@@ -1,8 +1,8 @@
 import React, {useState, useRef} from 'react';
 import { View, Text, Button, Image, FlatList, useWindowDimensions, Animated, Pressable, TouchableOpacity } from 'react-native';
-import slides from './slides';
-import WelcomeItem from './welcome-item'; 
-import Paginator from './paginator';
+import slides from '../components/welcomeComponents/slides';
+import WelcomeItem from '../components/welcomeComponents/welcome-item'; 
+import Paginator from '../components/welcomeComponents/paginator';
 
 const WelcomeScreen = () => {
 
