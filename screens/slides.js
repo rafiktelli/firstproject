@@ -1,31 +1,24 @@
 export default [
     {
         id:'1',
-        title:'1 Quick and easy',
-        description:'grow your business',
+        title:"Manage your Tasks",
+        description:'this is a description to explain the tasks',
         image: require('../assets/doctor_hello.jpg'),
 
     },
     {
         id:'2',
-        title:'Secondx Image here ',
-        description:'2 DONT grow your business',
+        title:'Comunicate Less ',
+        description:'this is a description to explain the tasks',
         image: require('../assets/welcome.jpg'),
 
     },
     {
         id:'3',
-        title:'Seconde Image here ',
-        description:'3 DONT grow your business',
-        image: require('../assets/welcome.jpg'),
+        title:'Rapid Appointment Booking',
+        description:'this is a description to explain the tasks',
+        image: require('../assets/another_pic.jpg'),
 
-    }
-    ,
-    {
-        id:'4',
-        title:'4 Second Image here ',
-        description:'DONT grow your business',
-        image: require('../assets/welcome.jpg'),
+    },
 
-    }
 ]

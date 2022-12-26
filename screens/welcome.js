@@ -1,7 +1,7 @@
 import React, {useState, useRef} from 'react';
-import { View, Text, Button, Image, FlatList, useWindowDimensions, Animated } from 'react-native';
+import { View, Text, Button, Image, FlatList, useWindowDimensions, Animated, Pressable, TouchableOpacity } from 'react-native';
 import slides from './slides';
-import Itm from './itm'; 
+import WelcomeItem from './welcome-item'; 
 import Paginator from './paginator';
 
 const WelcomeScreen = () => {
@@ -17,7 +17,7 @@ const WelcomeScreen = () => {
       <View style={{flex: 3}}>
         <FlatList 
             data={slides} 
-            renderItem={({ item }) => <Itm item={item} /> }
+            renderItem={({ item }) => <WelcomeItem item={item} /> }
             horizontal
             showsHorizontalScrollIndicator ={false}
             pagingEnabled
@@ -32,7 +32,9 @@ const WelcomeScreen = () => {
       </View>
       
       <Paginator data={slides} scrollX={scrollX} />
-      
+      <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView}>
+       <Text style={styles.buttonText}>Get Started </Text>
+      </TouchableOpacity>
 
 
     </View>
@@ -53,6 +55,15 @@ const styles = {
   alignItems: 'center',
   position: 'absolute', //Here is the trick
   bottom: 50, //Here is the trick
+  backgroundColor: '#493d8a',
+  borderRadius: 5,
+  paddingVertical: 12, 
+  paddingHorizontal: 32,
+  },
+  buttonText: {
+    fontSize: 16, 
+    fontWeight: 'bold', 
+    color: 'white',
   },
 };
 

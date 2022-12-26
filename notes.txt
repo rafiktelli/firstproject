@@ -18,3 +18,6 @@
 <View style={styles.buttonView}>
        <Button title="Get Started" />
       </View>
+
+
+      nice purple : #493d8a

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button, Image, FlatList, StyleSheet, useWindowDimensions } from 'react-native';
 
 
-export default Itm =({ item }) => {
+export default WelcomeItem =({ item }) => {
     
     const {width} = useWindowDimensions();
     return (
