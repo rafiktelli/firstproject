@@ -16,7 +16,6 @@ export default function App() {
     
     <View style={styles.global}>
     <WelcomeScreen />
-    <Text> kaka </Text>
     </View>
      
   );
