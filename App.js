@@ -16,7 +16,7 @@ export default function App() {
     
     <View style={styles.global}>
     <WelcomeScreen />
-    <Text> HIIIIIIIII</Text>
+    <Text> mama </Text>
     </View>
      
   );
