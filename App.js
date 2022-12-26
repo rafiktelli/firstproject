@@ -15,7 +15,8 @@ export default function App() {
   return (
     
     <View style={styles.global}>
-    
+    <WelcomeScreen />
+    <Text> HIIIIIIIIIi</Text>
     </View>
      
   );
