@@ -1,4 +1,20 @@
 
 {/* onPress={() => completeTask(index)} */}
 
+
+  {/* <Image source={require('../assets/welcome.jpg')} style={{ width: 350, height: 350 }} /> */} 
+     
+
                   
+
+        {/*   const viewableItemsChanged = useRef(({viewableItems }) => {
+     setCurrentIndex( viewableItems[1].index );
+  }).current; */}
+
+            {/* onViewableItemsChanged = {viewableItemsChanged} */}
+
+
+
+<View style={styles.buttonView}>
+       <Button title="Get Started" />
+      </View>

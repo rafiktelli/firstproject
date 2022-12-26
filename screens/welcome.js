@@ -1,15 +1,40 @@
-import React from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import React, {useState, useRef} from 'react';
+import { View, Text, Button, Image, FlatList, useWindowDimensions, Animated } from 'react-native';
+import slides from './slides';
+import Itm from './itm'; 
+import Paginator from './paginator';
 
 const WelcomeScreen = () => {
+
+  const [currentIndex, setCurrentIndex] = useState(0); 
+
+
+  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 100}).current; 
+  const scrollX = useRef(new Animated.Value(0)).current;
+  const slidesRef = useRef(null);
   return (
     <View style={styles.container}>
-      <View style={styles.imageView}>
-        <Image source={require('../assets/welcome.jpg')} style={{ width: 350, height: 350 }} />
+      <View style={{flex: 3}}>
+        <FlatList 
+            data={slides} 
+            renderItem={({ item }) => <Itm item={item} /> }
+            horizontal
+            showsHorizontalScrollIndicator ={false}
+            pagingEnabled
+            bounces={false}
+            keyExtractor ={(item) => item.id }
+            onScroll={Animated.event([{nativeEvent:{contentOffset: {x: scrollX} }}], { useNativeDriver: false, 
+            } )}
+            scrollEventThrottle={32}
+            viewabilityConfig={viewConfig}
+            ref ={slidesRef}
+             />
       </View>
-      <View style={styles.buttonView}>
-       <Button title="Get Started" />
-      </View>
+      
+      <Paginator data={slides} scrollX={scrollX} />
+      
+
+
     </View>
   );
 };
