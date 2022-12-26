@@ -17,7 +17,7 @@ export default function App() {
     <View style={styles.global}>
     <WelcomeScreen />
     </View>
-    
+     
   );
 
 
