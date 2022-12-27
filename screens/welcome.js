@@ -36,7 +36,7 @@ const WelcomeScreen = ({ navigation }) => {
       
       <Paginator data={slides} scrollX={scrollX} />
       <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Login") } >
-       <Text style={styles.buttonText}>Get Started </Text>
+       <Text style={styles.buttonText}> Connect </Text>
       </TouchableOpacity>
 
 

@@ -23,7 +23,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name = "Welcome"
-        component={MainScreen}
+        component={WelcomeScreen}
         options={{headerShown: false}}
          />
         <Stack.Screen 
