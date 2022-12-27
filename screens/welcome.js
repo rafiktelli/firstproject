@@ -1,19 +1,22 @@
 import React, {useState, useRef} from 'react';
-import { View, Text, Button, Image, FlatList, useWindowDimensions, Animated, Pressable, TouchableOpacity } from 'react-native';
+import { View, Text, Button, Image, FlatList, useWindowDimensions, Animated, Pressable, TouchableOpacity, StatusBar } from 'react-native';
 import slides from '../components/welcomeComponents/slides';
 import WelcomeItem from '../components/welcomeComponents/welcome-item'; 
 import Paginator from '../components/welcomeComponents/paginator';
 
-const WelcomeScreen = () => {
+
+const WelcomeScreen = ({ navigation }) => {
 
   const [currentIndex, setCurrentIndex] = useState(0); 
 
 
-  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 100}).current; 
+  const viewConfig = useRef({viewAreaCoveragePercentThreshold: 10}).current; 
   const scrollX = useRef(new Animated.Value(0)).current;
   const slidesRef = useRef(null);
   return (
     <View style={styles.container}>
+    
+    <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View style={{flex: 3}}>
         <FlatList 
             data={slides} 
@@ -32,7 +35,7 @@ const WelcomeScreen = () => {
       </View>
       
       <Paginator data={slides} scrollX={scrollX} />
-      <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView}>
+      <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Login") } >
        <Text style={styles.buttonText}>Get Started </Text>
       </TouchableOpacity>
 
@@ -40,12 +43,14 @@ const WelcomeScreen = () => {
     </View>
   );
 };
+export default WelcomeScreen;
 
 const styles = {
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#FFF',
   },
   imageView:{
     
@@ -67,4 +72,3 @@ const styles = {
   },
 };
 
-export default WelcomeScreen;

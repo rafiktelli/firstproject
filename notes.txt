@@ -21,3 +21,9 @@
 
 
       nice purple : #493d8a
+
+
+
+          <View style={styles.global}>
+    <WelcomeScreen />
+    </View>

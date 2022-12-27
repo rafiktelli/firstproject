@@ -1,4 +1,4 @@
-import { KeyboardAvoidingView, TextInput, TouchableOpacity, Keyboard, ScrollView, Animated, Text, View } from 'react-native';
+import { KeyboardAvoidingView, TextInput, TouchableOpacity, Keyboard, ScrollView, Animated, Text, View, StatusBar } from 'react-native';
 import Task from './task';
 import {useState, useCallback, useMemo, useRef} from "react";
 import {StyleSheet} from 'react-native';
@@ -28,6 +28,8 @@ const ListTaks = () => {
    
     return (
         <View style={styles.container}>
+        
+        <StatusBar barStyle="dark-content" backgroundColor="#fff" />
         <View style={styles.taskWrapper}>
       
         <Text style={styles.sectionTitle}>Today's Tasks</Text>
