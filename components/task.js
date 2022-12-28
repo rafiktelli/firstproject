@@ -1,5 +1,9 @@
-import React from 'react';
-import { StyleSheet, Text, View, Animated, TouchableOpacity } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, Text, View, Animated, TouchableOpacity, Pressable } from 'react-native';
+import {AntDesign, Ionicons} from '@expo/vector-icons';
+
+
+
 
 const LeftSwipeActions = () => {
     return (
@@ -23,10 +27,13 @@ const LeftSwipeActions = () => {
 
 
 const Task = (props) => {
+  
     return (
       <View style={styles.item}>
           <View style={styles.itemLeft}>
-              <View style={styles.square}></View>
+          <TouchableOpacity>
+             <Ionicons name="ios-square-outline" size={24} color={'#55BCF6'} style={{width:32}} />
+          </TouchableOpacity>
               <Text style={styles.itemText}>{props.text}</Text>
           </View>
           <View style={styles.circular}>
@@ -67,7 +74,8 @@ const styles = StyleSheet.create({
       marginRight: 15,
   },
   itemText:{
-      maxWidth: '80%'
+      maxWidth: '80%',
+      textDecorationLine: 'line-through',
   },
   circular:{
       width:12,

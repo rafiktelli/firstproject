@@ -5,6 +5,7 @@ import ListTasks from './components/list-tasks';
 import WelcomeScreen from './screens/welcome';
 import Login from './screens/login';
 import MainScreen from './screens/main-screen';
+import Application from './components/todolist/Application';
 import { createStackNavigator } from '@react-navigation/stack'; //Insert screens into a stack
 import { NavigationContainer } from '@react-navigation/native'; //contains navigator and screen
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -23,7 +24,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name = "Welcome"
-        component={WelcomeScreen}
+        component={Application}
         options={{headerShown: false}}
          />
         <Stack.Screen 

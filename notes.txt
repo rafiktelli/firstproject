@@ -27,3 +27,12 @@
           <View style={styles.global}>
     <WelcomeScreen />
     </View>
+
+
+    onPress= {() => completeTask(index)}
+
+    tempData.push({ 
+                        name,
+                        color, 
+                        todos: [] 
+                    });  

@@ -37,7 +37,7 @@ const ListTaks = () => {
         <ScrollView style={styles.items}>
         { taskItems.map((item, index) =>{
             return(
-                <TouchableOpacity onPress= {() => completeTask(index)} >
+                <TouchableOpacity  >
                   <Task text ={item} key={index}  />
                 </TouchableOpacity>
                 ); 
