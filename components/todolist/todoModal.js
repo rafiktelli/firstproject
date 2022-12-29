@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity, Touchable, FlatList, KeyboardAvoidingView, TextInput, Keyboard } from 'react-native';
+import { Text, View, SafeAreaView, StyleSheet, TouchableOpacity, Touchable, FlatList, KeyboardAvoidingView, TextInput, Keyboard, Animated } from 'react-native';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import colors from './Colors';
+import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
+
 
 export default class todoModal extends Component {
     state ={
@@ -23,16 +25,51 @@ export default class todoModal extends Component {
         Keyboard.dismiss();
     };
 
+    deleteTodo= index =>{
+        let list = this.props.list;
+        list.todos.splice(index,1);
+        this.props.updateList(list);
+    }
+
+
     renderTodo = (todo, index) =>{
         return(
+            <GestureHandlerRootView>
+            <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
             <View style={styles.todoContainer}>
                 <TouchableOpacity onPress={()=>this.toggleTodoCompleted(index)}>
                     <Ionicons name= {todo.completed? "ios-square":"ios-square-outline"}  size={24} color={colors.gray} style={{width:32}} />
                 </TouchableOpacity>
                 <Text style={[styles.todo, { textDecorationLine: todo.completed? 'line-through': 'none', color: todo.completed ? colors.gray:colors.black} ]}>{todo.title}</Text>
             </View>
+            </Swipeable>
+            </GestureHandlerRootView>
         )
     };
+
+    rightActions = (dragX, index) => {
+        const scale =  dragX.interpolate({
+            inputRange:[-100,0],
+            outputRange:[1, 0.9],
+            extrapolate: "clamp"
+        });
+        const opacity = dragX.interpolate({
+            inputRange:[-100, -20, 0],
+            outputRange:[1, 0.8,0],
+            extrapolate:"clamp"
+        });
+        return(
+
+            <TouchableOpacity onPress={()=>this.deleteTodo(index)}>
+                <Animated.View style={[styles.deleteButton, {opacity: opacity}]} >
+                    <Animated.Text style={{color:colors.white, fontWeight:"800", transform:[{scale}]}}>
+                        Delete
+                    </Animated.Text>
+                </Animated.View>
+            </TouchableOpacity>
+        )
+    }
+
     render() {
         const list = this.props.list;
         const taskCount = list.todos.length;
@@ -53,11 +90,10 @@ export default class todoModal extends Component {
                         </View>                        
                     </View>
                     
-                    <View style={[styles.section, {flex:3}]}>
+                    <View style={[styles.section, {flex:3, marginVertical:16}]}>
                         <FlatList data={list.todos} 
                         renderItem={({item, index})=> this.renderTodo(item, index) } 
                         keyExtractor={item => item.title}
-                        contentContainerStyle={{ paddingHorizontal:32, paddingVertical:64 }}
                         showsVerticalScrollIndicator={false}
                         />
 
@@ -83,7 +119,7 @@ const styles = StyleSheet.create({
     },
     
     section:{
-        flex: 1,
+        paddingTop:16,
         alignSelf: "stretch"
 
     },
@@ -108,6 +144,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:32,
         flexDirection: "row",
         alignItems:"center",
+        paddingVertical: 16
 
     },
     input:{
@@ -128,11 +165,19 @@ const styles = StyleSheet.create({
         paddingVertical:16,
         flexDirection:"row",
         alignItems:"center",
+        paddingLeft:16,
     },
     todo:{
         color:colors.black,
         fontWeight: "700",
         fontSize: 16,
+    },
+    deleteButton:{
+        flex:1,
+        backgroundColor:colors.red,
+        justifyContent:"center",
+        alignItems:"center",
+        width: 80,
     }
 });
 
