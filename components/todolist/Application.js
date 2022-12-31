@@ -1,17 +1,20 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, Modal,TouchableOpacity} from "react-native";
+import {StyleSheet, Text, View, FlatList, Modal,TouchableOpacity, ActivityIndicator} from "react-native";
 import colors from "./Colors";
 import {AntDesign} from "@expo/vector-icons";
 import tempData from "./tempData";
 import TodoList from './todoList';
 import AddListModal from './addListModal';
+import AddPersonnel from './addPersonnel';
 import Fire from './Fire';
 
 
 export default class Application extends React.Component{
     state = {
         addTodoVisible: false,
+        addPersonnelVisible: false,
         lists: [],
+        personnels: [],
         user: {},
         loading: true
     };
@@ -26,35 +29,73 @@ export default class Application extends React.Component{
                     this.setState({loading:false});
                 });
             });
+            
+            firebase.getPersonnels(personnels=>{
+                this.setState({personnels, user}, () => {
+                    this.setState({loading:false});
+                });
+            });
+
 
             this.setState({user});
             console.log(user.uid);
         });
     }
 
+    componentWillUnmount(){
+        firebase.detach();
+    }
     toggleAddTodoModal(){
         this.setState({addTodoVisible: !this.state.addTodoVisible});
+    }
+
+    toggleAddPersonnelModel(){
+        this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
     }
 
     renderList = list =>{
         return <TodoList list={list} updateList={this.updateList} />;
     }
     addList = list => {
-        this.setState({lists: [...this.state.lists, {...list, id: this.state.lists.length + 1, todos: [] }] })
+       // this.setState({lists: [...this.state.lists, {...list, id: this.state.lists.length + 1, todos: [] }] })
+       firebase.addList({
+           name: list.name,
+           color: list.color,
+           todos: []
+       });
+    }
+    addPersonnel = personnel =>{
+        firebase.addPersonnel({
+            nom: personnel.nom,
+            profession: personnel.profession,
+            speciality: personnel.speciality,
+            naissance: personnel.naissance
+        });
     }; 
     updateList = list => {
-        this.setState({
-            lists:this.state.lists.map(item=>{
-                return item.id === list.id ? list : item; 
-            })
-        });
+        
+        firebase.updateList(list);
     };
 
     render(){
+
+        if(this.state.laoding){
+            return(
+                <View style={style.container}>
+                    <ActivityIndicator size="large" color={colors.blue} />
+                </View>
+            );
+        }
+
+
+
         return(
             <View style={styles.container}>
                 <Modal animationType="slide" visible={this.state.addTodoVisible} onRequestClose ={()=>this.toggleAddTodoModal()}>
                     <AddListModal closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
+                </Modal>
+                <Modal animationType="slide" visible={this.state.addPersonnelVisible} onRequestClose ={()=>this.toggleAddPersonnelModel()}>
+                    <AddPersonnel closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
                 </Modal>
                 <View>
                     <Text>User:{this.state.user.uid}</Text>
@@ -72,11 +113,18 @@ export default class Application extends React.Component{
                         <AntDesign name="plus" size={16} color={colors.blue} />
                     </TouchableOpacity>
                     <Text style={styles.add}> Add List </Text>
+
+                    <TouchableOpacity style={styles.addList} onPress ={()=> this.toggleAddPersonnelModel()}>
+                        <AntDesign name="plus" size={16} color={colors.blue} />
+                    </TouchableOpacity>
+                    <Text style={styles.add}> Add Personnel </Text>
                 </View>
+                
                 <View style={{height:275, paddingLeft: 32}}>
                     <FlatList data={this.state.lists} 
-                    keyExtractor={item => item.name} horizontal={true} s
-                    howsHorizontalScrollIndicator={false} 
+                    keyExtractor={item => item.id.toString()} 
+                    horizontal={true} 
+                    showsHorizontalScrollIndicator={false} 
                     renderItem={ ({item})  => this.renderList(item)}
                     keyboardShouldPersistTaps= "always"
                      />
@@ -111,6 +159,7 @@ const styles =StyleSheet.create({
         borderColor: colors.lightBlue,
         borderRadius:4,
         padding: 16,
+        width:56,
         alignContent:'center',
         justifyContent:'center',
     },

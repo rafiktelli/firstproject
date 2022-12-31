@@ -19,9 +19,18 @@ export default class todoModal extends Component {
 
     addTodo=()=>{
         let list = this.props.list;
-        list.todos.push({title: this.state.newTodo, completed: false});
-        this.props.updateList(list);
+
+        if(!list.todos.some(todo => todo.title.toLowerCase() === this.state.newTodo.toLowerCase() )) {
+
+            list.todos.push({title: this.state.newTodo, completed: false});
+
+            this.props.updateList(list);
+
+        }
+
+        
         this.setState({newTodo:""});
+
         Keyboard.dismiss();
     };
 
@@ -93,13 +102,13 @@ export default class todoModal extends Component {
                     <View style={[styles.section, {flex:3, marginVertical:16}]}>
                         <FlatList data={list.todos} 
                         renderItem={({item, index})=> this.renderTodo(item, index) } 
-                        keyExtractor={item => item.title}
+                        keyExtractor={(_, index) => index.toString()}
                         showsVerticalScrollIndicator={false}
                         />
 
                     </View>
                     <View style={[styles.section, styles.footer]} >
-                        <TextInput style={[styles.input, {borderColor:list.color}]} onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
+                        <TextInput  style={[styles.input, {borderColor:list.color}]} placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
                         <TouchableOpacity style={[styles.addTodo, {backgroundColor:list.color}]} onPress={()=>this.addTodo()} >
                             <AntDesign name="plus" size={16} color={colors.white} />
                         </TouchableOpacity>
@@ -152,14 +161,17 @@ const styles = StyleSheet.create({
         height: 48, 
         borderWidth: StyleSheet.hairlineWidth,
         borderRadius: 6,
-        marginRight: 8, 
-        paddingHorizontal: 8,
+        marginRight: 8,
+        paddingHorizontal: 18,
+        borderRadius:60, 
+        borderWidth: 1,
     },
     addTodo:{
         borderRadius: 4, 
         padding: 16,
         alignItems:"center",
         justifyContent: 'center',
+        borderRadius: 60
     },
     todoContainer:{
         paddingVertical:16,

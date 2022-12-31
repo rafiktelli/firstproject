@@ -35,4 +35,6 @@
                         name,
                         color, 
                         todos: [] 
-                    });  
+                    }); 
+
+  onChangeText={text => this.setState({ profession: text })}

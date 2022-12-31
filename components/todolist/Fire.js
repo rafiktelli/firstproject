@@ -1,6 +1,5 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
-import "firebase/compat/firestore";
+import firebase from 'firebase';
+
 
 const firebaseConfig ={
     apiKey: "AIzaSyA1qtBgLpLt_IVqUY8eH8kFCoNyPv6Fcvk",
@@ -19,6 +18,8 @@ class Fire{
     init(callback){
         if(!firebase.apps.length){
             firebase.initializeApp(firebaseConfig);
+            firebase.firestore().settings({ experimentalForceLongPolling: true }); //add this..
+
         }
         
         firebase.auth().onAuthStateChanged(user => {
@@ -35,13 +36,10 @@ class Fire{
         
         });
     }
-
+    // LISTS ---------------------------------------------
     getLists(callback){
-        let ref = firebase 
-            .firestore()
-            .collection("users")
-            .doc(this.userId)
-            .collection("lists");
+        let ref = this.ref.orderBy("name");
+
         this.unsubscribe = ref.onSnapshot(snapshot => {
             lists = [];
             
@@ -55,9 +53,65 @@ class Fire{
             callback(lists);
         });
     }
+
+    addList(list){
+        let ref = this.ref;
+
+        ref.add(list);
+    }
+
+    updateList(list){
+        let ref = this.ref;
+        ref.doc(list.id).update(list);
+    }
+
+    // PERSONNEL ---------------------------------
+    getPersonnels(callback){
+        let ref = this.ref.orderBy("nom");
+
+        this.unsubscribe = ref.onSnapshot(snapshot => {
+            personnels = [];
+            
+            
+
+            snapshot.forEach(doc => {
+                console.log("here we GOOOOOOO");
+                personnels.push({ id: doc.id, ...doc.data() });
+                
+            });
+            callback(personnels);
+        });
+    }
+
+
+    addPersonnel(personnel){
+        let refPers = this.refPers;
+        refPers.add(personnel);
+    }
     
+    // {REQUESTS} ------------------------------
+
     get userId(){
         return firebase.auth().currentUser.uid;
+    }
+
+    get ref(){
+        return firebase 
+            .firestore()
+            .collection("users")
+            .doc(this.userId)
+            .collection("lists");
+    }
+    get refPers(){
+        return firebase 
+            .firestore()
+            .collection("users")
+            .doc(this.userId)
+            .collection("personnels");
+    }
+
+    detach(){
+        this.unsubscribe();
     }
 
 }
