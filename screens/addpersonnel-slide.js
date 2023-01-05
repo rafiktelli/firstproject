@@ -1,17 +1,16 @@
 import React from "react"; 
 import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput, FlatList } from "react-native"; 
 import { AntDesign } from "@expo/vector-icons"; 
-import colors from "./Colors"; 
-import tempData from "./tempData"; 
+import colors from "../Colors"; 
 import SelectDropdown from 'react-native-select-dropdown';
-import Dropdown2 from "./compoDropDown";
+import Dropdown from "../components/todolist/dropDown";
 
 
 
 const countries = ["Egypt", "Canada", "Australia", "Ireland"]
 
 
-export default class AddPersonnel extends React.Component {
+export default class AddPersonnelSlide extends React.Component {
 
     state = { 
                 nom: "", 
@@ -52,7 +51,7 @@ export default class AddPersonnel extends React.Component {
                         <TextInput style={styles.input} placeholderTextColor="#000" placeholder="Birthday" onChangeText={text => this.setState({ naissance: text})} />     
                     </View>
                     <View  style={{ alignSelf: "stretch", marginHorizontal: 32}}>
-                        <Dropdown2 onProfessionChange={this.getProfession} onSpecialityChange={this.getSpeciality} />
+                        <Dropdown onProfessionChange={this.getProfession} onSpecialityChange={this.getSpeciality} />
                     </View>
                     <View  style={{ alignSelf: "stretch", marginHorizontal: 32}}>
                         <TouchableOpacity style={[styles.create, { backgroundColor: colors.blue }]} onPress={this.createPersonnel}> 

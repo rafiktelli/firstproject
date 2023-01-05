@@ -4,9 +4,9 @@ import {View, Text, SafeAreaView, StatusBar, Dimensions, StyleSheet, ScrollView}
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const {width} = Dimensions.get('window');
 import SelectDropdown from 'react-native-select-dropdown';
-import Colors from "./Colors";
+import Colors from "../../Colors";
 
-export default Dropdown2 = (props) => {
+export default Dropdown = (props) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
 

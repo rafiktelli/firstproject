@@ -46,7 +46,6 @@ class Fire{
             
 
             snapshot.forEach(doc => {
-                console.log("here we GOOOOOOO");
                 lists.push({ id: doc.id, ...doc.data() });
                 
             });
@@ -75,7 +74,6 @@ class Fire{
             
 
             snapshot.forEach(doc => {
-                console.log("here we GOOOOOOO");
                 personnels.push({ id: doc.id, ...doc.data() });
                 
             });

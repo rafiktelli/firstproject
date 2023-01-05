@@ -1,15 +1,14 @@
 import React from 'react';
 import {StyleSheet, Text, View, FlatList, Modal,TouchableOpacity, ActivityIndicator} from "react-native";
-import colors from "./Colors";
+import colors from "../Colors";
 import {AntDesign} from "@expo/vector-icons";
-import tempData from "./tempData";
-import TodoList from './todoList';
-import AddListModal from './addListModal';
-import AddPersonnel from './addPersonnel';
-import Fire from './Fire';
+import TodoListSummary from '../components/todolist/todoList-summary';
+import AddListSlide from './addList-slide';
+import AddPersonnelSlide from './addpersonnel-slide';
+import Fire from '../Fire';
 
 
-export default class Application extends React.Component{
+export default class TodoListsScreen extends React.Component{
     state = {
         addTodoVisible: false,
         addPersonnelVisible: false,
@@ -54,7 +53,7 @@ export default class Application extends React.Component{
     }
 
     renderList = list =>{
-        return <TodoList list={list} updateList={this.updateList} />;
+        return <TodoListSummary list={list} updateList={this.updateList} />;
     }
     addList = list => {
        // this.setState({lists: [...this.state.lists, {...list, id: this.state.lists.length + 1, todos: [] }] })
@@ -92,10 +91,10 @@ export default class Application extends React.Component{
         return(
             <View style={styles.container}>
                 <Modal animationType="slide" visible={this.state.addTodoVisible} onRequestClose ={()=>this.toggleAddTodoModal()}>
-                    <AddListModal closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
+                    <AddListSlide closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
                 </Modal>
                 <Modal animationType="slide" visible={this.state.addPersonnelVisible} onRequestClose ={()=>this.toggleAddPersonnelModel()}>
-                    <AddPersonnel closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
+                    <AddPersonnelSlide closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
                 </Modal>
                 <View>
                     <Text>User:{this.state.user.uid}</Text>

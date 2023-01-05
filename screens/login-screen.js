@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
-import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, FlatList} from 'react-native';
+import TaskCard from '../components/doctorComponents/taskCard';
+import taskdata from '../data';
 
 
 
@@ -47,6 +49,7 @@ const Login = ({navigation}) => {
                             <Text style={styles.buttonText}>Login </Text>
                         </TouchableOpacity>
                     </View>  
+                    
            
         
 

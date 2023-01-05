@@ -6,6 +6,9 @@ export default colors ={
     gray:"#A4A4A4",
     lightGray:"#CACACA",
     red : "#be4141",
+    purple: "#807cd4",
+    shadyBlue: "#87a9e6",
+
 
     
 };
