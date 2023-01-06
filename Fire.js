@@ -73,12 +73,13 @@ class Fire{
 
             snapshot.forEach(doc => {
                 personnels.push({ id: doc.id, ...doc.data() });
-                console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
                 
             });
             callback(personnels);
         });
     }
+
+    
 
 
     addPersonnel(personnel){

@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
+import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, Pressable, TouchableOpacity, Dimensions, FlatList, Modal, KeyboardAvoidingView } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../Colors';
 import TaskCard from '../components/doctorComponents/taskCard';
@@ -8,28 +8,37 @@ import taskdata from '../data';
 import { AntDesign, Ionicons } from "@expo/vector-icons"; 
 import TodoListSummary from '../components/todolist/todoList-summary';
 import TodoList from '../components/todolist/todoList';
-import DoctorAppointSlide from '../screens/doctor-appoint-slide';
 import Fire from '../Fire';
+import DoctorBar from '../components/doctorComponents/doctorBar';
+import SpeCompo from '../components/doctorComponents/speCompo';
 
 export default class AppointmentScreen extends React.Component {
     state={
-        showListVisible : false,
         personnels : [],
+        doctors : [],
+        filtered : [],
+        spec : {},
+        inputValue :'', 
+        specPressed : false, 
+        pressedCategory : '',
+
+        
     };
     
     componentDidMount(){
         firebase = new Fire((error, user)=>{
             if(error){
                 return alert("Uh no, there is something went wrong");
-            }
-            
+            }            
             firebase.getPersonnels(personnels=>{
                 this.setState({personnels, user}, () => {
                     this.setState({loading:false});
+                    this.state.doctors = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
+                    this.state.filtered = this.state.doctors;
+                    this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
+                    
                 });
             });
-
-
             this.setState({user});
             console.log(user.uid);
         });
@@ -38,22 +47,44 @@ export default class AppointmentScreen extends React.Component {
     componentWillUnmount(){
         firebase.detach();
     }
-
-
-
-    toggleListModal(){
-        this.setState({showListVisible: !this.state.showListVisible})
-    }
     
+    clearInputText(){
+        this.setState({inputValue:''});
+        this.componentDidMount();
+
+    }
+
+    catPressed= cat =>{
+        this.setState({pressedCategory : cat, });
+        console.log(this.state.pressedCategory);
+
+    }
+
+    renderDoctors = pers =>{
+        
+        return( <DoctorBar pers={pers} /> );
+    }
+    searchDoc (textToSearch){
+        this.setState({inputValue: textToSearch});
+        this.setState({
+            filtered: this.state.doctors.filter(i=>
+                    i.nom.toLowerCase().includes(textToSearch.toLowerCase()),
+                )    
+        });
+        this.setState({
+            spec:  Array.from(new Set(this.state.doctors.filter(j=>
+                j.nom.toLowerCase().includes(textToSearch.toLowerCase()),
+            ).map(a => a.speciality)
+        ))});
+        
+        console.log(this.state.inputValue);
+    } 
 
     render(){
+        //this.state.filtred = this.state.doctors;
         return (
-            
             <View  style={styles.container}>
-            <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                   <DoctorAppointSlide closeModal={()=>this.toggleListModal()} />
-            </Modal>
-            <ScrollView>
+            <ScrollView keyboardShouldPersistTaps='always'>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
                 <View style={{ marginHorizontal:20}}>
                     <View style={{height:90}} />
@@ -61,8 +92,11 @@ export default class AppointmentScreen extends React.Component {
                         <Text style={{fontWeight:'700', fontSize:30, width:250}}>Doctor Appointment</Text>
                     </View>
                     <View style={{flexDirection:'row', marginTop: 20, marginBottom: 25 }}>
-                        <TextInput style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
-                        <TouchableOpacity style={styles.search}>
+                        <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TouchableOpacity onPress={()=>this.clearInputText()} activeOpacity={1} style={{width:25, backgroundColor:'#f8f4f4', borderBottomRightRadius:15,borderTopRightRadius:15, alignContent:'center',justifyContent:'center'}} onPress={()=>this.clearInputText()} >
+                            <Ionicons name="close" size={ this.state.inputValue ? 24 : 0} color={'#C0C0C0'}   />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.search} >
                             <Ionicons name="search" size={24} color={'#FFF'}  />
                         </TouchableOpacity>
                     </View>
@@ -70,48 +104,36 @@ export default class AppointmentScreen extends React.Component {
                         <Text style={{fontWeight:'700', fontSize:18}}>Categories</Text>
                     </View>
                     <View >
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:120, flexDirection:'row'}}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:110, flexDirection:'row'}}>
                         <FlatList 
-                            data={taskdata}
-                            numColumns={taskdata.length}
-                            keyExtractor={(item)=>item.id.toString()}
+                            data={this.state.spec}
+                            keyExtractor={(item) => item.toString()} 
+                            numColumns={12}
                             renderItem={({ item })=>{
                                 return(
-                                     <View style={styles.category}>
-                                        <TouchableOpacity style={{flex:1, flexDirection:'column', justifyContent:'flex-end', alignItems:'center', marginBottom:15  }}>
-                                            <Text style={{}}>{item.category}</Text>
-                                        </TouchableOpacity>
-                                     </View>
-                                )
+                                    <TouchableOpacity onPress={()=>this.catPressed(item.toString())}>
+                                      <SpeCompo name={item.toString()} isPressed ={this.state.pressedCategory}  />  
+                                    </TouchableOpacity>
+                                    );
                             }}
                         />
                         </ScrollView>
                     </View>
-                    <View style={{marginVertical:20}}>
+                    <View style={{marginVertical:10,  }}>
                         <Text style={{fontWeight:'700', fontSize:18}}>Doctors</Text>
                     </View>
                     <View style={{  }}>
-                        <ScrollView style={{backgroundColor:'#fff'}} 
+                        <ScrollView keyboardShouldPersistTaps='always' style={{backgroundColor:'#fff'}} 
                                 showsVerticalScrollIndicator={false}>
+                           
                             <FlatList 
-                                data={this.state.personnels} 
-                                keyExtractor={item => item.id.toString()} 
-                                renderItem={({ item })=>{
-                                    return(
-                                        <View style={styles.doctor}>
-                                            <TouchableOpacity onPress={()=>this.toggleListModal()} style={{ marginBottom:15, flexDirection:'row', alignItems:'center',  }}>
-                                                <View>
-                                                    <Image source={require('../assets/default-doctor.png')} style={{width:50, height:50, borderRadius: 5, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
-                                                </View>
-                                                <View>
-                                                    <Text style={{}}>{item.nom}</Text>
-                                                    <Text style={{}}>{item.speciality}</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
-                                    )
-                                }}
+                                data={this.state.filtered} 
+                                extraData={this.state}
+                                keyExtractor={(item) => item.id.toString()} 
+                                renderItem={ ({item})  => this.renderDoctors(item)}
                             />
+                            <Text> {console.log(this.state.filtered)} </Text>
+                            <Text> {console.log(this.state.spec)}</Text>
                         </ScrollView>
                     </View>
 
@@ -142,10 +164,12 @@ const styles = StyleSheet.create({
       },
     input:{
         paddingVertical: 15,
-        paddingHorizontal: 20,
-        width: 290,
+        paddingLeft:20,
+        paddingRight: 5,
+        width: 270,
         backgroundColor: '#f8f4f4',
-        borderRadius: 15,
+        borderBottomLeftRadius:15,
+        borderTopLeftRadius:15,
         borderColor: '#f8f4f4',
         borderWidth: 1,
     },  
@@ -155,18 +179,9 @@ const styles = StyleSheet.create({
         width: 60, 
         paddingVertical:15, 
         backgroundColor:'#0073CF', 
-        borderRadius:15
+        borderRadius:15,
     },
-    category:{
-        height:110,
-        marginHorizontal:3, 
-        flexDirection:'row', 
-        borderRadius: 15, 
-        marginVertical: 10, 
-        justifyContent:'space-between',
-        width:90, 
-        backgroundColor:colors.lightGray, 
-    },
+    
     doctor:{
         flex:1,
         borderRadius: 15, 
