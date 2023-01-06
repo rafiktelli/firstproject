@@ -8,6 +8,8 @@ export default colors ={
     red : "#be4141",
     purple: "#807cd4",
     shadyBlue: "#87a9e6",
+    lighterGray : "#f8f4f4",
+    
 
 
     

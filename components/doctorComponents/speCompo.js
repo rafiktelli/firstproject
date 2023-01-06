@@ -23,9 +23,9 @@ export default class speCompo extends React.Component {
         }
     
     return (
-        <View style={[styles.category,{ backgroundColor: pressed ? '#0073CF':colors.lightGray}]}>
-            <View style={{flex:1, flexDirection:'column', justifyContent:'flex-end', alignItems:'center', marginBottom:15  }} >
-                <Text style={{color: pressed ? colors.white:'#000', fontWeight: '700'}}>{this.props.name}</Text>
+        <View style={[styles.category,{ backgroundColor: pressed ? '#127eff':colors.lighterGray}]}>
+            <View style={{flex:1, flexDirection:'column', justifyContent:'flex-end', alignItems:'center', marginBottom:25  }} >
+                <Text style={{color: pressed ? colors.white:'#000', fontWeight: '700', fontSize:15}}>{this.props.name}</Text>
             </View>
         </View>
     );
@@ -34,12 +34,13 @@ export default class speCompo extends React.Component {
 
 const styles = StyleSheet.create({
     category:{
-        height:110,
-        marginHorizontal:3, 
+        height:120,
+        marginHorizontal:5, 
         flexDirection:'row', 
+        
         borderRadius: 15, 
         justifyContent:'space-between',
-        width:90, 
+        width:100, 
         backgroundColor:colors.lightGray, 
     },
 });

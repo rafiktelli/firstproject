@@ -64,23 +64,39 @@ export default class AppointmentScreen extends React.Component {
             this.setState({count: this.state.count +1})
             if(this.state.count%2 === 0){
                 this.setState({pressedCategory:''});
+                this.setState({
+                    filtered: this.state.doctors,
+                    });
             }
-            
+            else{
+                this.setState({
+                    filtered: this.state.doctors.filter(i=>
+                            i.speciality.toLowerCase().includes(cat.toLowerCase()),
+                        )    
+                });
+            }
         }else{
             this.setState({count: 0})
+            this.setState({
+            filtered: this.state.doctors.filter(i=>
+                    i.speciality.toLowerCase().includes(cat.toLowerCase()),
+                )    
+        });
         }
         this.setState({oldPressedCategory : cat });
+        
 
     }
+    
 
     renderDoctors = pers =>{
         
         return( <DoctorBar pers={pers} /> );
     }
-    searchDoc (textToSearch){
+    searchDoc(textToSearch){
         this.setState({inputValue: textToSearch});
         this.setState({
-            filtered: this.state.doctors.filter(i=>
+            filtered: this.state.filtered.filter(i=>
                     i.nom.toLowerCase().includes(textToSearch.toLowerCase()),
                 )    
         });
@@ -89,20 +105,25 @@ export default class AppointmentScreen extends React.Component {
                 j.nom.toLowerCase().includes(textToSearch.toLowerCase()),
             ).map(a => a.speciality)
         ))});
-        
+        if(textToSearch === '') {
+            this.setState({
+                filtered: this.state.doctors,
+            });
+        }
         console.log(this.state.inputValue);
     } 
 
     render(){
         //this.state.filtred = this.state.doctors;
+        if(this.state.inputValue === ''){ console.log("tnaaaaaket"); }
         return (
             <View  style={styles.container}>
             <ScrollView keyboardShouldPersistTaps='always'>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-                <View style={{ marginHorizontal:20}}>
-                    <View style={{height:90}} />
-                    <View>
-                        <Text style={{fontWeight:'700', fontSize:30, width:250}}>Doctor Appointment</Text>
+                <View style={{ marginLeft:20,  }}>
+                    <View style={{height:75,  }} />
+                    <View style={{}}>
+                        <Text style={{fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Doctor Appointment</Text>
                     </View>
                     <View style={{flexDirection:'row', marginTop: 20, marginBottom: 25 }}>
                         <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
@@ -114,10 +135,10 @@ export default class AppointmentScreen extends React.Component {
                         </TouchableOpacity>
                     </View>
                     <View style={{marginBottom:20}}>
-                        <Text style={{fontWeight:'700', fontSize:18}}>Categories</Text>
+                        <Text style={{fontWeight:'900', fontSize:20}}>Categories</Text>
                     </View>
                     <View >
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:110, flexDirection:'row'}}>
+                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:120, flexDirection:'row'}}>
                         <FlatList 
                             data={this.state.spec}
                             keyExtractor={(item) => item.toString()} 
@@ -133,7 +154,7 @@ export default class AppointmentScreen extends React.Component {
                         </ScrollView>
                     </View>
                     <View style={{marginVertical:10,  }}>
-                        <Text style={{fontWeight:'700', fontSize:18}}>Doctors</Text>
+                        <Text style={{fontWeight:'900', fontSize:20}}>Doctors</Text>
                     </View>
                     <View style={{  }}>
                         <ScrollView keyboardShouldPersistTaps='always' style={{backgroundColor:'#fff'}} 
@@ -145,8 +166,7 @@ export default class AppointmentScreen extends React.Component {
                                 keyExtractor={(item) => item.id.toString()} 
                                 renderItem={ ({item})  => this.renderDoctors(item)}
                             />
-                            <Text> {console.log(this.state.filtered)} </Text>
-                            <Text> {console.log(this.state.spec)}</Text>
+                            <Text> {console.log(this.state.pressedCategory)}</Text>
                         </ScrollView>
                     </View>
 
@@ -165,7 +185,7 @@ export default class AppointmentScreen extends React.Component {
 
 const styles = StyleSheet.create({
     container:{
-    backgroundColor:'#fff', 
+    backgroundColor:'#FFF', 
     flex: 1,
     },
     header: {
@@ -191,7 +211,7 @@ const styles = StyleSheet.create({
         justifyContent:'center', 
         width: 60, 
         paddingVertical:15, 
-        backgroundColor:'#0073CF', 
+        backgroundColor:'#127eff', 
         borderRadius:15,
     },
     

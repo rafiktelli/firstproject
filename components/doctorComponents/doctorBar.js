@@ -32,8 +32,8 @@ export default class DoctorBar extends React.Component {
                             <Image source={require('../../assets/default-doctor.png')} style={{width:50, height:50, borderRadius: 5, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
                         </View>
                         <View>
-                            <Text style={{}}>{pers.nom}</Text>
-                            <Text style={{}}>{pers.speciality}</Text>
+                            <Text style={{ }}>{pers.speciality}</Text>
+                            <Text style={{ fontSize:15, fontWeight:'700' }}>Dr. {pers.nom}</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -47,11 +47,11 @@ const styles = StyleSheet.create({
 
     doctor:{
         flex:1,
-        borderRadius: 15, 
+        borderRadius: 20, 
         marginVertical: 3, 
         width:350, 
-        height:80,
-        backgroundColor:colors.lightGray, 
+        height:90,
+        backgroundColor:colors.lighterGray, 
 
     },
 
