@@ -1,21 +1,61 @@
 import React,{useState} from 'react';
-import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 import colors from '../Colors';
 import TaskCard from '../components/doctorComponents/taskCard';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import taskdata from '../data';
 import { AntDesign, Ionicons } from "@expo/vector-icons"; 
-
-
+import TodoListSummary from '../components/todolist/todoList-summary';
+import TodoList from '../components/todolist/todoList';
+import DoctorAppointSlide from '../screens/doctor-appoint-slide';
+import Fire from '../Fire';
 
 export default class AppointmentScreen extends React.Component {
+    state={
+        showListVisible : false,
+        personnels : [],
+    };
+    
+    componentDidMount(){
+        firebase = new Fire((error, user)=>{
+            if(error){
+                return alert("Uh no, there is something went wrong");
+            }
+            
+            firebase.getPersonnels(personnels=>{
+                this.setState({personnels, user}, () => {
+                    this.setState({loading:false});
+                });
+            });
+
+
+            this.setState({user});
+            console.log(user.uid);
+        });
+    }
+
+    componentWillUnmount(){
+        firebase.detach();
+    }
+
+
+
+    toggleListModal(){
+        this.setState({showListVisible: !this.state.showListVisible})
+    }
+    
 
     render(){
         return (
+            
             <View  style={styles.container}>
+            <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
+                   <DoctorAppointSlide closeModal={()=>this.toggleListModal()} />
+            </Modal>
+            <ScrollView>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-                <View style={{flex:1, marginHorizontal:20}}>
+                <View style={{ marginHorizontal:20}}>
                     <View style={{height:90}} />
                     <View>
                         <Text style={{fontWeight:'700', fontSize:30, width:250}}>Doctor Appointment</Text>
@@ -48,24 +88,24 @@ export default class AppointmentScreen extends React.Component {
                         </ScrollView>
                     </View>
                     <View style={{marginVertical:20}}>
-                        <Text style={{fontWeight:'700', fontSize:18}}>Categories</Text>
+                        <Text style={{fontWeight:'700', fontSize:18}}>Doctors</Text>
                     </View>
-                    <View style={{ height: 300}}>
+                    <View style={{  }}>
                         <ScrollView style={{backgroundColor:'#fff'}} 
                                 showsVerticalScrollIndicator={false}>
                             <FlatList 
-                                data={taskdata}
-                                keyExtractor={(item)=>item.id.toString()}
+                                data={this.state.personnels} 
+                                keyExtractor={item => item.id.toString()} 
                                 renderItem={({ item })=>{
                                     return(
                                         <View style={styles.doctor}>
-                                            <TouchableOpacity style={{ marginBottom:15, flexDirection:'row', alignItems:'center',  }}>
+                                            <TouchableOpacity onPress={()=>this.toggleListModal()} style={{ marginBottom:15, flexDirection:'row', alignItems:'center',  }}>
                                                 <View>
-                                                    <Image style={{width:50, height:50, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
+                                                    <Image source={require('../assets/default-doctor.png')} style={{width:50, height:50, borderRadius: 5, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
                                                 </View>
                                                 <View>
-                                                    <Text style={{}}>{item.doctor}</Text>
-                                                    <Text style={{}}>{item.category}</Text>
+                                                    <Text style={{}}>{item.nom}</Text>
+                                                    <Text style={{}}>{item.speciality}</Text>
                                                 </View>
                                             </TouchableOpacity>
                                         </View>
@@ -76,6 +116,7 @@ export default class AppointmentScreen extends React.Component {
                     </View>
 
                 </View>
+                </ScrollView>
             </View>
             
                 

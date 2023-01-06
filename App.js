@@ -39,7 +39,7 @@ export default function App() {
          />
          <Stack.Screen
          name="Tasks"
-         component={ListTasks}
+         component={TodoListsScreen}
          options={{headerShown: false}}
          />
       </Stack.Navigator>

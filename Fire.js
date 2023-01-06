@@ -66,15 +66,14 @@ class Fire{
 
     // PERSONNEL ---------------------------------
     getPersonnels(callback){
-        let ref = this.ref.orderBy("nom");
+        let ref = this.refPers.orderBy("nom");
 
         this.unsubscribe = ref.onSnapshot(snapshot => {
             personnels = [];
-            
-            
 
             snapshot.forEach(doc => {
                 personnels.push({ id: doc.id, ...doc.data() });
+                console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
                 
             });
             callback(personnels);
