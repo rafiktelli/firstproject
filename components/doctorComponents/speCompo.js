@@ -23,9 +23,9 @@ export default class speCompo extends React.Component {
         }
     
     return (
-        <View style={[styles.category,{ backgroundColor: pressed ? '#000':colors.lightGray}]}>
+        <View style={[styles.category,{ backgroundColor: pressed ? '#0073CF':colors.lightGray}]}>
             <View style={{flex:1, flexDirection:'column', justifyContent:'flex-end', alignItems:'center', marginBottom:15  }} >
-                <Text style={{color: pressed ? colors.white:'#000'}}>{this.props.name}</Text>
+                <Text style={{color: pressed ? colors.white:'#000', fontWeight: '700'}}>{this.props.name}</Text>
             </View>
         </View>
     );

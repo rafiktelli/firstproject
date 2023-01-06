@@ -21,6 +21,8 @@ export default class AppointmentScreen extends React.Component {
         inputValue :'', 
         specPressed : false, 
         pressedCategory : '',
+        oldPressedCategory :'',
+        count : -1,
 
         
     };
@@ -31,6 +33,7 @@ export default class AppointmentScreen extends React.Component {
                 return alert("Uh no, there is something went wrong");
             }            
             firebase.getPersonnels(personnels=>{
+                
                 this.setState({personnels, user}, () => {
                     this.setState({loading:false});
                     this.state.doctors = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
@@ -55,8 +58,18 @@ export default class AppointmentScreen extends React.Component {
     }
 
     catPressed= cat =>{
+        
         this.setState({pressedCategory : cat, });
-        console.log(this.state.pressedCategory);
+        if( cat === this.state.oldPressedCategory ){
+            this.setState({count: this.state.count +1})
+            if(this.state.count%2 === 0){
+                this.setState({pressedCategory:''});
+            }
+            
+        }else{
+            this.setState({count: 0})
+        }
+        this.setState({oldPressedCategory : cat });
 
     }
 
