@@ -29,10 +29,10 @@ export default class DoctorBar extends React.Component {
             <View style={styles.doctor}>
                     <TouchableOpacity onPress={()=>this.toggleListModal()} style={{ marginBottom:15, flexDirection:'row', alignItems:'center',  }}>
                         <View>
-                            <Image source={require('../../assets/default-doctor.png')} style={{width:50, height:50, borderRadius: 5, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
+                            <Image source={require('../../assets/default-doctor.png')} style={{width:65, height:65, borderRadius: 15, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
                         </View>
                         <View>
-                            <Text style={{ }}>{pers.speciality}</Text>
+                            <Text style={{ }}>{pers.profession}</Text>
                             <Text style={{ fontSize:15, fontWeight:'700' }}>Dr. {pers.nom}</Text>
                         </View>
                     </TouchableOpacity>

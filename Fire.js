@@ -66,7 +66,7 @@ class Fire{
 
     // PERSONNEL ---------------------------------
     getPersonnels(callback){
-        let ref = this.refPers.orderBy("nom");
+        let ref = this.refPers.orderBy("profession", 'desc');
 
         this.unsubscribe = ref.onSnapshot(snapshot => {
             personnels = [];

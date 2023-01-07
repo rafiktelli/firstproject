@@ -94,6 +94,7 @@ export default class AppointmentScreen extends React.Component {
         return( <DoctorBar pers={pers} /> );
     }
     searchDoc(textToSearch){
+        this.setState({spec: ''});
         this.setState({inputValue: textToSearch});
         this.setState({
             filtered: this.state.filtered.filter(i=>
@@ -138,7 +139,7 @@ export default class AppointmentScreen extends React.Component {
                         <Text style={{fontWeight:'900', fontSize:20}}>Categories</Text>
                     </View>
                     <View >
-                        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:120, flexDirection:'row'}}>
+                        <ScrollView horizontal={true} keyboardShouldPersistTaps='always' showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:120, flexDirection:'row'}}>
                         <FlatList 
                             data={this.state.spec}
                             keyExtractor={(item) => item.toString()} 

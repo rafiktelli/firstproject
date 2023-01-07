@@ -8,6 +8,8 @@ import MainScreen from './screens/main-screen';
 import DoctorTasksScreen from './screens/doctor-tasks-screen';
 import TodoListsScreen from './screens/todolists-sceen';
 import AppointmentScreen from './screens/appointment-screen';
+import AddPersonnelSlide from './screens/addpersonnel-slide';
+import ManageStaff from './screens/manage-staff';
 import { createStackNavigator } from '@react-navigation/stack'; //Insert screens into a stack
 import { NavigationContainer } from '@react-navigation/native'; //contains navigator and screen
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -28,7 +30,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name = "Welcome"
-        component={AppointmentScreen}
+        component={WelcomeScreen}
         options={{headerShown: false}}
 
          />
@@ -38,8 +40,28 @@ export default function App() {
         options={{headerShown: false}}
          />
          <Stack.Screen
+         name="Main"
+         component={MainScreen}
+         options={{headerShown: false}}
+         />
+         <Stack.Screen
+         name="Appointment"
+         component={AppointmentScreen}
+         options={{headerShown: false}}
+         />
+        <Stack.Screen
          name="Tasks"
          component={TodoListsScreen}
+         options={{headerShown: false}}
+         />
+         <Stack.Screen
+         name="Staff"
+         component={AddPersonnelSlide}
+         options={{headerShown: false}}
+         />
+         <Stack.Screen
+         name="ManageStaff"
+         component={ManageStaff}
          options={{headerShown: false}}
          />
       </Stack.Navigator>

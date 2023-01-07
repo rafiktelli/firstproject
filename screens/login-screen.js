@@ -45,7 +45,7 @@ const Login = ({navigation}) => {
                     
                     </View>
                     <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Tasks") } >
+                        <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Main") } >
                             <Text style={styles.buttonText}>Login </Text>
                         </TouchableOpacity>
                     </View>  
