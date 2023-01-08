@@ -1,5 +1,4 @@
-import colors from './Colors';
-export default taskdata = [
+const SlotsData = [
     {id:2, time:'9:00'},
     {id:3, time:'9:30'},
     {id:4, time:'10:00'},
@@ -11,4 +10,6 @@ export default taskdata = [
     {id:10, time:'15:00'},
     {id:11, time:'15:30'},
     {id:12, time:'16:00'},
-]
+    {id:13, time:'16:30'},
+];
+export default SlotsData;

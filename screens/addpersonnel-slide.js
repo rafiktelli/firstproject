@@ -40,6 +40,10 @@ export default class AddPersonnelSlide extends React.Component {
 
 
         render() {
+
+            
+
+
             return (
                <KeyboardAvoidingView style={styles.container}> 
                     <TouchableOpacity style={{ position: "absolute", top: 33, right: 32, }} onPress={this.props.closeModal}> 

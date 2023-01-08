@@ -116,7 +116,7 @@ export default class AppointmentScreen extends React.Component {
 
     render(){
         //this.state.filtred = this.state.doctors;
-        if(this.state.inputValue === ''){ console.log("tnaaaaaket"); }
+        if(this.state.inputValue === ''){ console.log(""); }
         return (
             <View  style={styles.container}>
             <ScrollView keyboardShouldPersistTaps='always'>
