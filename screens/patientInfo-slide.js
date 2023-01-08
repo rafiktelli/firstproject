@@ -18,6 +18,7 @@ export default class PatientInfoSlide extends React.Component {
     const motif = this.state.inputValue1;
     const consultation = {doctorID, date, slot, patientID, motif}; 
     this.addConsultation(consultation); 
+    this.props.closeModal();
     console.log(patientID);
     }; 
 
@@ -38,7 +39,7 @@ export default class PatientInfoSlide extends React.Component {
 
   render(){
     return (
-      <View style={styles.container}>
+      <View style={styles.container}  >
         <View>
             <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
                 <AntDesign  name="close" size={24} color={colors.black} />

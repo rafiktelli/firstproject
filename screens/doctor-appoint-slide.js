@@ -17,13 +17,14 @@ export default class DoctorAppointSlide extends React.Component {
         selectedDate: moment(new Date()).format('DD-MM-YYYY'),
         pressedSlot : '',
         showListVisible:false,
+        slotsData: '',
     }
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
       } 
       onDateSelected = date => {
-        this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), pressedSlot:''});
+        this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), pressedSlot:'', SlotsData:SlotsData});
         //console.log(this.state.selectedDate);
     }   
 
@@ -33,6 +34,9 @@ export default class DoctorAppointSlide extends React.Component {
     }
     toggleListModal(){
         this.setState({showListVisible: !this.state.showListVisible})
+    }
+    toggleAddPersonnelModel(){
+        this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
     }
 
 
@@ -58,7 +62,7 @@ export default class DoctorAppointSlide extends React.Component {
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
                 
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                    <PatientInfoSlide pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
+                    <PatientInfoSlide closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
                 
                 <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
@@ -109,7 +113,7 @@ export default class DoctorAppointSlide extends React.Component {
 
                     <View style={{ flexDirection:'column', paddingHorizontal:6,}} >
                         <FlatList 
-                            data={SlotsData}
+                            data={this.state.SlotsData}
                             keyExtractor={(item) => item.id} 
                             numColumns={4}
                             renderItem={({ item })=>{
