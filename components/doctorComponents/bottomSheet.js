@@ -19,8 +19,8 @@ export default class BottomSheet extends React.Component {
             <View>
                 <Image source={require('../../assets/doctor-female.jpg')} style={{width:65, height:65, borderRadius: 15, backgroundColor:'#C0C0C0', marginHorizontal:10, marginVertical: 10}} />
             </View>
-            <View style={{flexDirection:'column', paddingVertical:15, }}>
-                <Text style={{fontSize:20, fontWeight:'700', color:'#5A5A5A'}}> {pers.nom} </Text>
+            <View style={{flexDirection:'column', paddingVertical:15,  }}>
+                <Text style={{fontSize:20, fontWeight:'700', color:'#000'}}>{pers.nom} </Text>
                 <View style={{flexDirection:'row', }}>
 
                     <View style={styles.tag}>
@@ -48,7 +48,7 @@ export default class BottomSheet extends React.Component {
                 <TouchableOpacity>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="checkbox-outline" size={24} color={'#5A5A5A'} />
-                    <Text style={{fontSize:18, paddingHorizontal:10, fontWeight:'600',  color:'#000'}}>Check Schedule and Tasks</Text>
+                    <Text style={{fontSize:18, paddingHorizontal:10, fontWeight:'600',  color:'#5A5A5A'}}>Check Schedule and Tasks</Text>
                 </View>
                 </TouchableOpacity>
             </View>
@@ -57,7 +57,7 @@ export default class BottomSheet extends React.Component {
                 <TouchableOpacity>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="create" size={24} color={'#5A5A5A'} />
-                    <Text style={{ fontSize:18, paddingHorizontal:10, fontWeight:'600',  color:'#000' }} >Edit Profile</Text>
+                    <Text style={{ fontSize:18, paddingHorizontal:10, fontWeight:'600',  color:'#5A5A5A' }} >Edit Profile</Text>
                 </View>
                 </TouchableOpacity>
             </View>

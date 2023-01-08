@@ -30,7 +30,7 @@ export default class PatientInfoSlide extends React.Component {
         patientID: consultation.patientID,
         motif: consultation.motif,
     });
-
+    this.props.closePrevModal();
 }
 
   

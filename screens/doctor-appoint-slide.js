@@ -123,7 +123,7 @@ export default class DoctorAppointSlide extends React.Component {
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
                 
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                    <PatientInfoSlide closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
+                    <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
                 
                 <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
@@ -170,9 +170,9 @@ export default class DoctorAppointSlide extends React.Component {
                         
                         
                     </View>
-                    <View>
+                    <View style={{}}>
 
-                    <View style={{ flexDirection:'column', paddingHorizontal:6,}} >
+                    <View style={{ flexDirection:'column', paddingHorizontal:6}} >
                         <FlatList 
                             data={this.state.availableSlots}
                             keyExtractor={(item) => item.toString()} 
@@ -192,7 +192,7 @@ export default class DoctorAppointSlide extends React.Component {
 
 
                     </View>
-                    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                    <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
                             <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
                                 <View style={{flexDirection:'row'}}>
