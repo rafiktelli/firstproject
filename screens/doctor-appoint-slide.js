@@ -1,6 +1,6 @@
 import React,{useState, useRef} from 'react'
 import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList } from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
+import {AntDesign, Ionicons} from '@expo/vector-icons';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import SlotsData from '../myData';
@@ -65,7 +65,7 @@ export default class DoctorAppointSlide extends React.Component {
                     <View style={{marginHorizontal:20, marginVertical:10}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
                     </View>
-                    <View style={{ backgroundColor:'#000', }}>
+                    <View style={{ }}>
                     <CalendarStrip
                         scrollable
                         ref={this.myRef}
@@ -96,7 +96,7 @@ export default class DoctorAppointSlide extends React.Component {
                     </View>
                     <View>
 
-                    <View style={{ flexDirection:'column', paddingHorizontal:6}} >
+                    <View style={{ flexDirection:'column', paddingHorizontal:6,}} >
                         <FlatList 
                             data={SlotsData}
                             keyExtractor={(item) => item.id} 
@@ -112,9 +112,23 @@ export default class DoctorAppointSlide extends React.Component {
                         <Text></Text>
                         
                         <Text>{console.log(this.state.selectedDate)}{console.log(this.state.pressedSlot)}</Text>
+                    </View>
+
+
+                    </View>
+                    <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
+                        <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
+                            <TouchableOpacity onPress={()=>alert(this.props.pers.nom + this.state.pressedSlot + " " + this.state.selectedDate)}>
+                                <View style={{flexDirection:'row'}}>
+                                    <View >
+                                        <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
+                                    </View>
+                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
                         </View>
-
-
                     </View>
                 </View>
                 
