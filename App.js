@@ -9,6 +9,7 @@ import DoctorTasksScreen from './screens/doctor-tasks-screen';
 import TodoListsScreen from './screens/todolists-sceen';
 import AppointmentScreen from './screens/appointment-screen';
 import AddPersonnelSlide from './screens/addpersonnel-slide';
+import DoctorAppointSlide from './screens/doctor-appoint-slide';
 import ManageStaff from './screens/manage-staff';
 import { createStackNavigator } from '@react-navigation/stack'; //Insert screens into a stack
 import { NavigationContainer } from '@react-navigation/native'; //contains navigator and screen
@@ -63,6 +64,11 @@ export default function App() {
          name="ManageStaff"
          component={ManageStaff}
          options={{headerShown: false}}
+         />
+         <Stack.Screen
+         name="Take an Appointment"
+         component={DoctorAppointSlide}
+         options={{headerShown: true}}
          />
       </Stack.Navigator>
     </NavigationContainer>

@@ -25,6 +25,7 @@
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^2.5.1",
     "react-native-gesture-handler": "^2.8.0",
+    "react-native-raw-bottom-sheet": "^2.2.0",
     "react-native-reanimated": "^2.13.0",
     "react-native-safe-area-context": "^4.4.1",
     "react-native-screens": "^3.18.2",

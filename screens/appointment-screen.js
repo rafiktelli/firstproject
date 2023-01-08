@@ -124,7 +124,7 @@ export default class AppointmentScreen extends React.Component {
                 <View style={{ marginLeft:20,  }}>
                     <View style={{height:75,  }} />
                     <View style={{}}>
-                        <Text style={{fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Doctor Appointment</Text>
+                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Doctor Appointment</Text>
                     </View>
                     <View style={{flexDirection:'row', marginTop: 20, marginBottom: 25 }}>
                         <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />

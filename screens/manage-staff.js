@@ -44,7 +44,7 @@ export default class ManageStaff extends React.Component{
 
     renderDoctors = pers =>{
         
-        return( <DoctorBar pers={pers} /> );
+        return( <DoctorBar isManage={true} pers={pers} /> );
     }
 
     toggleAddPersonnelModel(){
@@ -81,14 +81,8 @@ export default class ManageStaff extends React.Component{
                     <AddPersonnelSlide closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
                 </Modal>
                 <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
-                <View style={{flexDirection:'row', height:80, backgroundColor:'#FFF', }} >
-                    <View style={styles.divider} />
-                        <Text style={[styles.title,{alignSelf:"center",}]}>
-                            Manage <Text style={{fontWeight: "300", color: colors.blue }}>Staff</Text>
-                        </Text>
-                        <View style={styles.divider} />
-                </View>
-                <View style={{alignItems:'center'}}>
+                
+                <View  style={styles.viewButton}>
                     <TouchableOpacity style={styles.search} onPress ={()=> this.toggleAddPersonnelModel()}>
                         <AntDesign name="plus" size={25} color={colors.white} />
                     </TouchableOpacity>
@@ -152,12 +146,25 @@ const styles =StyleSheet.create({
         height : 60, 
         backgroundColor:'#127eff', 
         borderRadius:15,
+        shadowOffset: {
+            width: 0,
+            height: 3
+          },
+          shadowRadius: 5,
+          shadowOpacity: 1.0
+        
     },
     add:{
         color: colors.black,
         fontWeight:"800",
         fontSize: 14,
+        
     },
+    viewButton:{
+        marginVertical:40,
+        alignItems:'center',
+        
+    }
 
 
 
