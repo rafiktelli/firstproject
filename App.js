@@ -30,7 +30,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name = "Welcome"
-        component={WelcomeScreen}
+        component={AppointmentScreen}
         options={{headerShown: false}}
 
          />

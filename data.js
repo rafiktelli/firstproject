@@ -1,14 +1,10 @@
 import colors from './Colors';
 export default taskdata = [
-    {id:2, time:'9:00'},
-    {id:3, time:'9:30'},
-    {id:4, time:'10:00'},
-    {id:5, time:'10:30'},
-    {id:6, time:'11:00'},
-    {id:7, time:'11:30'},
-    {id:8, time:'12:00'},
-    {id:9, time:'12:30'},
-    {id:10, time:'15:00'},
-    {id:11, time:'15:30'},
-    {id:12, time:'16:00'},
+    {id:3, name: 'phaso surgery', date:'Today at 6:00PM', doctor:'David Bronsworth', duration:'120 Mins', time:'18:00', category:'Neuro', color:colors.purple },
+    {id:2, name: 'Consultation Check-up', date:'Wednesday at 2:00PM', doctor:'Yacine Chergui', duration:'60 Mins', time:'18:00', category:'Cardio', color: colors.shadyBlue },
+    {id:1, name: 'Consultation Check-up', date:'Wednesday at 2:00PM', doctor:'Yacine Chergui', duration:'60 Mins', time:'18:00', category:'Psychiatry', color: colors.lightBlue },
+    {id:3, name: 'phaso surgery', date:'Today at 6:00PM', doctor:'David Bronsworth', duration:'120 Mins', time:'18:00', category:'Radio', color:colors.purple },
+    {id:2, name: 'Consultation Check-up', date:'Wednesday at 2:00PM', doctor:'Yacine Chergui', duration:'60 Mins', time:'18:00', category:'Dermato', color: colors.shadyBlue },
+    {id:1, name: 'Consultation Check-up', date:'Wednesday at 2:00PM', doctor:'Yacine Chergui', duration:'60 Mins', time:'18:00', category:'Patho', color: colors.lightBlue },
+    
 ]

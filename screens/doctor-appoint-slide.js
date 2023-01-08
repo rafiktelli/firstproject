@@ -5,10 +5,32 @@ import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import SlotsData from '../myData';
 import SpeCompo from '../components/doctorComponents/speCompo';
+import Slot from '../components/doctorComponents/slot';
+
+
 
 export default class DoctorAppointSlide extends React.Component {
-   
-    
+
+    state={
+        selectedDate: new Date(),
+        pressedSlot : '',
+    }
+    constructor(props) {
+        super(props);
+        this.myRef = React.createRef();
+      } 
+      onDateSelected = date => {
+        this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), pressedSlot:''});
+        //console.log(this.state.selectedDate);
+    }   
+
+    slotPressed= slot =>{
+        
+        this.setState({pressedSlot : slot, });
+    }
+
+
+
     render(){
         var startDate = new Date("2023-01-01");
         
@@ -24,7 +46,6 @@ export default class DoctorAppointSlide extends React.Component {
               end: endDate
             }
           ];
-          console.log(selectedDate);
           
         return (
             <View style={styles.container}>
@@ -63,12 +84,15 @@ export default class DoctorAppointSlide extends React.Component {
                         highlightDateNumberStyle={{color:'#FFF'}}
                         disabledDateNumberStyle={datesWhitelist}
                         disabledDateNameStyle={datesWhitelist}
+                        onDateSelected={async date => this.onDateSelected(date)}
                         iconContainer={{flex:0.1}}
                         
                     />
                     </View>
                     <View style={{marginHorizontal:20, marginVertical:10}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Slots</Text>
+                        
+                        
                     </View>
                     <View>
 
@@ -79,14 +103,15 @@ export default class DoctorAppointSlide extends React.Component {
                             numColumns={4}
                             renderItem={({ item })=>{
                                 return(
-                                    <TouchableOpacity >
-                                      <View style={{height:45, width:90, backgroundColor:'#C0C0C0' ,marginRight:5, marginBottom: 5, borderRadius:15, alignItems:'center',justifyContent:'center'}} >
-                                          <Text style={{fontWeight:'700', fontSize:15,}}>{item.time}</Text>
-                                      </View>
+                                    <TouchableOpacity onPress={()=>this.slotPressed(item.time)}>
+                                        <Slot time={item.time} isPressed ={this.state.pressedSlot} />
                                     </TouchableOpacity>
                                     );
                             }}
                         />
+                        <Text></Text>
+                        
+                        <Text>{console.log(this.state.selectedDate)}{console.log(this.state.pressedSlot)}</Text>
                         </View>
 
 
