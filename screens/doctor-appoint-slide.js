@@ -8,24 +8,45 @@ import SpeCompo from '../components/doctorComponents/speCompo';
 import Slot from '../components/doctorComponents/slot';
 import PatientInfoSlide from '../screens/patientInfo-slide';
 import colors from '../Colors';
-
+import Fire from '../Fire';
 
 
 export default class DoctorAppointSlide extends React.Component {
+
+     
 
     state={
         selectedDate: moment(new Date()).format('DD-MM-YYYY'),
         pressedSlot : '',
         showListVisible:false,
-        slotsData: '',
+        consultations :[],
+        filteredCons :[],
+        user: {},
+        loading: true,
+        pressedSlots:[],
+        SlotsData:[],
+        availableSlots:[],
     }
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
+        this.setState({availableSlots: SlotsData});
       } 
       onDateSelected = date => {
-        this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), pressedSlot:'', SlotsData:SlotsData});
-        //console.log(this.state.selectedDate);
+          console.log("zabi1");
+        this.setState({availableSlots:SlotsData});
+        var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
+        console.log("zabi2");
+        var newCons = this.state.consultations.filter( function(el) { return el.date === formatedDate } );
+        this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), SlotsData:SlotsData});
+        console.log("khalina ntestiw wach t3tina hadi? " + moment(date).format('DD-MM-YYYY'));
+        this.setState({ filteredCons : newCons });
+        console.log("filtredCons:", newCons);
+        this.showContent(newCons);
+        console.log("zabi3");
+        this.setState({pressedSlot:''});
+        
+
     }   
 
     slotPressed= slot =>{
@@ -38,12 +59,49 @@ export default class DoctorAppointSlide extends React.Component {
     toggleAddPersonnelModel(){
         this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
     }
+    showContent(newCons){
+        var a = this.state.SlotsData.map(data => data.time);
+        var b = newCons.map( data => data.slot);
+        var c = a.filter(n => !b.includes(n));
+        this.setState({availableSlots:c});
+
+        
+        console.log(a);
+        console.log(b);
+        console.log(c);
+    }
+
+    componentDidMount(){
+        
+        var test = this.props.pers.id.toString();
+
+        firebase = new Fire((error, user)=>{
+            if(error){
+                return alert("Uh no, there is something went wrong");
+            }
+            firebase.getConsultations(consultations=>{
+                            
+                this.setState({consultations, user}, () => {
+                    this.setState({loading:false});
+                    var newCons = this.state.consultations.filter( function(el) { return el.doctorID === test } );
+                    this.setState({ consultations : newCons });
+                    //this.state.consultations = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
+                });
+            });
+            this.setState({user});
+
+            this.setState({user});
+            console.log(user.uid);
+        });
+
+
+            
+      }
 
 
 
     render(){
         var startDate = new Date("2023-01-01");
-        
         var selectedDate = new Date();
         var endDate = new Date("2023-04-02");
         var datesWhitelist = [
@@ -56,6 +114,9 @@ export default class DoctorAppointSlide extends React.Component {
               end: endDate
             }
           ];
+          
+        
+          
           
         return (
             <View style={styles.container}>
@@ -105,7 +166,7 @@ export default class DoctorAppointSlide extends React.Component {
                     />
                     </View>
                     <View style={{marginHorizontal:20, marginVertical:10}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Slots</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Available Slots</Text>
                         
                         
                     </View>
@@ -113,20 +174,20 @@ export default class DoctorAppointSlide extends React.Component {
 
                     <View style={{ flexDirection:'column', paddingHorizontal:6,}} >
                         <FlatList 
-                            data={this.state.SlotsData}
-                            keyExtractor={(item) => item.id} 
+                            data={this.state.availableSlots}
+                            keyExtractor={(item) => item.toString()} 
                             numColumns={4}
                             renderItem={({ item })=>{
                                 return(
-                                    <TouchableOpacity onPress={()=>this.slotPressed(item.time)}>
-                                        <Slot time={item.time} isPressed ={this.state.pressedSlot} />
+                                    <TouchableOpacity onPress={()=>this.slotPressed(item.toString())}>
+                                        <Slot time={item.toString()} isPressed ={this.state.pressedSlot} />
                                     </TouchableOpacity>
                                     );
                             }}
                         />
                         <Text></Text>
                         
-                        <Text>{console.log(this.state.selectedDate)}{console.log(this.state.pressedSlot)}</Text>
+                       
                     </View>
 
 
@@ -140,13 +201,16 @@ export default class DoctorAppointSlide extends React.Component {
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
                                         <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
+                                        <Text> {console.log("start")} </Text>
+                                        <Text> {console.log("end")} </Text>
+                                        
                                     </View>
                                 </View>
                             </TouchableOpacity>
                         </View>
                     </View>
                 </View>
-                
+
             </View>
         )
     }

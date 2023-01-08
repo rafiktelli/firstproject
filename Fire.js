@@ -79,6 +79,20 @@ class Fire{
         });
     }
 
+    getConsultations(callback){
+        let ref = this.refCons;
+        this.unsubscribe = ref.onSnapshot(snapshot => {
+            consultations = [];
+
+            snapshot.forEach(doc => {
+                consultations.push({ id: doc.id, ...doc.data() });
+                
+            });
+            callback(consultations);
+        });
+
+    }
+
     
 
 
