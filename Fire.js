@@ -86,6 +86,11 @@ class Fire{
         let refPers = this.refPers;
         refPers.add(personnel);
     }
+
+    addConsultation(consultation){
+        let refCons = this.refCons;
+        refCons.add(consultation);
+    }
     
     // {REQUESTS} ------------------------------
 
@@ -106,6 +111,13 @@ class Fire{
             .collection("users")
             .doc(this.userId)
             .collection("personnels");
+    }
+    get refCons(){
+        return firebase  
+            .firestore()
+            .collection("users")
+            .doc(this.userId)
+            .collection("consultations");
     }
 
     detach(){

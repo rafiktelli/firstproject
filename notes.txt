@@ -38,3 +38,6 @@
                     }); 
 
   onChangeText={text => this.setState({ profession: text })}
+
+
+  alert(this.props.pers.nom + this.state.pressedSlot + " " + this.state.selectedDate)

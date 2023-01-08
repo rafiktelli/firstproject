@@ -1,19 +1,22 @@
 import React,{useState, useRef} from 'react'
-import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList, Modal } from 'react-native';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
 import SlotsData from '../myData';
 import SpeCompo from '../components/doctorComponents/speCompo';
 import Slot from '../components/doctorComponents/slot';
+import PatientInfoSlide from '../screens/patientInfo-slide';
+import colors from '../Colors';
 
 
 
 export default class DoctorAppointSlide extends React.Component {
 
     state={
-        selectedDate: new Date(),
+        selectedDate: moment(new Date()).format('DD-MM-YYYY'),
         pressedSlot : '',
+        showListVisible:false,
     }
     constructor(props) {
         super(props);
@@ -27,6 +30,9 @@ export default class DoctorAppointSlide extends React.Component {
     slotPressed= slot =>{
         
         this.setState({pressedSlot : slot, });
+    }
+    toggleListModal(){
+        this.setState({showListVisible: !this.state.showListVisible})
     }
 
 
@@ -50,6 +56,11 @@ export default class DoctorAppointSlide extends React.Component {
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
+                
+                <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
+                    <PatientInfoSlide pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
+                </Modal>
+                
                 <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
                         <AntDesign  name="close" size={24} color={colors.black} />
                 </TouchableOpacity>
@@ -118,7 +129,7 @@ export default class DoctorAppointSlide extends React.Component {
                     </View>
                     <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
-                            <TouchableOpacity onPress={()=>alert(this.props.pers.nom + this.state.pressedSlot + " " + this.state.selectedDate)}>
+                            <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
