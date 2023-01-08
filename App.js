@@ -10,6 +10,7 @@ import TodoListsScreen from './screens/todolists-sceen';
 import AppointmentScreen from './screens/appointment-screen';
 import AddPersonnelSlide from './screens/addpersonnel-slide';
 import DoctorAppointSlide from './screens/doctor-appoint-slide';
+import AssignTaskScreen from './screens/assignTask-screen';
 import ManageStaff from './screens/manage-staff';
 import { createStackNavigator } from '@react-navigation/stack'; //Insert screens into a stack
 import { NavigationContainer } from '@react-navigation/native'; //contains navigator and screen
@@ -30,7 +31,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name = "Welcome"
-        component={WelcomeScreen}
+        component={MainScreen}
         options={{headerShown: false}}
 
          />
@@ -68,6 +69,11 @@ export default function App() {
          name="Take an Appointment"
          component={DoctorAppointSlide}
          options={{headerShown: true}}
+         />
+         <Stack.Screen
+         name="Assign Task"
+         component={AssignTaskScreen}
+         options={{headerShown: false}}
          />
       </Stack.Navigator>
     </NavigationContainer>

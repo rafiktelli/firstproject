@@ -12,7 +12,7 @@ import Fire from '../Fire';
 import DoctorBar from '../components/doctorComponents/doctorBar';
 import SpeCompo from '../components/doctorComponents/speCompo';
 
-export default class AppointmentScreen extends React.Component {
+export default class AssignTaskScreen extends React.Component {
     state={
         personnels : [],
         doctors : [],
@@ -36,7 +36,7 @@ export default class AppointmentScreen extends React.Component {
                 
                 this.setState({personnels, user}, () => {
                     this.setState({loading:false});
-                    this.state.doctors = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
+                    this.state.doctors = this.state.personnels.filter( function(el) { return el.profession === "Aide-Soignant"; } );
                     this.state.filtered = this.state.doctors;
                     this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
                     
@@ -91,7 +91,7 @@ export default class AppointmentScreen extends React.Component {
 
     renderDoctors = pers =>{
         
-        return( <DoctorBar med={true} pers={pers} /> );
+        return( <DoctorBar med={false} pers={pers} /> );
     }
     searchDoc(textToSearch){
         this.setState({spec: ''});
@@ -124,7 +124,8 @@ export default class AppointmentScreen extends React.Component {
                 <View style={{ marginLeft:20,  }}>
                     <View style={{height:75,  }} />
                     <View style={{}}>
-                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Doctor Appointment</Text>
+                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Assign Tasks</Text>
+                        
                     </View>
                     <View style={{flexDirection:'row', marginTop: 20, marginBottom: 25 }}>
                         <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
@@ -135,27 +136,9 @@ export default class AppointmentScreen extends React.Component {
                             <Ionicons name="search" size={24} color={'#FFF'}  />
                         </TouchableOpacity>
                     </View>
-                    <View style={{marginBottom:20}}>
-                        <Text style={{fontWeight:'900', fontSize:20}}>Categories</Text>
-                    </View>
-                    <View >
-                        <ScrollView horizontal={true} keyboardShouldPersistTaps='always' showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:120, flexDirection:'row'}}>
-                        <FlatList 
-                            data={this.state.spec}
-                            keyExtractor={(item) => item.toString()} 
-                            numColumns={12}
-                            renderItem={({ item })=>{
-                                return(
-                                    <TouchableOpacity onPress={()=>this.catPressed(item.toString())}>
-                                      <SpeCompo name={item.toString()} isPressed ={this.state.pressedCategory}  />  
-                                    </TouchableOpacity>
-                                    );
-                            }}
-                        />
-                        </ScrollView>
-                    </View>
+
                     <View style={{marginVertical:10,  }}>
-                        <Text style={{fontWeight:'900', fontSize:20}}>Doctors</Text>
+                        <Text style={{fontWeight:'900', fontSize:20}}>Aides-Soignants</Text>
                     </View>
                     <View style={{  }}>
                         <ScrollView keyboardShouldPersistTaps='always' style={{backgroundColor:'#fff'}} 

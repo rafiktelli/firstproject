@@ -11,7 +11,7 @@ import colors from '../Colors';
 import Fire from '../Fire';
 
 
-export default class DoctorAppointSlide extends React.Component {
+export default class AssignSlide extends React.Component {
 
      
 
@@ -130,15 +130,17 @@ export default class DoctorAppointSlide extends React.Component {
                         <AntDesign  name="close" size={24} color={colors.black} />
                 </TouchableOpacity>
 
-                <View style={{ backgroundColor:'',  height:260, marginBottom:10, paddingTop:50, flexDirection:'column', alignItems:'center', justifyContent:'center', }}>
-                    <View>
-                        <Image style={{width:130, height:130, borderRadius:25,  }} source={require('../assets/doctor-female.jpg')}  />
+                <View style={{ paddingVertical:30, paddingHorizontal:10, backgroundColor:'#FFF', alignItems:'center', height:160,  paddingTop:50, flexDirection:'row',  borderBottomLeftRadius:40, borderBottomRightRadius:40 }}>
+                    <View style={{alignItems:'flex-end', paddingRight:10}} >
+                        <Image style={{width:80, height:80, borderRadius:25,  }} source={require('../assets/doctor-female.jpg')}  />
                     </View>
-                    <Text style={styles.persName}>{this.props.pers.speciality} </Text>
-                    <Text style={styles.persSpec}>Dr.{this.props.pers.nom}</Text>
+                    <View style={{flexDirection:'column'}}>
+                        <Text style={styles.persName}>{this.props.pers.profession} </Text>
+                        <Text style={styles.persSpec}>{this.props.pers.nom}</Text>
+                    </View>
                 </View>
-                <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:20 }}>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
+                <View style={{backgroundColor:'#f8f4f4',flex:1,  paddingVertical:20 }}>
+                    <View style={{marginHorizontal:20, marginBottom:10}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
                     </View>
                     <View style={{ }}>
@@ -165,11 +167,7 @@ export default class DoctorAppointSlide extends React.Component {
                         
                     />
                     </View>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Available Slots</Text>
-                        
-                        
-                    </View>
+                    
                     <View style={{}}>
 
                     <View style={{ flexDirection:'column', paddingHorizontal:6}} >
@@ -192,24 +190,15 @@ export default class DoctorAppointSlide extends React.Component {
 
 
                     </View>
-                    <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
-                        <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
-                            <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
-                                <View style={{flexDirection:'row'}}>
-                                    <View >
-                                        <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
-                                    </View>
-                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
-                                        <Text> {console.log("start")} </Text>
-                                        <Text> {console.log("end")} </Text>
-                                        
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
+                    
                 </View>
+
+                <View style={[styles.section, styles.footer]} >
+                        <TextInput  style={styles.input} list placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
+                        <TouchableOpacity style={[styles.addTodo, {backgroundColor:colors.blue}]} onPress={()=>this.addTodo()} >
+                            <AntDesign name="plus" size={16} color={colors.white} />
+                        </TouchableOpacity>
+                    </View>
 
             </View>
         )
@@ -219,19 +208,47 @@ export default class DoctorAppointSlide extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#f8f4f4',
       },
       persName:{
-            paddingTop: 10,
+            
             fontSize: 18,
             fontWeight: '400',
       },
       persSpec:{
-        paddingTop: 5,
         fontSize: 18,
-        fontWeight: '400',
         fontWeight:'500',
       },
+      section:{
+        paddingTop:16,
+        alignSelf: "stretch"
+
+    },
+    footer:{
+            paddingHorizontal:16,
+            flexDirection: "row",
+            alignItems:"center",
+            paddingVertical: 16
+
+        },
+    input:{
+            height : 50,
+            flex:1,
+            borderRadius: 15,
+            marginRight: 8,
+            paddingHorizontal: 18,
+            borderRadius:10, 
+            borderWidth: 1,
+            backgroundColor:'#FFF',
+            borderColor:'#FFF',
+        },
+    addTodo:{ 
+            height:50,
+            width: 50,
+            alignItems:"center",
+            justifyContent: 'center',
+            borderRadius: 10,
+        },
 
 
 })
