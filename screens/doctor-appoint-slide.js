@@ -60,7 +60,7 @@ export default class DoctorAppointSlide extends React.Component {
         this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
     }
     showContent(newCons){
-        var a = this.state.SlotsData.map(data => data.time);
+        var a = SlotsData.map(data => data.time);
         var b = newCons.map( data => data.slot);
         var c = a.filter(n => !b.includes(n));
         this.setState({availableSlots:c});
