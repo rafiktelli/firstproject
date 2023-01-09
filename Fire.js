@@ -50,14 +50,15 @@ class Fire{
                 
             });
             callback(lists);
+            
         });
     }
 
     addList(list){
         let ref = this.ref;
-
         ref.add(list);
-    }
+        console.log(list);
+    } 
 
     updateList(list){
         let ref = this.ref;

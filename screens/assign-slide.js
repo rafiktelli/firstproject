@@ -9,6 +9,7 @@ import colors from '../Colors';
 import Fire from '../Fire';
 
 
+
 export default class AssignSlide extends React.Component {
         
      
@@ -33,8 +34,8 @@ export default class AssignSlide extends React.Component {
 
       componentDidMount(){
         
+        this.getLists();
         var test = this.props.pers.id.toString();
-
         firebase = new Fire((error, user)=>{
             if(error){
                 return alert("Uh no, there is something went wrong");
@@ -45,14 +46,15 @@ export default class AssignSlide extends React.Component {
                     this.setState({loading:false});
                     var newCons = this.state.consultations.filter( function(el) { return el.doctorID === test } );
                     this.setState({ consultations : newCons });
-                    //this.state.consultations = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
                 });
             });
+
+            
+
             this.setState({user});
 
             this.setState({user});
             console.log(user.uid);
-            this.getLists();
         });
 
 
@@ -61,20 +63,57 @@ export default class AssignSlide extends React.Component {
 
 
       onDateSelected = date => {
+        
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var id = this.props.pers.id;
         //console.log(this.state.lists);
         var list = this.state.lists.filter( function(el){ return (el.persID === id && el.date === formatedDate) })[0];
-         
+       
+        if(list === undefined){
+            this.addList(formatedDate);
+            this.setState({persDateList:{persID: this.props.pers.id, date : formatedDate, todos: [] }}) ;
+        }
+        else{
+           
+            
         this.setState({persDateList:list});
+        }
+
+
 
     }
     addList = date =>{
-        firebase.addList({
-            persID: this.props.pers.id,
-            date : date,
-            todos: []
+        this.setState({persDateList:{ persID: this.props.pers.id, date : date, todos: [] }});
+        firebase = new Fire((error, user)=>{
+            if(error){
+                return alert("Uh no, there is something went wrong");
+            }
+
+            firebase.addList({
+                persID: this.props.pers.id,
+                date : date,
+                todos: []
+            });
+            firebase.getLists(lists=>{
+                this.setState({lists, user}, () => {
+                    this.setState({loading:false});
+                    var id = this.props.pers.id;
+                    //var myLists = lists.filter( function(el) { return el.date === "19-01-2023"  } );
+                    //console.log(myLists);
+                    this.setState({ lists : lists });
+                    var ok = lists.filter( function(el){ return (el.persID === id && el.date === date) })[0];
+                    console.log("la mo2akhda");
+                    console.log(ok);
+                    this.setState({persDateList:ok});
+                    console.log("end la mo2akhda");
+                    this.setState({ lists : lists });
+                    
+                });
+            });
+
+            this.componentDidMount();
         });
+        
      }
      updateList = list => {
         
@@ -105,17 +144,14 @@ export default class AssignSlide extends React.Component {
     }
     toggleTodoCompleted = index =>{
         let list = this.state.persDateList;
-        console.log(list);
+        //console.log(list);
         list.todos[index].completed = !list.todos[index].completed;
         this.updateList(list);
     };
  
         
 
-    slotPressed= slot =>{
-        
-        this.setState({pressedSlot : slot, });
-    }
+
     toggleListModal(){
         this.setState({showListVisible: !this.state.showListVisible})
     }
@@ -134,7 +170,6 @@ export default class AssignSlide extends React.Component {
                     <Ionicons name= {todo.completed? "checkbox-outline":"ios-square-outline"}  size={24} color={todo.completed? colors.gray:colors.gray} style={{width:32}} />
                 </TouchableOpacity>
                 <Text style={[styles.todo, { textDecorationLine: todo.completed? 'line-through': 'none', color: todo.completed ? colors.gray:colors.black} ]}>{todo.title}</Text>
-                <Text>{console.log(todo.title)}</Text>
             </View>
             </Swipeable>
             </GestureHandlerRootView>
@@ -142,9 +177,7 @@ export default class AssignSlide extends React.Component {
         )
     };
 
-    showContent(newCons){
 
-    }
     rightActions = (dragX, index) => {
         const scale =  dragX.interpolate({
             inputRange:[-100,0],
@@ -174,6 +207,8 @@ export default class AssignSlide extends React.Component {
     }
 
     addTodo=()=>{
+        this.getLists();
+        this.getLists();
         let list = this.state.persDateList;
         if(!list.todos.some(todo => todo.title.toLowerCase() === this.state.newTodo.toLowerCase()) && this.state.newTodo!==''  ) {
             
@@ -193,7 +228,7 @@ export default class AssignSlide extends React.Component {
 
     render(){ 
         const persDateList = this.state.persDateList;
-        console.log(persDateList.todos);
+        //console.log(persDateList.todos);
           
         return (
             <View style={styles.container}>
