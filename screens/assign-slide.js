@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList, Modal, Animated } from 'react-native';
+import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList, Modal, Animated, Keyboard } from 'react-native';
 import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import CalendarStrip from 'react-native-calendar-strip';
@@ -22,6 +22,7 @@ export default class AssignSlide extends React.Component {
         loading: true,
         lists:[],
         persDateList:[],
+        newTodo:'',
     }
 
     constructor(props) {
@@ -123,14 +124,14 @@ export default class AssignSlide extends React.Component {
     }
 
     renderTodo = (todo, index) =>{
-        console.log("hollllllllllllllllllllaaaaaaaaaaaaaa");
+        
         return(
             
-            <GestureHandlerRootView>
+            <GestureHandlerRootView style={{marginVertical:3}}>
             <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
             <View style={styles.todoContainer}>
                 <TouchableOpacity onPress={()=>this.toggleTodoCompleted(index)}>
-                    <Ionicons name= {todo.completed? "checkbox-outline":"ios-square-outline"}  size={24} color={todo.completed? colors.gray:colors.blue} style={{width:32}} />
+                    <Ionicons name= {todo.completed? "checkbox-outline":"ios-square-outline"}  size={24} color={todo.completed? colors.gray:colors.gray} style={{width:32}} />
                 </TouchableOpacity>
                 <Text style={[styles.todo, { textDecorationLine: todo.completed? 'line-through': 'none', color: todo.completed ? colors.gray:colors.black} ]}>{todo.title}</Text>
                 <Text>{console.log(todo.title)}</Text>
@@ -160,17 +161,31 @@ export default class AssignSlide extends React.Component {
             <TouchableOpacity onPress={()=>this.deleteTodo(index)}>
                 <Animated.View style={[styles.deleteButton, {opacity: opacity}]} >
                     <Animated.Text style={{color:colors.white, fontWeight:"800", transform:[{scale}]}}>
-                        Delete
+                        <Ionicons name="ios-trash" size={35} color={colors.red} />
                     </Animated.Text>
                 </Animated.View>
             </TouchableOpacity>
         )
     }
     deleteTodo= index =>{
-        let list = this.props.list;
+        let list = this.state.persDateList;
         list.todos.splice(index,1);
-        this.props.updateList(list);
+        this.updateList(list);
     }
+
+    addTodo=()=>{
+        let list = this.state.persDateList;
+        if(!list.todos.some(todo => todo.title.toLowerCase() === this.state.newTodo.toLowerCase()) && this.state.newTodo!==''  ) {
+            
+            list.todos.push({title: this.state.newTodo, completed: false});
+            this.updateList(list);
+            
+        }
+
+        this.setState({newTodo:""});
+
+        Keyboard.dismiss();
+    };
 
     
 
@@ -213,7 +228,7 @@ export default class AssignSlide extends React.Component {
                             borderWidth:1,
                             borderHighlightColor:colors.blue,
                         }}
-                        style={{height:80, paddingTop:10, paddingBottom:10 }}
+                        style={{height:80, paddingTop:10, paddingBottom:10, }}
                         calendarHeaderStyle={{color:'#000'}}
                         calendarColor={'#FFF'}
                         dateNameStyle={{color:'#000'}}
@@ -225,21 +240,26 @@ export default class AssignSlide extends React.Component {
                         />
                     </View>
 
-                    <View style={{flex:1,}}>
-                    <View style={{height:275,}}>
-                        <Text> {console.log(persDateList)} </Text>
+
+                    <View style={{flex:1, }}>
+                    <View style={{marginHorizontal:20, }}>
+                        <Text style={{fontWeight:'500', fontSize:18, paddingVertical:10, }} >Tasks</Text>
+                    </View>
+                    <View style={{flex:1, }}>
+                        <View style={{}}>    
                             <FlatList data={persDateList.todos} 
                             renderItem={({item, index})=> this.renderTodo(item, index) } 
                             keyExtractor={(_, index) => index.toString()}
                             showsVerticalScrollIndicator={false}
                             />
-                            
+                        </View>
                         </View>
                         
                     </View>
                     
                     
                 </View>
+                
                 
 
                 <View style={[styles.section, styles.footer]} >
@@ -308,9 +328,8 @@ const styles = StyleSheet.create({
             paddingVertical:16,
             marginLeft:16,
             marginRight:16,
-            borderColor:colors.blue,
-            borderWidth: 1,
-            
+            borderColor:colors.white,
+            borderWidth: 0,
             paddingLeft:16,
         },
         todo:{
@@ -321,12 +340,12 @@ const styles = StyleSheet.create({
         },
         deleteButton:{
             flex:1,
-            backgroundColor:colors.red,
             justifyContent:"center",
             alignItems:"center",
-            width: 80,
+            width: 50,
             borderRadius: 10,
             marginLeft : -8,
+            
         }
 
 
