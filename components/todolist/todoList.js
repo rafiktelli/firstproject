@@ -44,6 +44,8 @@ export default class TodoList extends Component {
 
 
     renderTodo = (todo, index) =>{
+        console.log("hollllllllllllllllllllaaaaaaaaaaaaaa");
+        console.log(todo);
         return(
             
             <GestureHandlerRootView>
@@ -103,7 +105,7 @@ export default class TodoList extends Component {
                             </Text>
                         </View>                        
                     </View>
-                    
+                    <Text>{console.log(list)}</Text>
                     <View style={[styles.section, {flex:3, marginVertical:62}]}>
                         <FlatList data={list.todos} 
                         renderItem={({item, index})=> this.renderTodo(item, index) } 

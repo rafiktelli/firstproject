@@ -38,7 +38,7 @@ class Fire{
     }
     // LISTS ---------------------------------------------
     getLists(callback){
-        let ref = this.ref.orderBy("name");
+        let ref = this.ref;
 
         this.unsubscribe = ref.onSnapshot(snapshot => {
             lists = [];
@@ -63,6 +63,7 @@ class Fire{
         let ref = this.ref;
         ref.doc(list.id).update(list);
     }
+    
 
     // PERSONNEL ---------------------------------
     getPersonnels(callback){
@@ -117,7 +118,7 @@ class Fire{
             .firestore()
             .collection("users")
             .doc(this.userId)
-            .collection("lists");
+            .collection("tasks");
     }
     get refPers(){
         return firebase 
