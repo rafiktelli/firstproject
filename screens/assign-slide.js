@@ -1,5 +1,6 @@
 import React,{useState} from 'react'
-import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList, Modal, GestureHandlerRootView, Swipeable } from 'react-native';
+import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions, FlatList, Modal, Animated } from 'react-native';
+import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
@@ -126,6 +127,7 @@ export default class AssignSlide extends React.Component {
         return(
             
             <GestureHandlerRootView>
+            <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
             <View style={styles.todoContainer}>
                 <TouchableOpacity onPress={()=>this.toggleTodoCompleted(index)}>
                     <Ionicons name= {todo.completed? "checkbox-outline":"ios-square-outline"}  size={24} color={todo.completed? colors.gray:colors.blue} style={{width:32}} />
@@ -133,6 +135,7 @@ export default class AssignSlide extends React.Component {
                 <Text style={[styles.todo, { textDecorationLine: todo.completed? 'line-through': 'none', color: todo.completed ? colors.gray:colors.black} ]}>{todo.title}</Text>
                 <Text>{console.log(todo.title)}</Text>
             </View>
+            </Swipeable>
             </GestureHandlerRootView>
         
         )
@@ -140,6 +143,33 @@ export default class AssignSlide extends React.Component {
 
     showContent(newCons){
 
+    }
+    rightActions = (dragX, index) => {
+        const scale =  dragX.interpolate({
+            inputRange:[-100,0],
+            outputRange:[1, 0.9],
+            extrapolate: "clamp"
+        });
+        const opacity = dragX.interpolate({
+            inputRange:[-100, -20, 0],
+            outputRange:[1, 0.8,0],
+            extrapolate:"clamp"
+        });
+        return(
+
+            <TouchableOpacity onPress={()=>this.deleteTodo(index)}>
+                <Animated.View style={[styles.deleteButton, {opacity: opacity}]} >
+                    <Animated.Text style={{color:colors.white, fontWeight:"800", transform:[{scale}]}}>
+                        Delete
+                    </Animated.Text>
+                </Animated.View>
+            </TouchableOpacity>
+        )
+    }
+    deleteTodo= index =>{
+        let list = this.props.list;
+        list.todos.splice(index,1);
+        this.props.updateList(list);
     }
 
     
@@ -196,7 +226,7 @@ export default class AssignSlide extends React.Component {
                     </View>
 
                     <View style={{flex:1,}}>
-                    <View style={{height:275, paddingLeft: 32}}>
+                    <View style={{height:275,}}>
                         <Text> {console.log(persDateList)} </Text>
                             <FlatList data={persDateList.todos} 
                             renderItem={({item, index})=> this.renderTodo(item, index) } 
@@ -289,6 +319,15 @@ const styles = StyleSheet.create({
             fontWeight: "500",
             fontSize: 16,
         },
+        deleteButton:{
+            flex:1,
+            backgroundColor:colors.red,
+            justifyContent:"center",
+            alignItems:"center",
+            width: 80,
+            borderRadius: 10,
+            marginLeft : -8,
+        }
 
 
 })
