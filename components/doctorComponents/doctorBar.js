@@ -36,6 +36,7 @@ export default class DoctorBar extends React.Component {
   render() {
     const pers = this.props.pers;
     const med = this.props.med;
+    console.log(med);
     return (
         <View>
             <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={(med)=>this.toggleListModal()}>

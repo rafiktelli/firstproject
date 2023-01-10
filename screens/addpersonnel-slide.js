@@ -7,8 +7,6 @@ import Dropdown from "../components/todolist/dropDown";
 
 
 
-const countries = ["Egypt", "Canada", "Australia", "Ireland"]
-
 
 export default class AddPersonnelSlide extends React.Component {
 

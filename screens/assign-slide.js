@@ -113,9 +113,7 @@ export default class AssignSlide extends React.Component {
                 }       
 
             firebase.getLists(lists=>{
-                console.log("zaaabi");
-                console.log(lists)
-                console.log("end zaaabi");
+                console.log("KAMAYA");
                 this.setState({lists, user}, () => {
                     this.setState({loading:false});
                     //this.state.filtered = this.state.doctors;

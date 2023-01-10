@@ -19,7 +19,7 @@ export default Dropdown = (props) => {
         {title: 'Chirurgien', cities: [{title: 'Chirurgien général'}, {title: 'Chirurgien cardio-vasculaire'}, {title: 'Chirurgien urologue'}, {title: 'Chirurgien  infantile'}, {title: 'Neurochirurgien'}]},
         {title: 'Medecin', cities: [{title: 'Générale'}, {title: 'Pédiatrie'}, , {title: 'Cardio'}, {title: 'Dermato'}, {title: 'ORL'}, {title: 'Gastro'}, {title: 'Hémato'}, {title: 'Ophtalmo'}, {title: 'Radio'}]},
         {title: 'Infirmier', cities: [{title: 'Soins infirmiers généralistes'}, {title: 'Infirmier Anesthésiste'}, {title: 'Infirmière de Bloc Opératoire'}, {title: 'Infirmier Puéricultrice'}]},
-        {title: 'Aide soins',cities:[{}]}
+        {title: 'Aide-Soignant',cities:[{}]}
     ]);
     }, 1000);
   }, []);
