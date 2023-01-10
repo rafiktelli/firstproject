@@ -113,22 +113,24 @@ export default class AssignSlide extends React.Component {
                 }       
 
             firebase.getLists(lists=>{
-                
+                console.log("zaaabi");
+                console.log(lists)
+                console.log("end zaaabi");
                 this.setState({lists, user}, () => {
                     this.setState({loading:false});
                     //this.state.filtered = this.state.doctors;
                    // this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
-
-                   var idx = this.props.pers.id;
-            var list = lists.filter( function(el){ return (el.persID === idx && el.date === date ) });
-
-            this.setState({ persDateList: list[0] }, () => {
-                console.log('we are inside the addList');
-                console.log(list[0]);
-            });
-                
+                    this.componentWillUnmount();
             
-            
+              });
+
+     
+              var idx = this.props.pers.id;
+              var list = lists.filter( function(el){ return (el.persID === idx && el.date === date ) });
+  
+              this.setState({ persDateList: list[0] }, () => {
+                  console.log('we are inside the addList');
+                  console.log(list[0]);
               });
      
      
@@ -136,9 +138,9 @@ export default class AssignSlide extends React.Component {
      
      
      
-     
         }
-        )})}
+        )})
+    }
      updateList = list => {
         
         firebase.updateList(list);

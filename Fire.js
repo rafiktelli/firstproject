@@ -37,25 +37,7 @@ class Fire{
         });
     }
     // LISTS ---------------------------------------------
-    getLists(callback){
-        let ref = this.ref;
-
-        this.unsubscribe = ref.onSnapshot(snapshot => {
-            lists = [];
-            
-            
-
-            snapshot.forEach(doc => {
-                lists.push({ id: doc.id, ...doc.data() });
-                
-            });
-            //console.log("these are lists inside FIREBASE");
-            //console.log(lists);
-            callback(lists);
-            
-            
-        });
-    }
+    
 
     addList(list){
         let ref = this.ref;
@@ -97,6 +79,27 @@ class Fire{
             callback(consultations);
         });
 
+    }
+    
+    getLists(callback){
+        let ref = this.ref;
+
+        this.unsubscribe = ref.onSnapshot(snapshot => {
+            lists = [];
+            
+            
+
+            snapshot.forEach(doc => {
+                lists.push({ id: doc.id, ...doc.data() });
+
+                
+            });
+            //console.log("these are lists inside FIREBASE");
+            //console.log(lists);
+            callback(lists);
+            
+            
+        });
     }
 
     
