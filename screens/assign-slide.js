@@ -7,6 +7,7 @@ import moment from 'moment';
 import colors from '../Colors';
 import Fire from '../Fire';
 import PatientInfoSlide from './patientInfo-slide';
+import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStack';
 
 
 
@@ -49,16 +50,13 @@ export default class AssignSlide extends React.Component {
 
                    var idx = this.props.pers.id;
             var persLists = lists.filter( function(el){ return (el.persID === idx ) });
-            console.log("this is the persList variable");
-            console.log(persLists);
             this.setState({ persLists: persLists }, () => {
-                console.log("in compenent will Mount, this is the persList");
-                    
+            
+
                 });
                 
             this.setState({user});
             
-                //console.log(this.state.persLists);
             });
             
               });
@@ -73,41 +71,32 @@ export default class AssignSlide extends React.Component {
 
       onDateSelected = date => {
         
-        console.log("i entered to onDateSelected ");
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var list = [];
         var list1 ={};
         list = this.state.persLists.filter( function(el){ return (el.date === formatedDate) });
         list1 = list[0];
-        //console.log(this.state.persLists);
         if(list.length === 0 ){
-            console.log("helllll");
             this.addList(formatedDate);
         }
         else{
             this.setState({ persDateList: list1 }, () => {
-                //console.log(this.state.persDateList);
               });
 
         }
 
     }
     addList = date =>{
-        console.log("we are here");
         this.setState({persDateList:[]});
         var id = this.props.pers.id;
         firebase = new Fire((error, user)=>{
             // if(error){ return alert("Uh no, there is something went wrong"); }
           
             firebase.addList({ persID: id, date : date, todos: []});    
-            console.log("FIKA");
-            console.log({ persID: id, date : date, todos: []});
         });
         var list = this.state.persLists.filter( function(el){ return (el.date === date) });
         var list1 = list[0];
         this.setState({ persDateList: list }, () => {
-            console.log("inside the addList in the end");
-            console.log(list1);
           });
         
 
@@ -115,10 +104,41 @@ export default class AssignSlide extends React.Component {
           var idx = this.props.pers.id;
           var persLists = lists.filter( function(el){ return (el.persID === idx ) });
           this.setState({ persLists: persLists }, () => {
-              console.log(this.state.persLists);
             });
         
-     }
+
+            firebase = new Fire((error, user)=>{
+                if(error){
+                    return alert("Uh no, there is something went wrong");
+                }       
+
+            firebase.getLists(lists=>{
+                
+                this.setState({lists, user}, () => {
+                    this.setState({loading:false});
+                    //this.state.filtered = this.state.doctors;
+                   // this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
+
+                   var idx = this.props.pers.id;
+            var list = lists.filter( function(el){ return (el.persID === idx && el.date === date ) });
+
+            this.setState({ persDateList: list[0] }, () => {
+                console.log('we are inside the addList');
+                console.log(list[0]);
+            });
+                
+            
+            
+              });
+     
+     
+     
+     
+     
+     
+     
+        }
+        )})}
      updateList = list => {
         
         firebase.updateList(list);
@@ -126,7 +146,6 @@ export default class AssignSlide extends React.Component {
      
     toggleTodoCompleted = index =>{
         let list = this.state.persDateList;
-        //console.log(list);
         list.todos[index].completed = !list.todos[index].completed;
         this.updateList(list);
     };
@@ -274,8 +293,7 @@ export default class AssignSlide extends React.Component {
                     
                 </View>
                 
-                
-
+               
                 <View style={[styles.section, styles.footer]} >
                         <TextInput  style={styles.input} list placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
                         <TouchableOpacity style={[styles.addTodo, {backgroundColor:colors.blue}]} onPress={()=>this.addTodo()} >
