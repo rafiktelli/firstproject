@@ -7,6 +7,7 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Fire from '../../Fire';
 import DoctorAppointSlide from '../../screens/doctor-appoint-slide';
 import AssignSlide from '../../screens/assign-slide';
+import AssignSlide2 from '../../screens/assign-slide';
 import RBSheet from "react-native-raw-bottom-sheet";
 import BottomSheet from "../../components/doctorComponents/bottomSheet";
 

@@ -49,7 +49,10 @@ class Fire{
                 lists.push({ id: doc.id, ...doc.data() });
                 
             });
+            //console.log("these are lists inside FIREBASE");
+            //console.log(lists);
             callback(lists);
+            
             
         });
     }
@@ -57,7 +60,8 @@ class Fire{
     addList(list){
         let ref = this.ref;
         ref.add(list);
-        console.log(list);
+        //console.log("added list");
+        //console.log(list);
     } 
 
     updateList(list){

@@ -4,9 +4,9 @@ import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 import {AntDesign, Ionicons} from '@expo/vector-icons';
 import CalendarStrip from 'react-native-calendar-strip';
 import moment from 'moment';
+import PatientInfoSlide from './patientInfo-slide';
 import colors from '../Colors';
 import Fire from '../Fire';
-import PatientInfoSlide from './patientInfo-slide';
 
 
 
@@ -24,7 +24,6 @@ export default class AssignSlide extends React.Component {
         lists:[],
         persDateList:[],
         newTodo:'',
-        persLists:[],
     }
 
     constructor(props) {
@@ -32,91 +31,80 @@ export default class AssignSlide extends React.Component {
         this.myRef = React.createRef();
       } 
 
-    componentWillUnmount(){
-        firebase.detach();
-    }
-    componentDidMount(){
+
+      componentDidMount(){
+        
+        //this.getLists();
+        var test = this.props.pers.id.toString();
         firebase = new Fire((error, user)=>{
             if(error){
                 return alert("Uh no, there is something went wrong");
-            }            
-            firebase.getLists(lists=>{
-                
-                this.setState({lists, user}, () => {
-                    this.setState({loading:false});
-                    //this.state.filtered = this.state.doctors;
-                   // this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
+            }
 
-                   var idx = this.props.pers.id;
-            var persLists = lists.filter( function(el){ return (el.persID === idx ) });
-            console.log("this is the persList variable");
-            console.log(persLists);
-            this.setState({ persLists: persLists }, () => {
-                console.log("in compenent will Mount, this is the persList");
-                    
-                });
-                
+            
+
             this.setState({user});
-            
-                //console.log(this.state.persLists);
-            });
-            
-              });
-            
+
+            this.setState({user});
+            //console.log(user.uid);
         });
-    }
 
+        firebase.getLists(lists=>{
+                
+            this.setState({lists, user}, () => {
+                this.setState({loading:false});
+                this.setState({lists: lists});
+            });
+        });
 
             
-
+      }
 
 
       onDateSelected = date => {
         
-        console.log("i entered to onDateSelected ");
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
-        var list = [];
-        var list1 ={};
-        list = this.state.persLists.filter( function(el){ return (el.date === formatedDate) });
-        list1 = list[0];
-        //console.log(this.state.persLists);
-        if(list.length === 0 ){
-            console.log("helllll");
+        var id = this.props.pers.id;
+        //console.log(this.state.lists);
+        var list = this.state.lists.filter( function(el){ return (el.persID === id && el.date === formatedDate) })[0];
+       
+        if(list === undefined){
             this.addList(formatedDate);
+            //this.setState({persDateList:{persID: this.props.pers.id, date : formatedDate, todos: [] }}) ;
         }
         else{
-            this.setState({ persDateList: list1 }, () => {
-                //console.log(this.state.persDateList);
-              });
-
+           
+            
+        this.setState({persDateList:list});
         }
+
+
 
     }
     addList = date =>{
-        console.log("we are here");
-        this.setState({persDateList:[]});
-        var id = this.props.pers.id;
+        this.setState({persDateList:[]})
         firebase = new Fire((error, user)=>{
-            // if(error){ return alert("Uh no, there is something went wrong"); }
+            if(error){ return alert("Uh no, there is something went wrong"); }
           
-            firebase.addList({ persID: id, date : date, todos: []});    
-            console.log("FIKA");
-            console.log({ persID: id, date : date, todos: []});
-        });
-        var list = this.state.persLists.filter( function(el){ return (el.date === date) });
-        var list1 = list[0];
-        this.setState({ persDateList: list }, () => {
-            console.log("inside the addList in the end");
-            console.log(list1);
-          });
-        
+            firebase.addList({ persID: this.props.pers.id, date : date, todos: []});
 
+            var idx = this.props.pers.id;
+            var dok={};
+            
+            firebase.getLists(lists=>{
+                this.setState({lists}, () => {  
+                    this.setState({loading:false});
+                    dok = lists.filter( function(el){ return (el.persID === idx && el.date === date) })[0];
+                    this.setState({persDateList:dok});                        
+                    console.log("this is lists");
+                    console.log(lists);
+                    console.log("end is lists");
+                });
 
-          var idx = this.props.pers.id;
-          var persLists = lists.filter( function(el){ return (el.persID === idx ) });
-          this.setState({ persLists: persLists }, () => {
-              console.log(this.state.persLists);
+                
+
             });
+        });
         
      }
      updateList = list => {
@@ -131,6 +119,9 @@ export default class AssignSlide extends React.Component {
         this.updateList(list);
     };
  
+        
+
+
     toggleListModal(){
         this.setState({showListVisible: !this.state.showListVisible})
     }
@@ -139,6 +130,7 @@ export default class AssignSlide extends React.Component {
     }
 
     renderTodo = (todo, index) =>{
+        
         return(
             
             <GestureHandlerRootView style={{marginVertical:3}}>
@@ -188,7 +180,6 @@ export default class AssignSlide extends React.Component {
         //this.getLists();
         //this.getLists();
         let list = this.state.persDateList;
-
         if(!list.todos.some(todo => todo.title.toLowerCase() === this.state.newTodo.toLowerCase()) && this.state.newTodo!==''  ) {
             
             list.todos.push({title: this.state.newTodo, completed: false});
@@ -205,11 +196,13 @@ export default class AssignSlide extends React.Component {
 
 
 
-    render(){ 
-
-
+    render(){
+        console.log("these are the lists : ");
+        console.log(this.state.lists); 
         const persDateList = this.state.persDateList;
-       return (
+        //console.log(persDateList.todos);
+          
+        return (
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
