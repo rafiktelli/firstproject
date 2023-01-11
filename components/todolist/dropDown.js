@@ -5,11 +5,12 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const {width} = Dimensions.get('window');
 import SelectDropdown from 'react-native-select-dropdown';
 import Colors from "../../Colors";
+import Fire from "../../Fire";
 
 export default Dropdown = (props) => {
   const [countries, setCountries] = useState([]);
   const [cities, setCities] = useState([]);
-
+  const [medSpec, setMedSpec] = useState([]);
   const citiesDropdownRef = useRef();
   var rafik ="";
   var rafika ="";
@@ -17,7 +18,7 @@ export default Dropdown = (props) => {
     setTimeout(() => {
       setCountries([
         {title: 'Chirurgien', cities: [{title: 'Chirurgien général'}, {title: 'Chirurgien cardio-vasculaire'}, {title: 'Chirurgien urologue'}, {title: 'Chirurgien  infantile'}, {title: 'Neurochirurgien'}]},
-        {title: 'Medecin', cities: [{title: 'Générale'}, {title: 'Pédiatrie'}, , {title: 'Cardio'}, {title: 'Dermato'}, {title: 'ORL'}, {title: 'Gastro'}, {title: 'Hémato'}, {title: 'Ophtalmo'}, {title: 'Radio'}]},
+        {title: 'Medecin', cities: [{title: 'Générale'}, {title: 'Dermatologie'}, , {title: 'Anesthésie'}, {title: 'Neurologie'}, {title: 'Ophtalmologie'}, {title: 'Gastro-entérologie'}, {title: 'Gynécologie'}, {title: 'Psychiatrie'}, {title: 'Oto-rhino-laryngologie'}, {title: 'Pédiatrie'}]},
         {title: 'Infirmier', cities: [{title: 'Soins infirmiers généralistes'}, {title: 'Infirmier Anesthésiste'}, {title: 'Infirmière de Bloc Opératoire'}, {title: 'Infirmier Puéricultrice'}]},
         {title: 'Aide-Soignant',cities:[{}]}
     ]);
@@ -35,7 +36,12 @@ const handleSpeciality =()=> {
 
 };
 
-  
+
+
+
+
+
+
 
   return (
     <SafeAreaView>

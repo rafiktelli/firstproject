@@ -11,6 +11,8 @@ import AssignSlide2 from '../../screens/assign-slide';
 import RBSheet from "react-native-raw-bottom-sheet";
 import BottomSheet from "../../components/doctorComponents/bottomSheet";
 
+import ViewDocTasksScreen from '../../screens/viewDocTasks-screen';
+
 
 export default class DoctorBar extends React.Component {
    

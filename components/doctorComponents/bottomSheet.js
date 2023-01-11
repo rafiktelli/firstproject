@@ -7,13 +7,29 @@ import { AntDesign, Ionicons } from "@expo/vector-icons";
 import Fire from '../../Fire';
 import DoctorAppointSlide from '../../screens/doctor-appoint-slide';
 import RBSheet from "react-native-raw-bottom-sheet";
+import ViewDocTasksScreen from '../../screens/viewDocTasks-screen';
 
 export default class BottomSheet extends React.Component {
+
+    state={
+        showListVisible : false,
+    }
+
+    toggleListModal(){
+       this.setState({showListVisible: !this.state.showListVisible});
+       
+       console.log(this.state.showListVisible);
+        
+    
+    }
   render() {
       const windowWidth =  Dimensions.get('window').width;
       const pers = this.props.pers;
     return (
       <View>
+        <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={(med)=>this.toggleListModal()}>
+            <ViewDocTasksScreen pers={pers}  />
+        </Modal>
       <View style={{ }}>
         <View style={styles.top}>
             <View>
@@ -45,7 +61,7 @@ export default class BottomSheet extends React.Component {
         <View>
         {/* Check Schedule and Tasks */}
             <View style={{height:70, justifyContent:'center',  paddingHorizontal:30}}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.toggleListModal()}>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="checkbox-outline" size={24} color={'#5A5A5A'} />
                     <Text style={{fontSize:18, paddingHorizontal:10, fontWeight:'600',  color:'#5A5A5A'}}>Check Schedule and Tasks</Text>

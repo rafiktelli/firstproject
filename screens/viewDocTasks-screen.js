@@ -9,9 +9,10 @@ import Slot from '../components/doctorComponents/slot';
 import PatientInfoSlide from '../screens/patientInfo-slide';
 import colors from '../Colors';
 import Fire from '../Fire';
+import TaskCard from '../components/doctorComponents/taskCard';
 
 
-export default class DoctorAppointSlide extends React.Component {
+export default class ViewDocTasksScreen extends React.Component {
 
      
 
@@ -60,7 +61,8 @@ export default class DoctorAppointSlide extends React.Component {
         var a = SlotsData.map(data => data.time);
         var b = newCons.map( data => data.slot);
         var c = a.filter(n => !b.includes(n));
-        this.setState({availableSlots:c});
+        this.setState({availableSlots:b});
+        this.setState({newCons:newCons});
 
         
         console.log(a);
@@ -118,7 +120,7 @@ export default class DoctorAppointSlide extends React.Component {
           
           
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
                 
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
@@ -129,14 +131,8 @@ export default class DoctorAppointSlide extends React.Component {
                         <AntDesign  name="close" size={24} color={colors.black} />
                 </TouchableOpacity>
 
-                <View style={{ backgroundColor:'',  height:260, marginBottom:10, paddingTop:50, flexDirection:'column', alignItems:'center', justifyContent:'center', }}>
-                    <View>
-                        <Image style={{width:130, height:130, borderRadius:25,  }} source={require('../assets/doctor-female.jpg')}  />
-                    </View>
-                    <Text style={styles.persName}>{this.props.pers.speciality} </Text>
-                    <Text style={styles.persSpec}>Dr.{this.props.pers.nom}</Text>
-                </View>
-                <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:20 }}>
+                
+                <ScrollView style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:20 }}>
                     <View style={{marginHorizontal:20, marginVertical:10}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
                     </View>
@@ -173,14 +169,13 @@ export default class DoctorAppointSlide extends React.Component {
 
                     <View style={{ flexDirection:'column', paddingHorizontal:6}} >
                         <FlatList 
-                            data={this.state.availableSlots}
-                            keyExtractor={(item) => item.toString()} 
-                            numColumns={4}
+                            data={this.state.newCons}
+                            keyExtractor={(item) => item.id} 
                             renderItem={({ item })=>{
                                 return(
-                                    <TouchableOpacity onPress={()=>this.slotPressed(item.toString())}>
-                                        <Slot time={item.toString()} isPressed ={this.state.pressedSlot} />
-                                    </TouchableOpacity>
+                                    <View>
+                                        <TaskCard containerStyle={{backgroundColor: colors.shadyBlue }} name={item.motif} date={item.date} doctor={item.patientID} duration={item.duration} time={item.slot} />
+                                    </View>
                                     );
                             }}
                         />
@@ -191,24 +186,8 @@ export default class DoctorAppointSlide extends React.Component {
 
 
                     </View>
-                    <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
-                        <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
-                            <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
-                                <View style={{flexDirection:'row'}}>
-                                    <View >
-                                        <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
-                                    </View>
-                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
-                                        <Text> {console.log("start")} </Text>
-                                        <Text> {console.log("end")} </Text>
-                                        
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
+                    
+                </ScrollView>
 
             </View>
         )

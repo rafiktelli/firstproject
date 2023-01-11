@@ -26,6 +26,7 @@ export default class AssignSlide extends React.Component {
         persDateList:[],
         newTodo:'',
         persLists:[],
+        toggleAddTodo: true,
     }
 
     constructor(props) {
@@ -85,7 +86,22 @@ export default class AssignSlide extends React.Component {
 
         }
 
+        this.toggleAdd(date);
+
     }
+
+    toggleAdd = date=>{
+        if(date < moment()){
+            this.setState({toggleAddTodo: false})
+        } else {
+            this.setState({toggleAddTodo: true})
+        }
+    }
+
+    datesBlacklistFunc = date => {
+        return date.isoWeekday() === 6; // disable Saturdays
+    }
+
     addList = date =>{
         this.setState({persDateList:[]});
         var id = this.props.pers.id;
@@ -240,7 +256,7 @@ export default class AssignSlide extends React.Component {
 
                 <View style={{ paddingVertical:30, paddingHorizontal:10, backgroundColor:'#FFF', alignItems:'center', height:160,  paddingTop:50, flexDirection:'row',  borderBottomLeftRadius:40, borderBottomRightRadius:40 }}>
                     <View style={{alignItems:'flex-end', paddingRight:10}} >
-                        <Image style={{width:80, height:80, borderRadius:25,  }} source={require('../assets/doctor-female.jpg')}  />
+                        <Image style={{width:80, height:80, borderRadius:25,  }} source={require('../assets/doctor-male.jpg')}  />
                     </View>
                     <View style={{flexDirection:'column'}}>
                         <Text style={styles.persName}>{this.props.pers.profession} </Text>
@@ -268,6 +284,7 @@ export default class AssignSlide extends React.Component {
                         dateNumberStyle={{color:'#000'}}
                         highlightDateNameStyle={{color:'#FFF'}}
                         highlightDateNumberStyle={{color:'#FFF'}}
+                        datesBlacklist={this.datesBlacklistFunc}
                         onDateSelected={async date => this.onDateSelected(date)}
                         iconContainer={{flex:0.1}}
                         />
@@ -294,9 +311,9 @@ export default class AssignSlide extends React.Component {
                 </View>
                 
                
-                <View style={[styles.section, styles.footer]} >
-                        <TextInput  style={styles.input} list placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
-                        <TouchableOpacity style={[styles.addTodo, {backgroundColor:colors.blue}]} onPress={()=>this.addTodo()} >
+                <View style={[styles.section, styles.footer] } >
+                        <TextInput  style={[styles.input, { display: this.state.toggleAddTodo ? 'flex':'none' }]} list placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
+                        <TouchableOpacity style={[styles.addTodo, {backgroundColor:colors.blue, display: this.state.toggleAddTodo ? 'flex':'none' }]} onPress={()=>this.addTodo()} >
                             <AntDesign name="plus" size={16} color={colors.white} />
                         </TouchableOpacity>
                         <Text></Text>

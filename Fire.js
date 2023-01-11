@@ -67,6 +67,20 @@ class Fire{
         });
     }
 
+    getMedecineSpec(callback){
+        let ref = this.refMed.orderBy("short",'desc');
+        this.unsubscribe = ref.onSnapshot(snapshot => {
+            medecineSpec = [];
+
+            snapshot.forEach(doc => {
+                medecineSpec.push({ id: doc.id, ...doc.data() });
+                
+            });
+            callback(medecineSpec);
+        });
+
+    }
+
     getConsultations(callback){
         let ref = this.refCons;
         this.unsubscribe = ref.onSnapshot(snapshot => {
@@ -134,6 +148,13 @@ class Fire{
             .collection("users")
             .doc(this.userId)
             .collection("personnels");
+    }
+    get refMed(){
+        return firebase 
+            .firestore()
+            .collection("users")
+            .doc(this.userId)
+            .collection("specialities");
     }
     get refCons(){
         return firebase  
