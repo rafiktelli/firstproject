@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, Modal,TouchableOpacity, ActivityIndicator, ScrollView, Dimensions} from "react-native";
+import {StyleSheet, Text, View, Image, FlatList, Modal,TouchableOpacity, ActivityIndicator, ScrollView, Dimensions, StatusBar} from "react-native";
 import colors from "../Colors";
 import {AntDesign} from "@expo/vector-icons";
 import TodoListSummary from '../components/todolist/todoList-summary';
@@ -16,6 +16,14 @@ export default class ManageStaff extends React.Component{
         user: {},
         loading: true,
         doctors : [],
+        aides :[],
+        chur: [],
+        inf: [],
+        medVisible: false,
+        chirVisible : false,
+        infVisible: false,
+        aidVisible : false,
+
     };
 
     componentDidMount(){
@@ -27,15 +35,28 @@ export default class ManageStaff extends React.Component{
                 
                 this.setState({personnels, user}, () => {
                     this.setState({loading:false});
-                    this.state.doctors = this.state.personnels;
+                    //this.state.doctors = this.state.personnels;
                     //this.state.filtered = this.state.doctors;
-                   // this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
+                    var doc = this.state.personnels.filter(function(el) {return el.profession === "Medecin"});
+                    var aides = this.state.personnels.filter(function(el) {return el.profession === "Aide-Soignant"});
+                    var chir = this.state.personnels.filter(function(el) {return el.profession === "Chirurgien"});
+                    var inf = this.state.personnels.filter(function(el) {return el.profession === "Infirmier"});
+                    this.setState({doctors: doc});
+                    this.setState({aides: aides});
+                    this.setState({chir: chir});
+                    this.setState({inf: inf});
+                    
+                    // this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
                     
                 });
             });
             this.setState({user});
             console.log(user.uid);
         });
+    }
+
+    togglePers(){
+        this.setState({medVisible: !this.state.medVisible});
     }
 
     componentWillUnmount(){
@@ -77,34 +98,91 @@ export default class ManageStaff extends React.Component{
 
         return(
             <View style={styles.container}>
+            
+
+            
+            
+            <StatusBar barStyle="dark-content" backgroundColor="#fff" /> 
                 <Modal animationType="slide" visible={this.state.addPersonnelVisible} onRequestClose ={()=>this.toggleAddPersonnelModel()}>
                     <AddPersonnelSlide closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
                 </Modal>
-                <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
+
                 
-                <View  style={styles.viewButton}>
-                    <TouchableOpacity style={styles.search} onPress ={()=> this.toggleAddPersonnelModel()}>
-                        <AntDesign name="plus" size={25} color={colors.white} />
-                    </TouchableOpacity>
-                    <Text style={styles.add}> Add Personnel </Text>
-                </View>
+
+
+                <ScrollView  showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='always'>
+                
+                
 
                 <View>
-
-                <View style={{ width: windowWidth, alignItems:'center' }}>
-                        <View>
-                           
+                
+                <View style={{   alignItems:'center' }}>
+                        <View style={{flex: 1, paddingHorizontal:20}} >
+                        <View style={{height:10}}/>
+                        <View style={{}}>
+                            <TouchableOpacity style={styles.specTitle}  onPress={()=>{return this.setState({medVisible: !this.state.medVisible})}} >
+                                <Image style={{height:15, width:15}} source={this.state.medVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
+                                <Text style={styles.text}>Medecins</Text>
+                            </TouchableOpacity>
+                        </View>
+                          <View style={{flex:1, display:this.state.medVisible?'flex':'none', }}>   
                             <FlatList 
+                            style = {{ marginBottom:0, }}
                                 data={this.state.doctors} 
-                                extraData={this.state}
+                                keyExtractor={(item) => item.id.toString()} 
+                                renderItem={ ({item})  => this.renderDoctors(item)}
+                            />
+                        
+                        </View>
+                        <TouchableOpacity style={styles.specTitle} onPress={()=>{return this.setState({chirVisible: !this.state.chirVisible})}}  >
+                            <Image style={{height:15, width:15}} source={this.state.chirVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
+                            <Text style={styles.text}>Chirurgiens</Text>
+                        </TouchableOpacity>
+                        <View style={{flex:1, display:this.state.chirVisible?'flex':'none',}}>
+                            <FlatList 
+                                data={this.state.chir} 
+                                keyExtractor={(item) => item.id.toString()} 
+                                renderItem={ ({item})  => this.renderDoctors(item)}
+                            />
+                            </View>
+                        <TouchableOpacity style={styles.specTitle} onPress={()=>{return this.setState({infVisible: !this.state.infVisible})}}  >
+                            <Image style={{height:15, width:15}} source={this.state.infVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
+                            <Text style={styles.text}>Infirmiers</Text>
+                        </TouchableOpacity>
+                        <View style={{flex:1, display:this.state.infVisible?'flex':'none',}}>
+                            <FlatList 
+                                data={this.state.inf} 
                                 keyExtractor={(item) => item.id.toString()} 
                                 renderItem={ ({item})  => this.renderDoctors(item)}
                             />
                         </View>
-                    </View>
+                        <TouchableOpacity style={styles.specTitle} onPress={()=>{return this.setState({aidVisible: !this.state.aidVisible})}}  >
+                            <Image style={{height:15, width:15}} source={this.state.aidVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
+                            <Text style={styles.text}>Aides-Soignants</Text>
+                        </TouchableOpacity>
+                        <View style={{flex:1, display:this.state.aidVisible?'flex':'none',}}>
+                            <FlatList 
+                                data={this.state.aides} 
+                                keyExtractor={(item) => item.id.toString()} 
+                                renderItem={ ({item})  => this.renderDoctors(item)}
+                            />
+                        </View>
+
+<View style={{height:150}}/>    
+                        </View>
+                                                                
+                </View>
+                
+                <View>
+                
+                
+                </View>
+                
+                    
+                                    
+                                
 
                 </View>
-
 
 
 
@@ -112,6 +190,19 @@ export default class ManageStaff extends React.Component{
 
                 
             </ScrollView>
+            <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={()=> this.props.navigation.navigate("Ajouter un Personnel")} >
+                                <View style={{flexDirection:'row'}}>
+                                    <View >
+                                        <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
+                                    </View>
+                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Add Worker</Text>
+                                        <Text> {console.log("start")} </Text>
+                                        <Text> {console.log("end")} </Text>
+                                        
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
             </View> 
 
         );
@@ -164,6 +255,35 @@ const styles =StyleSheet.create({
         marginVertical:40,
         alignItems:'center',
         
+    },
+    
+buttonView: {
+    backgroundColor:colors.blue, 
+    width:250, 
+    height:80,
+    borderRadius:20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute', //Here is the trick
+    bottom: 50, //Here is the trick
+    backgroundColor: colors.blue,
+    },
+  buttonText: {
+      fontSize: 16, 
+      fontWeight: 'bold', 
+      color: 'white',
+    },
+    text:{
+        fontSize:20,
+        paddingHorizontal:20,
+        paddingVertical:15,
+        fontWeight:'600'
+    },
+    specTitle:{
+         width:windowWidth, 
+         flexDirection:'row',
+          justifyContent:'flex-start',
+           alignItems:'center'
     }
 
 

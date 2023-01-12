@@ -49,7 +49,7 @@ export default class DoctorBar extends React.Component {
             </Modal>
             
         <RBSheet ref={ref => { this.RBSheet = ref;}} height={300} openDuration={150} customStyles={sheetStyles}>
-            <BottomSheet pers={pers} />
+            <BottomSheet med={med} pers={pers} />
         </RBSheet>
            
 
@@ -58,8 +58,8 @@ export default class DoctorBar extends React.Component {
                         <View>
                             <Image source={require('../../assets/default-doctor.png')} style={{width:65, height:65, borderRadius: 15, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
                         </View>
-                        <View  style={{width:220, }}>
-                            <Text style={{ }}>{ med ? pers.speciality: pers.profession}</Text>
+                        <View  style={{width:220, flexDirection:'column', alignItems:'flex-start', }}>
+                            <Text style={{ display: pers.speciality  > "" ? 'flex' : 'none' }}>{ pers.speciality}</Text>
                             <Text style={{ fontSize:15, fontWeight:'700' }}>{med? "Dr.":""}{pers.nom}</Text>
                         </View>
                         <TouchableOpacity style={{ display: this.props.isManage ? 'flex' : 'none',  flex:1, alignItems: 'flex-end', justifyContent:'center',marginHorizontal:10, marginVertical: 10,width:40,}} onPress={() => this.RBSheet.open()}>

@@ -123,6 +123,31 @@ class Fire{
         let refPers = this.refPers;
         refPers.add(personnel);
     }
+    deleteDoctor(personnel){
+        let refPers = this.refPers;
+        let refCons = this.refCons;
+        refPers.doc(personnel.id).delete();
+        var query = refCons.where('doctorID','==', personnel.id);
+        query.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              doc.ref.delete();
+            });
+          });
+        
+    }
+    deleteAide(personnel){
+        let refPers = this.refPers;
+        let refCons = this.refCons;
+        let refTasks = this.refTasks;
+        refPers.doc(personnel.id).delete();
+        var query = refTasks.where('persID','==', personnel.id);
+        query.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              doc.ref.delete();
+            });
+          });
+        
+    }
 
     addConsultation(consultation){
         let refCons = this.refCons;
@@ -162,6 +187,13 @@ class Fire{
             .collection("users")
             .doc(this.userId)
             .collection("consultations");
+    }
+    get refTasks(){
+        return firebase  
+            .firestore()
+            .collection("users")
+            .doc(this.userId)
+            .collection("tasks");
     }
 
     detach(){

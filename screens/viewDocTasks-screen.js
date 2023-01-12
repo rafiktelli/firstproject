@@ -37,6 +37,9 @@ export default class ViewDocTasksScreen extends React.Component {
         this.setState({availableSlots:SlotsData});
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var newCons = this.state.consultations.filter( function(el) { return el.date === formatedDate } );
+        console.log(newCons);
+        newCons.sort(this.GetSortOrder("slot"));     
+        console.log(newCons); 
         this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), SlotsData:SlotsData});
         console.log("khalina ntestiw wach t3tina hadi? " + moment(date).format('DD-MM-YYYY'));
         this.setState({ filteredCons : newCons });
@@ -57,6 +60,16 @@ export default class ViewDocTasksScreen extends React.Component {
     toggleAddPersonnelModel(){
         this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
     }
+    GetSortOrder(prop) {    
+        return function(a, b) {  
+            if (a[prop] > b[prop]) {    
+                return 1;    
+            } else if (a[prop] < b[prop]) {    
+                return -1;    
+            }    
+            return 0;    
+        }    
+    } 
     showContent(newCons){
         var a = SlotsData.map(data => data.time);
         var b = newCons.map( data => data.slot);
@@ -120,9 +133,8 @@ export default class ViewDocTasksScreen extends React.Component {
           
           
         return (
-            <View style={styles.container} >
-                <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
-                
+            <View style={styles.container} >  
+                  
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
                     <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
@@ -132,9 +144,9 @@ export default class ViewDocTasksScreen extends React.Component {
                 </TouchableOpacity>
 
                 
-                <ScrollView style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:20 }}>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
+                <View style={{backgroundColor:'#f8f4f4',flex:1, paddingVertical:20 }}>
+                    <View style={{marginHorizontal:20, marginVertical:10, marginTop: 40}}>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Calendar</Text>
                     </View>
                     <View style={{ }}>
                     <CalendarStrip
@@ -161,20 +173,27 @@ export default class ViewDocTasksScreen extends React.Component {
                     />
                     </View>
                     <View style={{marginHorizontal:20, marginVertical:10}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Available Slots</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Schedule of Dr.{this.props.pers.nom}</Text>
                         
                         
                     </View>
-                    <View style={{}}>
-
+                    <ScrollView style={{}}>
                     <View style={{ flexDirection:'column', paddingHorizontal:6}} >
                         <FlatList 
                             data={this.state.newCons}
                             keyExtractor={(item) => item.id} 
                             renderItem={({ item })=>{
+                                var date = item.date;
+                                if(item.age === undefined) {var age =""; } else{
+                                    var age = item.age +" ans";
+                                }
+                                if (item.date === moment().format('DD-MM-YYYY') ){date = "Aujourd'hui"} 
+                                else {if(item.date === moment().add(1, 'day').format('DD-MM-YYYY')){ date = "Demain"}
+                                else{if(item.date  === moment().subtract(1, 'day').format('DD-MM-YYYY')){ date = "Hier"}}}
+                                 
                                 return(
                                     <View>
-                                        <TaskCard containerStyle={{backgroundColor: colors.shadyBlue }} name={item.motif} date={item.date} doctor={item.patientID} duration={item.duration} time={item.slot} />
+                                        <TaskCard containerStyle={{backgroundColor: colors.shadyBlue }} name={item.motif} date={date} doctor={item.patientID} duration={item.duration} age={age} time={item.slot} />
                                     </View>
                                     );
                             }}
@@ -185,9 +204,9 @@ export default class ViewDocTasksScreen extends React.Component {
                     </View>
 
 
-                    </View>
+                    </ScrollView>
                     
-                </ScrollView>
+                </View>
 
             </View>
         )

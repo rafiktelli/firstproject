@@ -70,10 +70,10 @@ const handleSpeciality =()=> {
               rowTextForSelection={(item, index) => {
                 return item.title;
               }}
-              buttonStyle={styles.dropdown1BtnStyle}
+              buttonStyle={styles.input}
               buttonTextStyle={styles.dropdown1BtnTxtStyle}
               renderDropdownIcon={isOpened => {
-                return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={Colors.lightBlue} size={18} />;
+                return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#C0C0C0'} size={18} />;
               }}
               dropdownIconPosition={'right'}
               dropdownStyle={styles.dropdown1DropdownStyle}
@@ -98,10 +98,10 @@ const handleSpeciality =()=> {
               rowTextForSelection={(item, index) => {
                 return item.title;
               }}
-              buttonStyle={styles.dropdown2BtnStyle}
+              buttonStyle={styles.input}
               buttonTextStyle={styles.dropdown2BtnTxtStyle}
               renderDropdownIcon={isOpened => {
-                return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={Colors.lightBlue} size={18} />;
+                return <FontAwesome name={isOpened ? 'chevron-up' : 'chevron-down'} color={'#C0C0C0'} size={18} />;
               }}
               dropdownIconPosition={'right'}
               dropdownStyle={styles.dropdown2DropdownStyle}
@@ -124,6 +124,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     
   },
+  input:{
+    paddingVertical: 0,
+    paddingLeft:20,
+    paddingRight: 5,
+    backgroundColor: '#f8f4f4',
+    borderRadius:15,
+    borderColor: '#f8f4f4',
+    borderWidth: 1,
+    marginVertical:10,
+    height:65, 
+    width: 330
+
+},
 
   dropdown1BtnStyle: {
     width: 329,
@@ -133,7 +146,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.blue,
     
   },
-  dropdown1BtnTxtStyle: {color: Colors.black, textAlign: 'left'},
+  dropdown1BtnTxtStyle: {color: Colors.black, textAlign: 'left', fontSize: 14},
   dropdown1DropdownStyle: {backgroundColor: '#EFEFEF'},
   dropdown1RowStyle: {backgroundColor: '#EFEFEF', borderBottomColor: Colors.gray, borderRaduis: 8,},
   dropdown1RowTxtStyle: {color: Colors.black, textAlign: 'left'},
@@ -146,8 +159,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.blue,
     
   },
-  dropdown2BtnTxtStyle: {color: Colors.black, textAlign: 'left'},
+  dropdown2BtnTxtStyle: {color: Colors.black, textAlign: 'left', fontSize: 14},
   dropdown2DropdownStyle: {backgroundColor: '#EFEFEF'},
   dropdown2RowStyle: {backgroundColor: '#EFEFEF', borderBottomColor: '#C5C5C5'},
   dropdown2RowTxtStyle: {color: '#444', textAlign: 'left'},
+
 });

@@ -1,6 +1,6 @@
 const SlotsData = [
-    {id:2, time:'9:00'},
-    {id:3, time:'9:30'},
+    {id:2, time:'09:00'},
+    {id:3, time:'09:30'},
     {id:4, time:'10:00'},
     {id:5, time:'10:30'},
     {id:6, time:'11:00'},

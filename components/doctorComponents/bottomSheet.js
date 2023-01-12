@@ -8,44 +8,61 @@ import Fire from '../../Fire';
 import DoctorAppointSlide from '../../screens/doctor-appoint-slide';
 import RBSheet from "react-native-raw-bottom-sheet";
 import ViewDocTasksScreen from '../../screens/viewDocTasks-screen';
+import AssignSlide from '../../screens/assign-slide';
 
 export default class BottomSheet extends React.Component {
 
     state={
         showListVisible : false,
+        showListVisible1 : false,
     }
 
     toggleListModal(){
-       this.setState({showListVisible: !this.state.showListVisible});
+        if (this.props.pers.profession=="Medecin"){
+            this.setState({showListVisible: !this.state.showListVisible});
        
-       console.log(this.state.showListVisible);
+        }
+        else{
+            this.setState({showListVisible1: !this.state.showListVisible1});
+        }
         
     
     }
+    DeleteDoctor(){ 
+        if(this.props.pers.profession==="Medecin"){
+            firebase.deleteDoctor(this.props.pers);
+        } else {
+            firebase.deleteAide(this.props.pers);
+        }
+    }
   render() {
-      const windowWidth =  Dimensions.get('window').width;
       const pers = this.props.pers;
     return (
       <View>
-        <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={(med)=>this.toggleListModal()}>
-            <ViewDocTasksScreen pers={pers}  />
+      <Text>{console.log(this.props.med)}</Text>
+        <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
+            <ViewDocTasksScreen pers={pers} closeModal={()=>this.toggleListModal()}  />
+        </Modal>
+        <Modal animationType="slide" visible={this.state.showListVisible1} onRequestClose={()=>this.toggleListModal()}>
+            <AssignSlide pers={pers} closeModal={()=>this.toggleListModal()}  />
         </Modal>
       <View style={{ }}>
         <View style={styles.top}>
             <View>
-                <Image source={require('../../assets/doctor-female.jpg')} style={{width:65, height:65, borderRadius: 15, backgroundColor:'#C0C0C0', marginHorizontal:10, marginVertical: 10}} />
+                <Image source={  require('../../assets/doctor-female.jpg')} style={{width:65, height:65, borderRadius: 15, backgroundColor:'#C0C0C0', marginHorizontal:10, marginVertical: 10}} />
             </View>
             <View style={{flexDirection:'column', paddingVertical:15,  }}>
                 <Text style={{fontSize:20, fontWeight:'700', color:'#000'}}>{pers.nom} </Text>
-                <View style={{flexDirection:'row', }}>
+                <View style={{flexDirection:'row',  }}>
 
-                    <View style={styles.tag}>
-                        <Text style={{color:'#FFF', fontWeight:'700'}}> {pers.profession} </Text>
+                    <View style={[styles.tag,{height:30}]}>
+                        <Text style={{color:'#FFF', fontWeight:'700'}}>{pers.profession}</Text>
                     </View>
-                    <View style={styles.tag}>
-                        <Text style={{color:'#FFF', fontWeight:'700',    }}> {pers.speciality} {console.log(windowWidth)}  </Text>
+                    <View>
+                    <View style={[styles.tag,{display : pers.speciality<=""? 'none':'flex' }]}>
+                        <Text style={{color:'#FFF', fontWeight:'700',     }}>{pers.speciality}</Text>
                     </View>
-                    
+                    </View>
                     
                 </View>
                 
@@ -79,7 +96,7 @@ export default class BottomSheet extends React.Component {
             </View>
         {/* Delete Profile */}
             <View style={{height:70, justifyContent:'center',  paddingHorizontal:30}}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={()=>this.DeleteDoctor()}>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="trash" size={24} color={colors.red} />
                     <Text style={{color:colors.red, fontSize:18, paddingHorizontal:10, fontWeight:'600', }}>Delete Profile</Text>
@@ -91,10 +108,15 @@ export default class BottomSheet extends React.Component {
       
     );
   }
+
 }
+
+
+const windowWidth =  Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     top:{
+        width: 180,
         paddingHorizontal:20,
         paddingTop:5,
         paddingBottom:5,
@@ -102,12 +124,15 @@ const styles = StyleSheet.create({
         
     },
     tag:{
+        
+        alignItems:'center',
         borderRadius:8,
         backgroundColor:'#127eff',
         paddingVertical:4,
         paddingHorizontal:8,
         marginRight: 5,
         flexGrow: 1,
+        
         
     },
     divider:{

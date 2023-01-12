@@ -37,7 +37,7 @@ const MainScreen = ({ navigation }) => {
                         <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Tasks </Text>
                     </View> 
                 </TouchableOpacity>         
-                <TouchableOpacity onPress={() => navigation.navigate("ManageStaff") }>
+                <TouchableOpacity onPress={() => navigation.navigate("Manage Staff") }>
                     <View style={{ width:150, height:150, backgroundColor: 'navy' , borderRadius:15,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
                         <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Manage    </Text>
                         <Text style={{  fontSize:24, fontWeight: '600', color: colors.white,   }} > Staff </Text>

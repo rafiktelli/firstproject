@@ -1,5 +1,5 @@
 import React from "react"; 
-import { View, Text, StyleSheet, KeyboardAvoidingView, TouchableOpacity, TextInput, FlatList, DatePickerIOS } from "react-native"; 
+import { View, Text, StyleSheet, KeyboardAvoidingView, Image, TouchableOpacity, TextInput, FlatList, DatePickerIOS } from "react-native"; 
 import { AntDesign } from "@expo/vector-icons"; 
 import colors from "../Colors"; 
 import SelectDropdown from 'react-native-select-dropdown';
@@ -44,22 +44,35 @@ export default class AddPersonnelSlide extends React.Component {
 
             return (
                <KeyboardAvoidingView style={styles.container}> 
-                    <TouchableOpacity style={{ position: "absolute", top: 33, right: 32, }} onPress={this.props.closeModal}> 
-                        <AntDesign name="close" size={24} color={colors.gray} /> 
-                    </TouchableOpacity>
-                    <View style={{ alignSelf: "stretch", marginHorizontal: 32 }}> 
-                        <Text style={styles.title}>Create Personnel</Text> 
+                    
+                    <View style={{ alignSelf: "stretch", marginHorizontal: 32, }}> 
                         <TextInput style={styles.input} placeholderTextColor="#000"  placeholder="Personnel Name" onChangeText={text => this.setState({ nom: text })}/> 
                         <TextInput style={styles.input} placeholderTextColor="#000" placeholder="Birthday" onChangeText={text => this.setState({ naissance: text})} />     
                     </View>
                     <View  style={{ alignSelf: "stretch", marginHorizontal: 32}}>
                         <Dropdown onProfessionChange={this.getProfession} onSpecialityChange={this.getSpeciality} />
                     </View>
-                    <View  style={{ alignSelf: "stretch", marginHorizontal: 32}}>
-                        <TouchableOpacity style={[styles.create, { backgroundColor: colors.blue }]} onPress={this.createPersonnel}> 
-                            <Text style={{ color: colors.white, fontWeight: "600" }}>Create!</Text> 
-                        </TouchableOpacity> 
+                    <View  style={{ flex: 1, alignItems:'center', alignSelf: "stretch", marginHorizontal: 32}}>
+                    <TouchableOpacity activeOpacity={1} style={styles.buttonView}  >
+                                <View style={{flexDirection:'row'}}>
+                                    <View >
+                                        <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
+                                    </View>
+                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Add Worker</Text>
+                                           
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+
+                        
+                        
+
+
                     </View> 
+
+
+                    
                 
                     
                 </KeyboardAvoidingView>
@@ -74,7 +87,9 @@ const styles = StyleSheet.create({
     backgroundColor:'#FFF',
     flex :1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    
+    paddingTop:50
     },
     title: { 
     fontSize: 28, 
@@ -94,19 +109,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16, 
     fontSize: 18 
     }, 
-    create: { 
-    marginTop: 24, 
-    height: 50, 
-    borderRadius: 6, 
-    alignItems: "center", 
-    justifyContent: "center" 
-    },
-    colorSelect:{ 
-    width: 30, 
-    height: 30, 
-    borderRadius: 4
+     
+    buttonView: {
+        backgroundColor:colors.blue, 
+        width:250, 
+        height:80,
+        borderRadius:20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute', //Here is the trick
+        bottom: 50, //Here is the trick
+        backgroundColor: colors.blue,
+        },
+        input:{
+            paddingVertical: 18,
+            paddingLeft:20,
+            paddingRight: 5,
+            backgroundColor: '#f8f4f4',
+            borderRadius:15,
+            borderColor: '#f8f4f4',
+            borderWidth: 1,
+            marginVertical:10,
 
-    }, 
+        },
 
 });
 
