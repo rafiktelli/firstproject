@@ -26,6 +26,7 @@ export default class DoctorAppointSlide extends React.Component {
         pressedSlots:[],
         SlotsData:[],
         availableSlots:[],
+        dateClicked : false,
     }
     constructor(props) {
         super(props);
@@ -33,6 +34,7 @@ export default class DoctorAppointSlide extends React.Component {
         this.setState({availableSlots: SlotsData});
       } 
       onDateSelected = date => {
+        this.setState({dateClicked:true});
         this.setState({availableSlots:SlotsData});
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var newCons = this.state.consultations.filter( function(el) { return el.date === formatedDate } );
@@ -100,6 +102,7 @@ export default class DoctorAppointSlide extends React.Component {
 
 
     render(){
+        var dateClicked = this.state.dateClicked;
         var startDate = new Date("2023-01-01");
         var selectedDate = new Date();
         var endDate = new Date("2023-04-02");
@@ -170,7 +173,9 @@ export default class DoctorAppointSlide extends React.Component {
                         
                     </View>
                     <View style={{}}>
-
+                    <View style={{display: (this.state.availableSlots.length===0 && dateClicked) ? 'flex':'none', alignItems:'center', justifyContent:'center', paddingTop:80 }}>
+                        <Image source={require("../assets/no-schedule.png")} style={{ height:100, width:100}} />
+                    </View>
                     <View style={{ flexDirection:'column', paddingHorizontal:6}} >
                         <FlatList 
                             data={this.state.availableSlots}
@@ -191,7 +196,7 @@ export default class DoctorAppointSlide extends React.Component {
 
 
                     </View>
-                    <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
+                    <View style={{flex:1, display: this.state.availableSlots.length === 0 ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
                             <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
                                 <View style={{flexDirection:'row'}}>

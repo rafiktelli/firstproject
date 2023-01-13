@@ -32,7 +32,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name = "Welcome"
-        component={WelcomeScreen}
+        component={MainScreen}
         options={{headerShown: false}}
 
          />

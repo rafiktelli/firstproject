@@ -48,7 +48,7 @@ export default class AddPersonnelSlide extends React.Component {
 
         render() {
 
-            
+            console.log("this is input value:"+ this.state.nom);
 
 
             return (

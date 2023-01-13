@@ -12,6 +12,7 @@ import Fire from '../Fire';
 import DoctorBar from '../components/doctorComponents/doctorBar';
 import SpeCompo from '../components/doctorComponents/speCompo';
 import PatientInfoSlide from './patientInfo-slide';
+import SurgSlotsData from '../SurgSlotsData';
 
 export default class ChooseSurgAssist extends React.Component {
     state={
@@ -26,6 +27,7 @@ export default class ChooseSurgAssist extends React.Component {
         count : -1,
         pressedCategory2: '',
         showListVisible : false,
+        anes :[],
 
         
     };
@@ -43,6 +45,9 @@ export default class ChooseSurgAssist extends React.Component {
                     this.state.nurses = this.state.personnels.filter( function(el) { return el.profession === "Infirmier"; } );
                     this.state.filtered = this.state.nurses;
                     this.state.anes = this.state.personnels.filter( function(el) { return (el.profession === "Medecin" && el.speciality=="Anesthésie"  ) } );
+                    this.state.anest = this.state.anes;
+                    console.log("hado Anes");
+                    console.log(this.state.anes);
                     this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
                     
                 });
@@ -80,28 +85,19 @@ export default class ChooseSurgAssist extends React.Component {
    
     
 
-    searchDoc(textToSearch){
-        this.setState({spec: ''});
-        this.setState({inputValue: textToSearch});
-        this.setState({
-            filtered: this.state.filtered.filter(i=>
-                    i.nom.toLowerCase().includes(textToSearch.toLowerCase()),
-                )    
-        });
-        this.setState({
-            spec:  Array.from(new Set(this.state.nurses.filter(j=>
-                j.nom.toLowerCase().includes(textToSearch.toLowerCase()),
-            ).map(a => a.speciality)
-        ))});
-        if(textToSearch === '') {
-            this.setState({
-                filtered: this.state.nurses,
-            });
-        }
-        console.log(this.state.inputValue);
-    } 
+ 
 
     render(){
+        var surgofday = this.props.surgofday;
+        var slot = this.props.slot;
+        var surgofdayslot = surgofday.filter( function(el) { return el.slot ===  slot} );
+        var occupNurse = surgofdayslot.map(c => c.nurse);
+        var occupAnes = surgofdayslot.map(c => c.anes);
+        var availableNurse = this.state.filtered.map(c => c.id).filter(n => !occupNurse.includes(n));
+        var availableAnes = this.state.anes.map(k => k.id).filter(n => !occupAnes.includes(n));
+        var avNurses = this.state.filtered.filter( function(el) { return availableNurse.includes(el.id)  } );
+        var avAnes = this.state.anes.filter( function(el) { return availableAnes.includes(el.id)  } )
+        
         //this.state.filtred = this.state.doctors;
         if(this.state.inputValue === ''){ console.log(""); }
         return (
@@ -127,7 +123,7 @@ export default class ChooseSurgAssist extends React.Component {
                                 showsVerticalScrollIndicator={false}>
                            
                             <FlatList 
-                                data={this.state.filtered} 
+                                data={avNurses} 
                                 extraData={this.state}
                                 keyExtractor={(item) => item.id.toString()} 
                                 renderItem={ ({item})  => 
@@ -152,7 +148,7 @@ export default class ChooseSurgAssist extends React.Component {
                                     showsVerticalScrollIndicator={false}>
                             
                                 <FlatList 
-                                    data={this.state.anes} 
+                                    data={avAnes} 
                                     extraData={this.state}
                                     keyExtractor={(item) => item.id.toString()} 
                                     renderItem={ ({item})  => 
@@ -178,7 +174,7 @@ export default class ChooseSurgAssist extends React.Component {
                 </ScrollView>
                 <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', }}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center', marginBottom:30 }}>
-                            <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleModal()} >
+                            <TouchableOpacity disabled={this.state.pressedCategory === '' || ((this.props.slot ==="15:00") && this.state.pressedCategory2 === '')  } onPress={()=>this.toggleModal()} >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />

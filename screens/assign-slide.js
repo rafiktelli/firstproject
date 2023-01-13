@@ -241,9 +241,20 @@ export default class AssignSlide extends React.Component {
 
 
     render(){ 
+        
+        
 
 
-        const persDateList = this.state.persDateList;
+        var completedCount = 0;
+        var taskCount = 0;
+        var persDateList = this.state.persDateList;
+        if(persDateList.todos !== undefined){
+            var alist = persDateList;
+            taskCount = alist.todos.length;
+            completedCount = alist.todos.filter(todo => todo.completed).length;
+            console.log("Task Count: "+taskCount + " and "+ completedCount);
+        }
+        
        return (
             <View style={styles.container}>
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
@@ -292,8 +303,10 @@ export default class AssignSlide extends React.Component {
 
 
                     <View style={{flex:1, }}>
-                    <View style={{marginHorizontal:20, }}>
-                        <Text style={{fontWeight:'500', fontSize:18, paddingVertical:10, }} >Tasks</Text>
+                    <View style={{marginHorizontal:20, flexDirection:'row' }}>
+                        <Text style={{fontWeight:'500', fontSize:18, paddingVertical:10, }} >Tasks </Text>
+                        <Text style={{ display: taskCount === undefined || taskCount===0  ? 'none':'flex' , fontWeight:'500', fontSize:18, paddingVertical:10, }} >( {completedCount}/{taskCount} ) </Text>
+                        
                     </View>
                     <View style={{flex:1, }}>
                         <View style={{}}>    

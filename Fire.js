@@ -94,6 +94,22 @@ class Fire{
         });
 
     }
+
+
+    getSurgeries(callback){
+        let ref = this.refSurg;
+        this.unsubscribe = ref.onSnapshot(snapshot => {
+            surgeries = [];
+
+            snapshot.forEach(doc => {
+                surgeries.push({ id: doc.id, ...doc.data() });
+                
+            });
+            callback(surgeries);
+        });
+
+    }
+
     
     getLists(callback){
         let ref = this.ref;
@@ -134,6 +150,18 @@ class Fire{
             });
           });
         
+    }
+    deleteSurg(personnel){
+        let refPers = this.refPers;
+        let refSurg = this.refSurg;
+        refPers.doc(personnel.id).delete();
+        var query = refSurg.where('doctorID','==', personnel.id);
+        query.get().then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              doc.ref.delete();
+            });
+          });
+           
     }
     deleteAide(personnel){
         let refPers = this.refPers;

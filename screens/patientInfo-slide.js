@@ -7,6 +7,10 @@ export default class PatientInfoSlide extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+        inputValue:"",
+        inputValue1:"",
+        inputValue2:"",
+        inputValue3:"",
     };
   }
   
@@ -69,20 +73,14 @@ export default class PatientInfoSlide extends React.Component {
   
 
 
-  state={
-    inputValue:'',
-    inputValue1:'',
-    inputValue2 : '',
-    inputValue3 : '',
-  };
-
   render(){
+      console.log("this is input1:"+this.state.inputValue3+"x");
+    var surg = false;  
+    surg = this.props.surg;
     return (
       <View style={styles.container}  >
         <View>
-            <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
-                <AntDesign  name="close" size={24} color={colors.black} />
-            </TouchableOpacity>
+            
         </View>
         <View >
                     
@@ -90,7 +88,7 @@ export default class PatientInfoSlide extends React.Component {
                         <View style={{marginVertical:10,  }}>
                             <Text style={{fontWeight:'600', fontSize:20}}>Patient Name </Text>
                         </View>
-                        <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.setState({inputValue:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TextInput onChangeText={text=>{this.setState({inputValue:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
                         
                        
                     </View>
@@ -98,27 +96,27 @@ export default class PatientInfoSlide extends React.Component {
                         <View style={{marginVertical:10,  }}>
                             <Text style={{fontWeight:'600', fontSize:20}}>Motif</Text>
                         </View>
-                        <TextInput value={this.state.inputValue1} clearButtonMode='always' onChangeText={text=>{this.setState({inputValue1:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TextInput clearButtonMode='always' onChangeText={text=>{this.setState({inputValue1:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
                         
                     </View>
                     <View style={{ marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
                         <View style={{marginVertical:10,  }}>
                             <Text style={{fontWeight:'600', fontSize:20}}>Patient's Age</Text>
                         </View>
-                        <TextInput keyboardType='decimal-pad' maxLength={3} value={this.state.inputValue2} clearButtonMode='always' onChangeText={text=>{this.setState({inputValue2:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TextInput keyboardType='decimal-pad' maxLength={3} onChangeText={text => this.setState({ inputValue2: text })} clearButtonMode='always' style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
                         
                     </View>
                     <View style={{ display: this.props.surg ? 'flex':'none' , marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
                         <View style={{marginVertical:10,  }}>
                             <Text style={{fontWeight:'600', fontSize:20}}>Détails</Text>
                         </View>
-                        <TextInput keyboardType='decimal-pad' maxLength={3} value={this.state.inputValue3} clearButtonMode='always' onChangeText={text=>{this.setState({inputValue3:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TextInput clearButtonMode='always' onChangeText={text=>{this.setState({inputValue3:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
                         
                     </View>
                     <View style={{ alignItems:'center', justifyContent:'center'}}>
                     
-                    <View style={{ display: this.props.surg ? 'none':'flex' , backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center',  }}>
-                            <TouchableOpacity onPress={()=>this.createSurgery()} >
+                    <View style={{ display: surg ? 'none':'flex' , backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center',  }}>
+                            <TouchableOpacity disabled={((this.state.inputValue === '') && (this.state.inputValue1===''))} onPress={()=>this.createConsultation()} >
                                 <View style={{flexDirection:'row',}}>
                                     <View >
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
@@ -130,14 +128,14 @@ export default class PatientInfoSlide extends React.Component {
                             </TouchableOpacity>
                             
                 </View>
-                <View style={{ display: this.props.surg ? 'flex':'none' , backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center',  }}>
-                            <TouchableOpacity onPress={()=>this.createSurgery()} >
+                <View style={{ display:  surg ? 'flex':'none' , backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center',  }}>
+                        <TouchableOpacity disabled={((this.state.inputValue === '') && (this.state.inputValue1===''))   } onPress={()=>this.createSurgery()} >
                                 <View style={{flexDirection:'row',}}>
                                     <View >
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Schedule</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>

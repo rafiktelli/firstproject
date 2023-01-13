@@ -19,8 +19,8 @@ export default Dropdown = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setCountries([
-        {title: 'Chirurgien', cities: [{title: 'Chirurgien général'}, {title: 'Chirurgien cardio-vasculaire'}, {title: 'Chirurgien urologue'}, {title: 'Chirurgien  infantile'}, {title: 'Neurochirurgien'}]},
-        {title: 'Medecin', cities: [{title: 'Générale'}, {title: 'Dermatologie'}, , {title: 'Anesthésie'}, {title: 'Neurologie'}, {title: 'Ophtalmologie'}, {title: 'Gastro-entérologie'}, {title: 'Gynécologie'}, {title: 'Psychiatrie'}, {title: 'Oto-rhino-laryngologie'}, {title: 'Pédiatrie'}]},
+        {title: 'Chirurgien', cities: [{title: 'Neurochirurgie'}, {title: 'Ophtalmologie'}, {title: 'Gynécologie'}, {title: 'Infantile'}, {title: 'Maxillo-faciale'}, {title: 'Vasculaire'}]},
+        {title: 'Medecin', cities: [{title: 'Générale'}, {title: 'Cardiologue'}, {title: 'Dermatologie'}, , {title: 'Anesthésie'}, {title: 'Neurologie'}, {title: 'Ophtalmologie'}, {title: 'Gastrologie'}, {title: 'Gynécologie'}, {title: 'Psychiatrie'}, {title: 'ORL'}, {title: 'Pédiatrie'}, {title: 'Urologie'}]},
         {title: 'Infirmier', cities: [{title: 'Soins infirmiers généralistes'}, {title: 'Infirmier Anesthésiste'}, {title: 'Infirmière de Bloc Opératoire'}, {title: 'Infirmier Puéricultrice'}]},
         {title: 'Aide-Soignant',cities:[{}]}
     ]);

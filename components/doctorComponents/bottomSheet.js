@@ -32,9 +32,15 @@ export default class BottomSheet extends React.Component {
         if(this.props.pers.profession==="Medecin"){
             firebase.deleteDoctor(this.props.pers);
         } else {
-            firebase.deleteAide(this.props.pers);
+            if(this.props.pers.profession==="Chirurgien"){
+                firebase.deleteSurg(this.props.pers);
+                   
+            } else{
+                firebase.deleteAide(this.props.pers);
+            }
         }
     }
+    
   render() {
       const pers = this.props.pers;
     return (

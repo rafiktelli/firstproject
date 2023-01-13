@@ -21,12 +21,14 @@ export default class SurgeonAppointSlide extends React.Component {
         pressedSlot : '',
         showListVisible:false,
         consultations :[],
+        surgeries: [],
         filteredCons :[],
         user: {},
         loading: true,
         pressedSlots:[],
         SlotsData:[],
         availableSlots:[],
+        dateClicked : false,
     }
     constructor(props) {
         super(props);
@@ -34,16 +36,19 @@ export default class SurgeonAppointSlide extends React.Component {
         this.setState({availableSlots: SurgSlotsData});
       } 
       onDateSelected = date => {
+        this.setState({dateClicked:true});
         console.log("shit");
         this.setState({availableSlots:SurgSlotsData});
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
-        var newCons = this.state.consultations.filter( function(el) { return el.date === formatedDate } );
+        var newSurg = this.state.surgeries.filter( function(el) { return el.date === formatedDate } );
         this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), SlotsData:SurgSlotsData});
+        console.log(newSurg);
         console.log("khalina ntestiw wach t3tina hadi? " + moment(date).format('DD-MM-YYYY'));
-        this.setState({ filteredCons : newCons });
-        console.log("filtredCons:", newCons);
-        this.showContent(newCons);
+        this.setState({ filteredCons : newSurg });
+        this.showContent(newSurg);
         this.setState({pressedSlot:''});
+        var allSurgOfDate = this.state.surg.filter( function(el) { return el.date === formatedDate } );
+        this.setState({allSurgOfDate: allSurgOfDate});
         
 
     }   
@@ -58,9 +63,9 @@ export default class SurgeonAppointSlide extends React.Component {
     toggleAddPersonnelModel(){
         this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
     }
-    showContent(newCons){
+    showContent(newSurg){
         var a = SurgSlotsData.map(data => data.time);
-        var b = newCons.map( data => data.slot);
+        var b = newSurg.map( data => data.slot);
         var c = a.filter(n => !b.includes(n));
         this.setState({availableSlots:c});
 
@@ -80,13 +85,14 @@ export default class SurgeonAppointSlide extends React.Component {
             if(error){
                 return alert("Uh no, there is something went wrong");
             }
-            firebase.getConsultations(consultations=>{
-                            
-                this.setState({consultations, user}, () => {
+            
+            firebase.getSurgeries(surgeries=>{
+                this.setState({surgeries, user}, () => {
                     this.setState({loading:false});
-                    var newCons = this.state.consultations.filter( function(el) { return el.doctorID === test } );
-                    this.setState({ consultations : newCons });
-                    //this.state.consultations = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
+                    var newSurg = this.state.surgeries.filter( function(el) { return el.doctorID === test } );
+                    this.setState({surg: surgeries});
+                    this.setState({ surgeries : newSurg });
+                    //this.state.surgeries = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
                 });
             });
             this.setState({user});
@@ -105,6 +111,8 @@ export default class SurgeonAppointSlide extends React.Component {
         
         var startDate = new Date("2023-01-01");
         var selectedDate = new Date();
+        var dateClicked = this.state.dateClicked;
+        var req =  (this.state.availableSlots.length<1 || ( this.state.availableSlots.length===1 && this.state.availableSlots[0]==="15:00"));
         var endDate = new Date("2023-04-02");
         var datesWhitelist = [
             // single date (today)
@@ -125,7 +133,7 @@ export default class SurgeonAppointSlide extends React.Component {
                 <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
                 
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                    <ChooseSurgAssist closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
+                    <ChooseSurgAssist closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} surgofday={this.state.allSurgOfDate} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
                 
                 
@@ -168,14 +176,16 @@ export default class SurgeonAppointSlide extends React.Component {
                         
                     />
                     </View>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
+                    <View style={{ display : req ? 'none': 'flex', marginHorizontal:20, marginVertical:10}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Minor Surgery</Text>
                         
                         
                     </View>
                     <View style={{}}>
-
-                    <View style={{ flexDirection:'column', paddingHorizontal:6}} >
+                    <View style={{display: (this.state.availableSlots.length===0 && dateClicked) ? 'flex':'none', alignItems:'center', justifyContent:'center', paddingTop:80 }}>
+                        <Image source={require("../assets/no-schedule.png")} style={{ height:100, width:100}} />
+                    </View>
+                    <View style={{ flexDirection:'column', paddingHorizontal:6,}} >
                         <FlatList 
                             data={this.state.availableSlots}
                             keyExtractor={(item) => item.toString()} 
@@ -187,9 +197,18 @@ export default class SurgeonAppointSlide extends React.Component {
                                         <Slot time={item.toString()} isPressed ={this.state.pressedSlot} />
                                     </TouchableOpacity>
                                     )
-                             }
-                             else {
+                             }}}
+                        />
+
+                        <FlatList 
+                            data={this.state.availableSlots}
+                            keyExtractor={(item) => item.toString()} 
+                            numColumns={1}
+                            renderItem={({ item })=>{
+                            if(item.toString()==="15:00"){
+                            
                                 return( 
+                                    
                                     <View style={{}}>
                                         <Text style={{ marginHorizontal:15, marginVertical:10, fontWeight:'500', fontSize:18}} >Major Surgery</Text>
                                     <TouchableOpacity onPress={()=>this.slotPressed(item.toString())}>
@@ -199,15 +218,14 @@ export default class SurgeonAppointSlide extends React.Component {
                                     );
 
                             }}}
-                        />
-                        <Text></Text>
+                        />  
                         
                        
                     </View>
 
 
                     </View>
-                    <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
+                    <View style={{flex:1,flex:1, display: this.state.availableSlots.length === 0 ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
                             <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
                                 <View style={{flexDirection:'row'}}>
