@@ -14,6 +14,8 @@ export default Dropdown = (props) => {
   const citiesDropdownRef = useRef();
   var rafik ="";
   var rafika ="";
+  var dis = true;
+  
   useEffect(() => {
     setTimeout(() => {
       setCountries([
@@ -44,6 +46,7 @@ const handleSpeciality =()=> {
 
 
   return (
+
     <SafeAreaView>
       <StatusBar backgroundColor="#FFF" barStyle="dark-content" />
       <View >
@@ -58,7 +61,8 @@ const handleSpeciality =()=> {
               data={countries}
               onSelect={(selectedItem, index) => {
                 rafik = selectedItem.title;
-                handleProfession();
+                dis = false;
+               handleProfession();
                 citiesDropdownRef.current.reset();
                 setCities([]);
                 setCities(selectedItem.cities);
@@ -85,7 +89,8 @@ const handleSpeciality =()=> {
             <SelectDropdown
               ref={citiesDropdownRef}
               data={cities}
-              onSelect={(selectedItem, index) => {
+              disabled ={!dis}
+                 onSelect={(selectedItem, index) => {
                 rafika = selectedItem.title;
                 console.log(selectedItem.title);
                 handleSpeciality();
@@ -142,8 +147,6 @@ const styles = StyleSheet.create({
     width: 329,
     backgroundColor: '#FFF',
     borderRadius: 6,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: Colors.blue,
     
   },
   dropdown1BtnTxtStyle: {color: Colors.black, textAlign: 'left', fontSize: 14},

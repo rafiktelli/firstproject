@@ -153,6 +153,12 @@ class Fire{
         let refCons = this.refCons;
         refCons.add(consultation);
     }
+    addSurgery(surgery){
+        let refSurg = this.refSurg;
+        console.log("here is the details of surgery");
+        console.log(surgery);
+        refSurg.add(surgery);
+    }
     
     // {REQUESTS} ------------------------------
 
@@ -187,6 +193,13 @@ class Fire{
             .collection("users")
             .doc(this.userId)
             .collection("consultations");
+    }
+    get refSurg(){
+        return firebase  
+            .firestore()
+            .collection("users")
+            .doc(this.userId)
+            .collection("surgeries");
     }
     get refTasks(){
         return firebase  

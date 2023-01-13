@@ -14,33 +14,66 @@ export default class PatientInfoSlide extends React.Component {
     const doctorID = this.props.pers.id ;
     const date = this.props.date;
     const slot = this.props.slot;
+    const nurse = this.props.pressedCategory2;
+    const anes = this.props.pressedCategory;
     const patientID = this.state.inputValue;
     const motif = this.state.inputValue1;
     const age = this.state.inputValue2;
+    const details = this.state.inputValue3;
     const consultation = {doctorID, date, slot, patientID, motif, age}; 
     this.addConsultation(consultation); 
     this.props.closeModal();
     console.log(patientID);
     }; 
 
-    addConsultation = consultation =>{
-    firebase.addConsultation({
-        doctorID: consultation.doctorID,
-        date: consultation.date,
-        slot: consultation.slot,
-        patientID: consultation.patientID,
-        motif: consultation.motif,
-        age: consultation.age,
-    });
-    this.props.closePrevModal();
-}
+    createSurgery = () => {
+        const doctorID = this.props.pers.id;
+        const date = this.props.date;
+        const slot = this.props.slot;
+        const nurse = this.props.nurse;
+        const anes = this.props.anes;
+        const patientID = this.state.inputValue;
+        const motif = this.state.inputValue1;
+        const age = this.state.inputValue2;
+        const details = this.state.inputValue3;
+        const surgery = {doctorID, date, slot, patientID, motif, age, details, nurse, anes}; 
+        this.addSurgery(surgery); 
+        };
 
+    addConsultation = consultation =>{
+        firebase.addConsultation({
+            doctorID: consultation.doctorID,
+            date: consultation.date,
+            slot: consultation.slot,
+            patientID: consultation.patientID,
+            motif: consultation.motif,
+            age: consultation.age,
+        });
+        this.props.closePrevModal(); 
+    };
+
+    addSurgery = surgery =>{
+        firebase.addSurgery({
+            doctorID: surgery.doctorID,
+            date: surgery.date,
+            slot: surgery.slot,
+            patientID: surgery.patientID,
+            motif: surgery.motif,
+            age: surgery.age,
+            details : surgery.details,
+            nurse : surgery.nurse,
+            anes : surgery.anes,
+        });
+
+    };
   
 
 
   state={
     inputValue:'',
     inputValue1:'',
+    inputValue2 : '',
+    inputValue3 : '',
   };
 
   render(){
@@ -75,10 +108,17 @@ export default class PatientInfoSlide extends React.Component {
                         <TextInput keyboardType='decimal-pad' maxLength={3} value={this.state.inputValue2} clearButtonMode='always' onChangeText={text=>{this.setState({inputValue2:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
                         
                     </View>
+                    <View style={{ display: this.props.surg ? 'flex':'none' , marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
+                        <View style={{marginVertical:10,  }}>
+                            <Text style={{fontWeight:'600', fontSize:20}}>Détails</Text>
+                        </View>
+                        <TextInput keyboardType='decimal-pad' maxLength={3} value={this.state.inputValue3} clearButtonMode='always' onChangeText={text=>{this.setState({inputValue3:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        
+                    </View>
                     <View style={{ alignItems:'center', justifyContent:'center'}}>
                     
-                    <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center',  }}>
-                            <TouchableOpacity onPress={()=>this.createConsultation()} >
+                    <View style={{ display: this.props.surg ? 'none':'flex' , backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center',  }}>
+                            <TouchableOpacity onPress={()=>this.createSurgery()} >
                                 <View style={{flexDirection:'row',}}>
                                     <View >
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
@@ -88,6 +128,20 @@ export default class PatientInfoSlide extends React.Component {
                                     </View>
                                 </View>
                             </TouchableOpacity>
+                            
+                </View>
+                <View style={{ display: this.props.surg ? 'flex':'none' , backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center',  }}>
+                            <TouchableOpacity onPress={()=>this.createSurgery()} >
+                                <View style={{flexDirection:'row',}}>
+                                    <View >
+                                        <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
+                                    </View>
+                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                            
                 </View>
                 </View>
                         </View>

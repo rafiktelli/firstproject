@@ -12,7 +12,7 @@ import Fire from '../Fire';
 import DoctorBar from '../components/doctorComponents/doctorBar';
 import SpeCompo from '../components/doctorComponents/speCompo';
 
-export default class AppointmentScreen extends React.Component {
+export default class SurgeryScreen extends React.Component {
     state={
         personnels : [],
         doctors : [],
@@ -36,8 +36,9 @@ export default class AppointmentScreen extends React.Component {
                 
                 this.setState({personnels, user}, () => {
                     this.setState({loading:false});
-                    this.state.doctors = this.state.personnels.filter( function(el) { return (el.profession === "Medecin" && el.speciality !== "Anesthésie" ); } );
-                    this.state.filtered = this.state.doctors;
+                    this.state.doctors = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
+                    this.state.surgeons = this.state.personnels.filter( function(el) { return el.profession === "Chirurgien"; } );
+                    this.state.filtered = this.state.surgeons;
                     this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
                     
                 });
@@ -65,12 +66,12 @@ export default class AppointmentScreen extends React.Component {
             if(this.state.count%2 === 0){
                 this.setState({pressedCategory:''});
                 this.setState({
-                    filtered: this.state.doctors,
+                    filtered: this.state.surgeons,
                     });
             }
             else{
                 this.setState({
-                    filtered: this.state.doctors.filter(i=>
+                    filtered: this.state.surgeons.filter(i=>
                             i.speciality.toLowerCase().includes(cat.toLowerCase()),
                         )    
                 });
@@ -78,7 +79,7 @@ export default class AppointmentScreen extends React.Component {
         }else{
             this.setState({count: 0})
             this.setState({
-            filtered: this.state.doctors.filter(i=>
+            filtered: this.state.surgeons.filter(i=>
                     i.speciality.toLowerCase().includes(cat.toLowerCase()),
                 )    
         });
@@ -91,7 +92,7 @@ export default class AppointmentScreen extends React.Component {
 
     renderDoctors = pers =>{
         
-        return( <DoctorBar med={true} pers={pers} /> );
+        return( <DoctorBar surg={true} pers={pers} /> );
     }
     searchDoc(textToSearch){
         this.setState({spec: ''});
@@ -102,13 +103,13 @@ export default class AppointmentScreen extends React.Component {
                 )    
         });
         this.setState({
-            spec:  Array.from(new Set(this.state.doctors.filter(j=>
+            spec:  Array.from(new Set(this.state.surgeons.filter(j=>
                 j.nom.toLowerCase().includes(textToSearch.toLowerCase()),
             ).map(a => a.speciality)
         ))});
         if(textToSearch === '') {
             this.setState({
-                filtered: this.state.doctors,
+                filtered: this.state.surgeons,
             });
         }
         console.log(this.state.inputValue);
@@ -124,7 +125,7 @@ export default class AppointmentScreen extends React.Component {
                 <View style={{ marginLeft:20,  }}>
                     <View style={{height:75,  }} />
                     <View style={{}}>
-                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Doctor Appointment</Text>
+                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Schedule Surgery</Text>
                     </View>
                     <View style={{flexDirection:'row', marginTop: 20, marginBottom: 25 }}>
                         <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
@@ -155,7 +156,7 @@ export default class AppointmentScreen extends React.Component {
                         </ScrollView>
                     </View>
                     <View style={{marginVertical:10,  }}>
-                        <Text style={{fontWeight:'900', fontSize:20}}>Doctors</Text>
+                        <Text style={{fontWeight:'900', fontSize:20}}>Surgeons</Text>
                     </View>
                     <View style={{  }}>
                         <ScrollView keyboardShouldPersistTaps='always' style={{backgroundColor:'#fff'}} 

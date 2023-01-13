@@ -11,6 +11,7 @@ import AppointmentScreen from './screens/appointment-screen';
 import DoctorAppointSlide from './screens/doctor-appoint-slide';
 import AssignTaskScreen from './screens/assignTask-screen';
 import ManageStaff from './screens/manage-staff';
+import SurgeryScreen from './screens/surgery-screen';
 import AddPersonnelSlide from './screens/addpersonnel-slide';
 import { createStackNavigator } from '@react-navigation/stack'; //Insert screens into a stack
 import { NavigationContainer } from '@react-navigation/native'; //contains navigator and screen
@@ -79,6 +80,11 @@ export default function App() {
          <Stack.Screen
          name="Ajouter un Personnel"
          component={AddPersonnelSlide}
+         options={{headerShown: true}}
+         />
+         <Stack.Screen
+         name="Surgery"
+         component={SurgeryScreen}
          options={{headerShown: true}}
          />
       </Stack.Navigator>

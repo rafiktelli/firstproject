@@ -74,14 +74,7 @@ export default class ManageStaff extends React.Component{
 
 
     
-    addPersonnel = personnel =>{
-        firebase.addPersonnel({
-            nom: personnel.nom,
-            profession: personnel.profession,
-            speciality: personnel.speciality,
-            naissance: personnel.naissance
-        });
-    }; 
+     
 
 
     render(){
@@ -121,8 +114,10 @@ export default class ManageStaff extends React.Component{
                         <View style={{height:10}}/>
                         <View style={{}}>
                             <TouchableOpacity style={styles.specTitle}  onPress={()=>{return this.setState({medVisible: !this.state.medVisible})}} >
-                                <Image style={{height:15, width:15}} source={this.state.medVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
                                 <Text style={styles.text}>Medecins</Text>
+                                <View style={{flex:1,  alignItems:'flex-end', paddingRight:40  }}>
+                                <Image style={{height:15, width:15,   }} source={this.state.medVisible ? require('../assets/uparrow.png') : require('../assets/arrowdown.png')} />
+                                </View>
                             </TouchableOpacity>
                         </View>
                           <View style={{flex:1, display:this.state.medVisible?'flex':'none', }}>   
@@ -135,8 +130,10 @@ export default class ManageStaff extends React.Component{
                         
                         </View>
                         <TouchableOpacity style={styles.specTitle} onPress={()=>{return this.setState({chirVisible: !this.state.chirVisible})}}  >
-                            <Image style={{height:15, width:15}} source={this.state.chirVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
                             <Text style={styles.text}>Chirurgiens</Text>
+                            <View style={{flex:1,  alignItems:'flex-end', paddingRight:40  }}>
+                                <Image style={{height:15, width:15,   }} source={this.state.chirVisible ? require('../assets/uparrow.png') : require('../assets/arrowdown.png')} />
+                                </View>
                         </TouchableOpacity>
                         <View style={{flex:1, display:this.state.chirVisible?'flex':'none',}}>
                             <FlatList 
@@ -146,8 +143,10 @@ export default class ManageStaff extends React.Component{
                             />
                             </View>
                         <TouchableOpacity style={styles.specTitle} onPress={()=>{return this.setState({infVisible: !this.state.infVisible})}}  >
-                            <Image style={{height:15, width:15}} source={this.state.infVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
                             <Text style={styles.text}>Infirmiers</Text>
+                            <View style={{flex:1,  alignItems:'flex-end', paddingRight:40  }}>
+                                <Image style={{height:15, width:15,   }} source={this.state.infVisible ? require('../assets/uparrow.png') : require('../assets/arrowdown.png')} />
+                                </View>
                         </TouchableOpacity>
                         <View style={{flex:1, display:this.state.infVisible?'flex':'none',}}>
                             <FlatList 
@@ -157,8 +156,10 @@ export default class ManageStaff extends React.Component{
                             />
                         </View>
                         <TouchableOpacity style={styles.specTitle} onPress={()=>{return this.setState({aidVisible: !this.state.aidVisible})}}  >
-                            <Image style={{height:15, width:15}} source={this.state.aidVisible ? require('../assets/arrow-left.png') : require('../assets/arrowdown.png')} />
                             <Text style={styles.text}>Aides-Soignants</Text>
+                            <View style={{flex:1,  alignItems:'flex-end', paddingRight:40  }}>
+                                <Image style={{height:15, width:15,   }} source={this.state.aidVisible ? require('../assets/uparrow.png') : require('../assets/arrowdown.png')} />
+                                </View>
                         </TouchableOpacity>
                         <View style={{flex:1, display:this.state.aidVisible?'flex':'none',}}>
                             <FlatList 

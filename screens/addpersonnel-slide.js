@@ -4,6 +4,7 @@ import { AntDesign } from "@expo/vector-icons";
 import colors from "../Colors"; 
 import SelectDropdown from 'react-native-select-dropdown';
 import Dropdown from "../components/todolist/dropDown";
+import Fire from "../Fire";
 
 
 
@@ -21,11 +22,11 @@ export default class AddPersonnelSlide extends React.Component {
     createPersonnel = () => {
         const {nom, profession, speciality, naissance} = this.state;
         const personnel = {nom, profession, speciality, naissance}; 
-        this.props.addPersonnel(personnel); 
+        this.addPersonnel(personnel); 
+        this.props.navigation.navigate("Manage Staff");
 
 
         this.setState({nom:""});
-        this.props.closeModal();
         }; 
         getProfession = (data) =>{
             console.log("Coming from Parent", data);
@@ -34,6 +35,14 @@ export default class AddPersonnelSlide extends React.Component {
         getSpeciality = (data) =>{
             console.log("Coming from Parent", data);
             this.setState({speciality: data});
+        };
+        addPersonnel = personnel =>{
+            firebase.addPersonnel({
+                nom: personnel.nom,
+                profession: personnel.profession,
+                speciality: personnel.speciality,
+                naissance: personnel.naissance
+            });
         };
 
 
@@ -46,14 +55,14 @@ export default class AddPersonnelSlide extends React.Component {
                <KeyboardAvoidingView style={styles.container}> 
                     
                     <View style={{ alignSelf: "stretch", marginHorizontal: 32, }}> 
-                        <TextInput style={styles.input} placeholderTextColor="#000"  placeholder="Personnel Name" onChangeText={text => this.setState({ nom: text })}/> 
-                        <TextInput style={styles.input} placeholderTextColor="#000" placeholder="Birthday" onChangeText={text => this.setState({ naissance: text})} />     
+                        <TextInput style={styles.input} placeholderTextColor="#C0C0C0"  placeholder="Personnel Name" onChangeText={text => this.setState({ nom: text })}/> 
+                        <TextInput style={styles.input} placeholderTextColor="#C0C0C0" placeholder="Birthday" onChangeText={text => this.setState({ naissance: text})} />     
                     </View>
                     <View  style={{ alignSelf: "stretch", marginHorizontal: 32}}>
                         <Dropdown onProfessionChange={this.getProfession} onSpecialityChange={this.getSpeciality} />
                     </View>
                     <View  style={{ flex: 1, alignItems:'center', alignSelf: "stretch", marginHorizontal: 32}}>
-                    <TouchableOpacity activeOpacity={1} style={styles.buttonView}  >
+                    <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={()=>this.createPersonnel() } >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
                                         <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
