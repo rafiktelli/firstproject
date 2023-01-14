@@ -158,21 +158,31 @@ export default class ViewDocTasksScreen extends React.Component {
                             highlightColor:colors.blue,
                             borderWidth:1,
                             borderHighlightColor:colors.blue,
+                            borderRadius:50, 
+                            
+                            
                         }}
-                        style={{height:80, paddingTop:10, paddingBottom:10 }}
-                        calendarHeaderStyle={{color:'#000'}}
+                        style={{height:95, paddingVertical:0,  }}
+                        innerStyle={{  }}
+                        dayComponentHeight={60}
+                        
+                        dayContainerStyle={{borderRadius:10,  paddingVertical:10  }}
+                        calendarHeaderContainerStyle={{}}
+                        
+                        calendarHeaderStyle={{color:'#000', paddingBottom:20, paddingTop:5, }}
                         calendarColor={'#FFF'}
-                        dateNameStyle={{color:'#000'}}
-                        dateNumberStyle={{color:'#000'}}
-                        highlightDateNameStyle={{color:'#FFF'}}
-                        highlightDateNumberStyle={{color:'#FFF'}}
+                        dateNameStyle={{color:'#000', paddingBottom:10, fontSize:10, fontWeight:'600'}}
+                        dateNumberStyle={{}}
+                        highlightDateNameStyle={{color:'#FFF', paddingBottom:10, fontSize:10 , fontWeight:'600' }}
+                        highlightDateNumberStyle={{color:'#FFF', }}
+                        disabledDateNameStyle={{ paddingBottom:10, fontSize:10}}
                         datesBlacklist={this.datesBlacklistFunc}
                         onDateSelected={async date => this.onDateSelected(date)}
                         iconContainer={{flex:0.1}}
                         
                     />
                     </View>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
+                    <View style={{marginHorizontal:20, marginBottom:10, marginTop:20}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Schedule of Dr.{this.props.pers.nom}</Text>
                         
                         
@@ -193,7 +203,7 @@ export default class ViewDocTasksScreen extends React.Component {
                                  
                                 return(
                                     <View>
-                                        <TaskCard containerStyle={{backgroundColor: colors.shadyBlue }} name={item.motif} date={date} doctor={item.patientID} duration={item.duration} age={age} time={item.slot} />
+                                        <TaskCard containerStyle={{backgroundColor: colors.lightBlue }} name={item.motif} date={date} doctor={item.patientID} duration={item.duration} age={age} time={item.slot} />
                                     </View>
                                     );
                             }}

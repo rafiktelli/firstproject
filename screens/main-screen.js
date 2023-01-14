@@ -18,30 +18,30 @@ const MainScreen = ({ navigation }) => {
             <View>
             <View style={{flexDirection:'row' ,paddingVertical: 20}}>
                 <TouchableOpacity onPress={() => navigation.navigate("Appointment") }>
-                    <View style={{ width:150, height:150, backgroundColor: 'navy' , borderRadius:15,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Schedule an  </Text>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Appointment </Text>
-                    </View> 
+                <View style={{ width:150, height:150, backgroundColor: colors.white , borderRadius:0,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
+                        <Image source={require('../assets/appointment.png')} style={{height:50, width:50}} />
+                        <Text style={{  paddingTop:20, fontSize:20, fontWeight: '600', color: colors.black, }} > Appointment Schedule </Text>
+                    </View>
                 </TouchableOpacity>   
                 <TouchableOpacity onPress={() => navigation.navigate("Surgery") } >
-                    <View style={{ width:150, height:150, backgroundColor: 'navy' , borderRadius:15,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Schedule a  </Text>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Surgery </Text>
-                    </View> 
+                <View style={{ width:150, height:150, backgroundColor: colors.white , borderRadius:0,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
+                        <Image source={require('../assets/appointment.png')} style={{height:50, width:50}} />
+                        <Text style={{  paddingTop:20, fontSize:20, fontWeight: '600', color: colors.black, }} > Schedule Surgery </Text>
+                    </View>
                 </TouchableOpacity>    
             </View>  
             <View style={{flexDirection:'row',  }}>
             <TouchableOpacity onPress={() => navigation.navigate("Assign Task") }>
-                    <View style={{ width:150, height:150, backgroundColor: 'navy' , borderRadius:15,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Assign </Text>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Tasks </Text>
+                    <View style={{ width:150, height:150, backgroundColor: colors.white , borderRadius:0,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
+                        <Image source={require('../assets/todo-icon.png')} style={{height:50, width:50}} />
+                        <Text style={{  paddingTop:20, fontSize:20, fontWeight: '600', color: colors.black, }} > Assign Tasks </Text>
                     </View> 
                 </TouchableOpacity>         
                 <TouchableOpacity onPress={() => navigation.navigate("Manage Staff") }>
-                    <View style={{ width:150, height:150, backgroundColor: 'navy' , borderRadius:15,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white, }} > Manage    </Text>
-                        <Text style={{  fontSize:24, fontWeight: '600', color: colors.white,   }} > Staff </Text>
-                    </View> 
+                <View style={{ width:150, height:150, backgroundColor: colors.white , borderRadius:0,  marginHorizontal:10, alignItems:'center', justifyContent:'center' }}>
+                        <Image source={require('../assets/manage-staff.png')} style={{height:50, width:50}} />
+                        <Text style={{  paddingTop:20, fontSize:20, fontWeight: '600', color: colors.black, }} > Manage Staff </Text>
+                    </View>
                 </TouchableOpacity>    
             </View> 
         </View> 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#FFF',
+        backgroundColor: colors.lighterGray,
       },
       category:{
         height:120,

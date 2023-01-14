@@ -1,5 +1,5 @@
 import React from "react"; 
-import { View, Text, StyleSheet, KeyboardAvoidingView, Image, TouchableOpacity, TextInput, FlatList, DatePickerIOS } from "react-native"; 
+import { View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, Image, TouchableOpacity, TextInput, FlatList, DatePickerIOS } from "react-native"; 
 import { AntDesign } from "@expo/vector-icons"; 
 import colors from "../Colors"; 
 import SelectDropdown from 'react-native-select-dropdown';
@@ -53,9 +53,10 @@ export default class AddPersonnelSlide extends React.Component {
 
             return (
                <KeyboardAvoidingView style={styles.container}> 
+                        <StatusBar barStyle="light-content" backgroundColor={colors.blue} /> 
                     
                     <View style={{ alignSelf: "stretch", marginHorizontal: 32, }}> 
-                    <Text> {this.props.route.params.name} </Text>
+            
                         <TextInput style={styles.input} placeholderTextColor="#C0C0C0"  placeholder="Personnel Name" onChangeText={text => this.setState({ nom: text })}/> 
                         <TextInput style={styles.input} placeholderTextColor="#C0C0C0" placeholder="Birthday" onChangeText={text => this.setState({ naissance: text})} />     
                     </View>

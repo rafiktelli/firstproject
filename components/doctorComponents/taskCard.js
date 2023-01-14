@@ -49,9 +49,9 @@ export default class TaskCard extends React.Component {
             </View>
             </View>
             <View style={{alignItems:'center'}}>
-                <Text style={[styles.bold, {fontSize:14} ]}>{this.props.time}</Text>
+                <Text style={[styles.regular, {fontSize:14} ]}>{this.props.time}</Text>
                 <View style={{height:80, width: 1, borderRadius:50,backgroundColor:'#fff', marginVertical:3 }} />
-                <Text style={[styles.bold, {fontSize:14} ]}>{this.getEndTime()}</Text>
+                <Text style={[styles.regular, {fontSize:14} ]}>{this.getEndTime()}</Text>
             </View>
       </View>
 
@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
     regular:{
         color: '#fff',
         fontSize: 14,
+        fontWeight:'300'
     },
     row: {
         flexDirection:'row',

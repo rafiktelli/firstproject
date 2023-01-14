@@ -79,8 +79,19 @@ export default function App() {
          <Stack.Screen
          name="Manage Staff"
          component={ManageStaff}
-         options={{headerShown: true}}
-         />
+         options={{
+          headerShown: true,
+          headerTintColor:'#FFF',
+          title: 'Manage Staff',
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}/
+         >
          <Stack.Screen
          name="Take an Appointment"
          component={DoctorAppointSlide}
@@ -115,7 +126,19 @@ export default function App() {
          <Stack.Screen
          name="Ajouter un Personnel"
          component={AddPersonnelSlide}
-         options={{headerShown: true, }}
+         options={{
+          headerShown: true,
+          headerTintColor:'#FFF',
+          title: 'Ajouter un Personnel',
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
+
          />
          <Stack.Screen
          name="Surgery"

@@ -177,8 +177,8 @@ export default class AssignSlide extends React.Component {
     renderTodo = (todo, index) =>{
         return(
             
-            <GestureHandlerRootView style={{marginVertical:3}}>
-            <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
+            <GestureHandlerRootView style={{marginVertical:3,}}>
+            <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)} >
             <View style={styles.todoContainer}>
                 <TouchableOpacity onPress={()=>this.toggleTodoCompleted(index)}>
                     <Ionicons name= {todo.completed? "checkbox-outline":"ios-square-outline"}  size={24} color={todo.completed? colors.gray:colors.gray} style={{width:32}} />
@@ -402,6 +402,7 @@ const styles = StyleSheet.create({
             flexDirection: 'row',
             alignItems: 'center',
             paddingVertical:16,
+            paddingRight:25,
             marginLeft:16,
             marginRight:16,
             borderColor:colors.white,

@@ -95,7 +95,7 @@ export default class ManageStaff extends React.Component{
 
             
             
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" /> 
+            <StatusBar barStyle="light-content" backgroundColor={colors.blue} /> 
                 <Modal animationType="slide" visible={this.state.addPersonnelVisible} onRequestClose ={()=>this.toggleAddPersonnelModel()}>
                     <AddPersonnelSlide closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
                 </Modal>
@@ -191,7 +191,7 @@ export default class ManageStaff extends React.Component{
 
                 
             </ScrollView>
-            <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={()=> this.props.navigation.navigate("Ajouter un Personnel", {name:'haha',})} >
+            <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={()=> this.props.navigation.navigate("Ajouter un Personnel", {navigation :this.props.navigation,})} >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
                                         <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
