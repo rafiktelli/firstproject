@@ -91,7 +91,7 @@ export default class AssignTaskScreen extends React.Component {
 
     renderDoctors = pers =>{
         
-        return( <DoctorBar med={false} pers={pers} /> );
+        return( <DoctorBar navigation={this.props.navigation} med={false} pers={pers} /> );
     }
     searchDoc(textToSearch){
         this.setState({spec: ''});
@@ -120,24 +120,30 @@ export default class AssignTaskScreen extends React.Component {
         return (
             <View  style={styles.container}>
             <ScrollView keyboardShouldPersistTaps='always'>
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-                <View style={{ marginLeft:20,  }}>
-                    <View style={{height:75,  }} />
-                    <View style={{}}>
-                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Assign Tasks</Text>
-                        
-                    </View>
-                    <View style={{flexDirection:'row', marginTop: 20, marginBottom: 25 }}>
-                        <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
-                        <TouchableOpacity onPress={()=>this.clearInputText()} activeOpacity={1} style={{width:25, backgroundColor:'#f8f4f4', borderBottomRightRadius:15,borderTopRightRadius:15, alignContent:'center',justifyContent:'center'}} onPress={()=>this.clearInputText()} >
+            <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
+                <View style={{ backgroundColor:colors.blue   }}>
+                
+                <View style={{ }}>
+                <View style={{height:75}}>
+                    <Text style={{fontWeight:'500', fontSize:22, color: colors.white, paddingHorizontal: 20, paddingTop:20}}> Specialist Doctors </Text>
+                    
+                    <Text style={{ fontWeight:'200', fontSize:16, color: colors.white, paddingHorizontal: 20, }}> In every domain </Text>
+                
+                </View>
+                <View style={{ marginLeft:20, flexDirection:'row', marginRight:20, marginTop: 20, marginBottom: 25, justifyContent:'center' }}>
+                    <TouchableOpacity onPress={()=>this.clearInputText()} activeOpacity={1} style={{ paddingLeft:10, backgroundColor:'#f8f4f4', borderBottomLeftRadius:15,borderTopLeftRadius:15, alignContent:'center',justifyContent:'center'}} onPress={()=>this.clearInputText()} >
+                            <Ionicons name="search" size={ 24 } color={'#C0C0C0'}   />
+                        </TouchableOpacity>
+                        <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Alexandre Gaillard" />
+                        <TouchableOpacity onPress={()=>this.clearInputText()} activeOpacity={1} style={{ width:30, backgroundColor:'#f8f4f4', borderBottomRightRadius:15,borderTopRightRadius:15, alignContent:'center',justifyContent:'center'}} onPress={()=>this.clearInputText()} >
                             <Ionicons name="close" size={ this.state.inputValue ? 24 : 0} color={'#C0C0C0'}   />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.search} >
-                            <Ionicons name="search" size={24} color={'#FFF'}  />
-                        </TouchableOpacity>
+                        
                     </View>
-
-                    <View style={{marginVertical:10,  }}>
+                </View>
+                <View style={{paddingVertical:20, borderTopRightRadius:20, borderTopLeftRadius:20, backgroundColor:'#FFF'}}>
+                 <View style={{marginLeft:20}}>
+                    <View style={{marginBottom:20}}>
                         <Text style={{fontWeight:'900', fontSize:20}}>Aides-Soignants</Text>
                     </View>
                     <View style={{  }}>
@@ -154,6 +160,8 @@ export default class AssignTaskScreen extends React.Component {
                         </ScrollView>
                     </View>
 
+                </View>
+                </View>
                 </View>
                 </ScrollView>
             </View>
@@ -179,23 +187,21 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         backgroundColor: '#FFF',
       },
-    input:{
+      input:{
         paddingVertical: 15,
         paddingLeft:20,
         paddingRight: 5,
-        width: 270,
+        width: 300,
         backgroundColor: '#f8f4f4',
-        borderBottomLeftRadius:15,
-        borderTopLeftRadius:15,
         borderColor: '#f8f4f4',
         borderWidth: 1,
-    },  
+    }, 
     search:{
         alignItems:'center', 
         justifyContent:'center', 
         width: 60, 
         paddingVertical:15, 
-        backgroundColor:'#127eff', 
+        backgroundColor:colors.blue, 
         borderRadius:15,
     },
     

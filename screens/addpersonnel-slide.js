@@ -55,6 +55,7 @@ export default class AddPersonnelSlide extends React.Component {
                <KeyboardAvoidingView style={styles.container}> 
                     
                     <View style={{ alignSelf: "stretch", marginHorizontal: 32, }}> 
+                    <Text> {this.props.route.params.name} </Text>
                         <TextInput style={styles.input} placeholderTextColor="#C0C0C0"  placeholder="Personnel Name" onChangeText={text => this.setState({ nom: text })}/> 
                         <TextInput style={styles.input} placeholderTextColor="#C0C0C0" placeholder="Birthday" onChangeText={text => this.setState({ naissance: text})} />     
                     </View>

@@ -80,7 +80,7 @@ export default class ChooseSurgAssist extends React.Component {
 
     }
     toggleModal(){
-        this.setState({showListVisible: !this.state.showListVisible})
+        this.props.navigation.navigate("Add Surgery Information",{surg : true, anes : this.state.pressedCategory2, nurse : this.state.pressedCategory, pers : this.props.route.params.pers, slot : this.props.route.params.slot, date : this.props.route.params.date});
     }
    
     
@@ -88,8 +88,8 @@ export default class ChooseSurgAssist extends React.Component {
  
 
     render(){
-        var surgofday = this.props.surgofday;
-        var slot = this.props.slot;
+        var surgofday = this.props.route.params.surgofday;
+        var slot = this.props.route.params.slot;
         var surgofdayslot = surgofday.filter( function(el) { return el.slot ===  slot} );
         var occupNurse = surgofdayslot.map(c => c.nurse);
         var occupAnes = surgofdayslot.map(c => c.anes);
@@ -103,17 +103,13 @@ export default class ChooseSurgAssist extends React.Component {
         return (
             <View  style={styles.container}>
             <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleModal()}>
-                <PatientInfoSlide surg={true} anes={this.state.pressedCategory2} nurse={this.state.pressedCategory} closePrevModal={()=>this.props.closeModal()} pers={this.props.pers} slot={this.props.slot} date={this.props.date}  closeModal={()=>this.toggleListModal()} />
+                <PatientInfoSlide surg={true} anes={this.state.pressedCategory2} nurse={this.state.pressedCategory} closePrevModal={()=>this.props.closeModal()} pers={this.props.route.params.pers} slot={this.props.route.params.slot} date={this.props.route.params.date}  closeModal={()=>this.toggleListModal()} />
 
             </Modal>
             <ScrollView keyboardShouldPersistTaps='always'>
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+            <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
                 <View style={{ marginLeft:20,  }}>
-                    <View style={{height:75,  }} />
-                    <View style={{}}>
-                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Choose Surgery Assistants</Text>
-                    </View>
-
+                    
                     
                     <View style={{marginVertical:10,  }}>
                         <Text style={{fontWeight:'900', fontSize:20}}>Available Nurses</Text>
@@ -139,8 +135,8 @@ export default class ChooseSurgAssist extends React.Component {
                             <Text> {console.log(this.state.pressedCategory)}</Text>
                         </ScrollView>
                     </View>
-                    <View style={{ display: (this.props.slot ==="15:00") ? 'flex' : 'none' }}>
-                        <View style={{marginVertical:10, display: (this.props.slot ==="15:00") ? 'flex' : 'none' }}>
+                    <View style={{ display: (this.props.route.params.slot ==="15:00") ? 'flex' : 'none' }}>
+                        <View style={{marginVertical:10, display: (this.props.route.params.slot ==="15:00") ? 'flex' : 'none' }}>
                             <Text style={{fontWeight:'900', fontSize:20}}>Available Anesthesiologist</Text>
                         </View>
                         <View style={{  }}>
@@ -174,7 +170,7 @@ export default class ChooseSurgAssist extends React.Component {
                 </ScrollView>
                 <View style={{flex:1, alignItems:'center', justifyContent:'flex-end', }}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center', marginBottom:30 }}>
-                            <TouchableOpacity disabled={this.state.pressedCategory === '' || ((this.props.slot ==="15:00") && this.state.pressedCategory2 === '')  } onPress={()=>this.toggleModal()} >
+                            <TouchableOpacity disabled={this.state.pressedCategory === '' || ((this.props.route.params.slot ==="15:00") && this.state.pressedCategory2 === '')  } onPress={()=>this.toggleModal()} >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
@@ -229,7 +225,7 @@ const styles = StyleSheet.create({
         justifyContent:'center', 
         width: 60, 
         paddingVertical:15, 
-        backgroundColor:'#127eff', 
+        backgroundColor:colors.blue, 
         borderRadius:15,
     },
     

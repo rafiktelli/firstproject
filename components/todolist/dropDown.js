@@ -53,6 +53,7 @@ const handleSpeciality =()=> {
         <ScrollView
           showsVerticalScrollIndicator={false}
           alwaysBounceVertical={false}
+          baseColor="#F0F"
           contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.container}>
             <View style={{marginTop: 4, marginBottom : 4, }} >
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical:10,
     height:65, 
-    width: 330
+    width: 330,
 
 },
 

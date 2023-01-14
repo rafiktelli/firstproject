@@ -3,6 +3,7 @@ import { View, Text, Button, Image, FlatList, useWindowDimensions, Animated, Pre
 import slides from '../components/welcomeComponents/slides';
 import WelcomeItem from '../components/welcomeComponents/welcome-item'; 
 import Paginator from '../components/welcomeComponents/paginator';
+import colors from '../Colors';
 
 
 const WelcomeScreen = ({ navigation }) => {
@@ -60,7 +61,7 @@ const styles = {
   alignItems: 'center',
   position: 'absolute', //Here is the trick
   bottom: 50, //Here is the trick
-  backgroundColor: '#493d8a',
+  backgroundColor: colors.middleBlue,
   borderRadius: 5,
   paddingVertical: 12, 
   paddingHorizontal: 32,

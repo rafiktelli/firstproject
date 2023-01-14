@@ -40,7 +40,7 @@ export default class speCompo extends React.Component {
     
     return (
         
-        <View style={[styles.category,{ backgroundColor: pressed ? colors.blue :colors.lighterGray}]}>
+        <View style={[styles.category,{ backgroundColor: pressed ? colors.orange :colors.lighterGray}]}>
             <View style={{flex:1, justifyContent:'center', alignItems:'center', paddingTop:10}}>
                 <Image source={source} style={{ height:45, width:45}} />
             </View>

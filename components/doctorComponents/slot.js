@@ -20,7 +20,7 @@ export default class Slot extends React.Component {
     }
     return (
       <View>
-            <View style={{height:45, width:90, backgroundColor: pressed ? colors.blue:'#C0C0C0' ,marginRight:5, marginBottom: 5, borderRadius:15, alignItems:'center',justifyContent:'center'}} >
+            <View style={{height:45, width:90, backgroundColor: pressed ? colors.blue:'#D2D2D2' ,marginRight:5, marginBottom: 5, borderRadius:15, alignItems:'center',justifyContent:'center'}} >
                 <Text style={{fontWeight:'700', fontSize:15, color: pressed ? colors.white:'#000',}}>{this.props.time}</Text>
             </View>
       </View>

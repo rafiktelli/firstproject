@@ -92,7 +92,7 @@ export default class SurgeryScreen extends React.Component {
 
     renderDoctors = pers =>{
         
-        return( <DoctorBar surg={true} pers={pers} /> );
+        return( <DoctorBar navigation={this.props.navigation} surg={true} pers={pers} /> );
     }
     searchDoc(textToSearch){
         this.setState({spec: ''});
@@ -114,33 +114,45 @@ export default class SurgeryScreen extends React.Component {
         }
         console.log(this.state.inputValue);
     } 
+    
 
     render(){
+        
         //this.state.filtred = this.state.doctors;
         if(this.state.inputValue === ''){ console.log(""); }
         return (
             <View  style={styles.container}>
-            <ScrollView keyboardShouldPersistTaps='always'>
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-                <View style={{ marginLeft:20,  }}>
-                    <View style={{height:75,  }} />
-                    <View style={{}}>
-                        <Text style={{ fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Schedule Surgery</Text>
-                    </View>
-                    <View style={{flexDirection:'row', marginTop: 20, marginBottom: 25 }}>
-                        <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
-                        <TouchableOpacity onPress={()=>this.clearInputText()} activeOpacity={1} style={{width:25, backgroundColor:'#f8f4f4', borderBottomRightRadius:15,borderTopRightRadius:15, alignContent:'center',justifyContent:'center'}} onPress={()=>this.clearInputText()} >
+            <ScrollView keyboardShouldPersistTaps='always' showsVerticalScrollIndicator={false} >
+            <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
+                <View style={{ backgroundColor:colors.blue   }}>
+                
+                <View style={{ }}>
+                <View style={{height:75}}>
+                    <Text style={{fontWeight:'500', fontSize:22, color: colors.white, paddingHorizontal: 20, paddingTop:20}}> Specialist Surgeons </Text>
+                    
+                    <Text style={{ fontWeight:'200', fontSize:16, color: colors.white, paddingHorizontal: 20, }}> In every domain </Text>
+                
+                </View>
+                    <View style={{ marginLeft:20, flexDirection:'row', marginRight:20, marginTop: 20, marginBottom: 25, justifyContent:'center' }}>
+                    <TouchableOpacity onPress={()=>this.clearInputText()} activeOpacity={1} style={{ paddingLeft:10, backgroundColor:'#f8f4f4', borderBottomLeftRadius:15,borderTopLeftRadius:15, alignContent:'center',justifyContent:'center'}} onPress={()=>this.clearInputText()} >
+                            <Ionicons name="search" size={ 24 } color={'#C0C0C0'}   />
+                        </TouchableOpacity>
+                        <TextInput value={this.state.inputValue} clearButtonMode='always' onChangeText={text=>{this.searchDoc(text)}} style={styles.input} placeholder="Search, e.g: Alexandre Gaillard" />
+                        <TouchableOpacity onPress={()=>this.clearInputText()} activeOpacity={1} style={{ width:30, backgroundColor:'#f8f4f4', borderBottomRightRadius:15,borderTopRightRadius:15, alignContent:'center',justifyContent:'center'}} onPress={()=>this.clearInputText()} >
                             <Ionicons name="close" size={ this.state.inputValue ? 24 : 0} color={'#C0C0C0'}   />
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.search} >
-                            <Ionicons name="search" size={24} color={'#FFF'}  />
-                        </TouchableOpacity>
+                        
                     </View>
+                </View>
+                 <View style={{paddingVertical:20, borderTopRightRadius:20, borderTopLeftRadius:20, backgroundColor:'#FFF'}}>
+                 <View style={{marginLeft:20}}>
                     <View style={{marginBottom:20}}>
                         <Text style={{fontWeight:'900', fontSize:20}}>Categories</Text>
                     </View>
-                    <View >
-                        <ScrollView horizontal={true} keyboardShouldPersistTaps='always' showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:120, flexDirection:'row'}}>
+                    <View style={{marginLeft:-20}}>
+                    
+                    <ScrollView horizontal={true} keyboardShouldPersistTaps='always' showsHorizontalScrollIndicator={false} style={{backgroundColor:'#fff', height:120, flexDirection:'row'}}>
+                    <View style={{width:20}} /> 
                         <FlatList 
                             data={this.state.spec}
                             keyExtractor={(item) => item.toString()} 
@@ -171,7 +183,8 @@ export default class SurgeryScreen extends React.Component {
                             <Text> {console.log(this.state.pressedCategory)}</Text>
                         </ScrollView>
                     </View>
-
+                    </View>
+                    </View>
                 </View>
                 </ScrollView>
             </View>
@@ -201,10 +214,8 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         paddingLeft:20,
         paddingRight: 5,
-        width: 270,
+        width: 300,
         backgroundColor: '#f8f4f4',
-        borderBottomLeftRadius:15,
-        borderTopLeftRadius:15,
         borderColor: '#f8f4f4',
         borderWidth: 1,
     },  
@@ -213,7 +224,7 @@ const styles = StyleSheet.create({
         justifyContent:'center', 
         width: 60, 
         paddingVertical:15, 
-        backgroundColor:'#127eff', 
+        backgroundColor:colors.blue, 
         borderRadius:15,
     },
     

@@ -31,16 +31,17 @@ export default class DoctorBar extends React.Component {
 
     toggleListModal(){
         if(this.props.surg){
-            this.setState({showListVisible1: !this.state.showListVisible1});
+            
+            this.props.navigation.navigate("SurgeonAppointSlide",{pers: this.props.pers});
         } else {
             if(this.props.med){
-                this.setState({showListVisible: !this.state.showListVisible});
+                this.props.navigation.navigate("Take an Appointment",{pers: this.props.pers});
             } else {
                 if(this.props.anes){
                     
                     
                 } else{
-                    this.setState({showListVisible2: !this.state.showListVisible2});
+                    this.props.navigation.navigate("Todo List",{pers: this.props.pers});
                 }
             }
         } 
@@ -75,7 +76,7 @@ export default class DoctorBar extends React.Component {
             <Modal animationType="slide" visible={this.state.showListVisible2} onRequestClose={(med)=>this.toggleListModal()}>
                 <AssignSlide pers={pers} closeModal={()=>this.toggleListModal(med)} />
             </Modal>
-            <Modal animationType="slide" visible={this.state.showListVisible1} onRequestClose={(med)=>this.toggleListModal()}>
+            <Modal animationType="slide" visible={this.state.showListVisible1} onRequestClose={(med,pers)=>this.toggleListModal()}>
                 <SurgeonAppointSlide pers={pers} closeModal={()=>this.toggleListModal(med)} />
             </Modal>
             
@@ -87,11 +88,13 @@ export default class DoctorBar extends React.Component {
             <View style={[styles.doctor, {backgroundColor: pressed ? colors.blue : colors.lighterGray }]}>
                     <TouchableOpacity disabled={this.props.isManage || this.props.anes} onPress={()=>this.toggleListModal()} style={{ marginBottom:15, flexDirection:'row', alignItems:'center',  }}>
                         <View>
-                            <Image source={require('../../assets/default-doctor.png')} style={{width:65, height:65, borderRadius: 15, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10}} />
+                            <View>
+                                <Image source={require('../../assets/default-doctor.png')} style={{ width:65, height:65, borderRadius: 15, backgroundColor:'#fff', marginHorizontal:10, marginVertical: 10, borderWidth:2,  }} />
+                            </View>
                         </View>
                         <View  style={{width:220, flexDirection:'column', alignItems:'flex-start', }}>
-                            <Text style={{  display: pers.speciality  > "" ? 'flex' : 'none', color: pressed ? '#FFF':'#000' }}>{ pers.speciality}</Text>
-                            <Text style={{ fontSize:15, fontWeight:'700', color: pressed ? '#FFF':'#000' }}>{med? "Dr.":""}{pers.nom}</Text>
+                            <Text style={{  display: pers.speciality  > "" ? 'flex' : 'none', color: pressed ? '#FFF': colors.gray , fontWeight:'300'  }}>{ pers.speciality}</Text>
+                            <Text style={{ fontSize:16,  color: pressed ? '#FFF':'#000', fontWeight:'600' }}>{(med || surg) ? "Dr. ":""}{pers.nom}</Text>
                         </View>
                         <TouchableOpacity style={{ display: this.props.isManage ? 'flex' : 'none',  flex:1, alignItems: 'flex-end', justifyContent:'center',marginHorizontal:10, marginVertical: 10,width:40,}} onPress={() => this.RBSheet.open()}>
                             <Image source={require('../../assets/verticalDots.png')} style={{ height:30, width:30, }} />

@@ -178,7 +178,8 @@ const styles = StyleSheet.create({
         padding: 16,
         alignItems:"center",
         justifyContent: 'center',
-        borderRadius: 10
+        borderRadius: 10,
+    
     },
     todoContainer:{
         backgroundColor: '#FFF',

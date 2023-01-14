@@ -53,7 +53,7 @@ export default class DoctorAppointSlide extends React.Component {
         this.setState({pressedSlot : slot, });
     }
     toggleListModal(){
-        this.setState({showListVisible: !this.state.showListVisible})
+        this.props.navigation.navigate("Add Surgery Information",{ pers: this.props.route.params.pers, slot: this.state.pressedSlot, date: this.state.selectedDate} );
     }
     toggleAddPersonnelModel(){
         this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
@@ -75,7 +75,7 @@ export default class DoctorAppointSlide extends React.Component {
 
     componentDidMount(){
         
-        var test = this.props.pers.id.toString();
+        var test = this.props.route.params.pers.id.toString();
         firebase = new Fire((error, user)=>{
             if(error){
                 return alert("Uh no, there is something went wrong");
@@ -122,25 +122,24 @@ export default class DoctorAppointSlide extends React.Component {
           
         return (
             <View style={styles.container}>
-                <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
+                <StatusBar barStyle="light-content" backgroundColor={colors.blue} />   
                 
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                    <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
+                    <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.route.params.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
                 
-                <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
-                        <AntDesign  name="close" size={24} color={colors.black} />
-                </TouchableOpacity>
+                
 
-                <View style={{ backgroundColor:'',  height:260, marginBottom:10, paddingTop:50, flexDirection:'column', alignItems:'center', justifyContent:'center', }}>
+                <View style={{ backgroundColor:'',  height:215, marginBottom:20, paddingTop:25, flexDirection:'column', alignItems:'center', justifyContent:'center', }}>
                     <View>
                         <Image style={{width:130, height:130, borderRadius:25,  }} source={require('../assets/doctor-female.jpg')}  />
                     </View>
-                    <Text style={styles.persName}>{this.props.pers.speciality} </Text>
-                    <Text style={styles.persSpec}>Dr.{this.props.pers.nom}</Text>
+                    
+                    <Text style={styles.persName}>Dr. {this.props.route.params.pers.nom}</Text>
+                    <Text style={styles.persSpec}>{this.props.route.params.pers.speciality} </Text>
                 </View>
-                <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:20 }}>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
+                <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:10 }}>
+                    <View style={{marginHorizontal:20, marginTop:10, marginBottom:15, }}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
                     </View>
                     <View style={{ }}>
@@ -153,21 +152,31 @@ export default class DoctorAppointSlide extends React.Component {
                             highlightColor:colors.blue,
                             borderWidth:1,
                             borderHighlightColor:colors.blue,
+                            borderRadius:50, 
+                            
+                            
                         }}
-                        style={{height:80, paddingTop:10, paddingBottom:10 }}
-                        calendarHeaderStyle={{color:'#000'}}
+                        style={{height:95, paddingVertical:0,  }}
+                        innerStyle={{  }}
+                        dayComponentHeight={60}
+                        
+                        dayContainerStyle={{borderRadius:10,  paddingVertical:10  }}
+                        calendarHeaderContainerStyle={{}}
+                        
+                        calendarHeaderStyle={{color:'#000', paddingBottom:20, paddingTop:5, }}
                         calendarColor={'#FFF'}
-                        dateNameStyle={{color:'#000'}}
-                        dateNumberStyle={{color:'#000'}}
-                        highlightDateNameStyle={{color:'#FFF'}}
-                        highlightDateNumberStyle={{color:'#FFF'}}
+                        dateNameStyle={{color:'#000', paddingBottom:10, fontSize:10, fontWeight:'600'}}
+                        dateNumberStyle={{}}
+                        highlightDateNameStyle={{color:'#FFF', paddingBottom:10, fontSize:10 , fontWeight:'600' }}
+                        highlightDateNumberStyle={{color:'#FFF', }}
+                        disabledDateNameStyle={{ paddingBottom:10, fontSize:10}}
                         datesBlacklist={this.datesBlacklistFunc}
                         onDateSelected={async date => this.onDateSelected(date)}
                         iconContainer={{flex:0.1}}
                         
                     />
                     </View>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
+                    <View style={{marginHorizontal:20, marginVertical:20, display: dateClicked ? 'flex' : 'none'}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Available Slots</Text>
                         
                         
@@ -196,14 +205,14 @@ export default class DoctorAppointSlide extends React.Component {
 
 
                     </View>
-                    <View style={{flex:1, display: this.state.availableSlots.length === 0 ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
+                    <View style={{flex:1, display: this.state.availableSlots.length === 0 ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:10}}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
                             <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
                                     </View>
-                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
+                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1, }}>
                                         <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
                                         <Text> {console.log("start")} </Text>
                                         <Text> {console.log("end")} </Text>
@@ -228,13 +237,14 @@ const styles = StyleSheet.create({
       persName:{
             paddingTop: 10,
             fontSize: 18,
-            fontWeight: '400',
+            fontWeight: '500',
       },
       persSpec:{
+        color:colors.gray,
         paddingTop: 5,
         fontSize: 18,
         fontWeight: '400',
-        fontWeight:'500',
+        
       },
 
 

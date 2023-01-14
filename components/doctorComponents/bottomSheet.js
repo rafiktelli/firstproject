@@ -58,7 +58,7 @@ export default class BottomSheet extends React.Component {
                 <Image source={  require('../../assets/doctor-female.jpg')} style={{width:65, height:65, borderRadius: 15, backgroundColor:'#C0C0C0', marginHorizontal:10, marginVertical: 10}} />
             </View>
             <View style={{flexDirection:'column', paddingVertical:15,  }}>
-                <Text style={{fontSize:20, fontWeight:'700', color:'#000'}}>{pers.nom} </Text>
+                <Text style={{fontSize:20, fontWeight:'600', color:'#000'}}>{pers.nom} </Text>
                 <View style={{flexDirection:'row',  }}>
 
                     <View style={[styles.tag,{height:30}]}>
@@ -87,7 +87,7 @@ export default class BottomSheet extends React.Component {
                 <TouchableOpacity onPress={()=>this.toggleListModal()}>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="checkbox-outline" size={24} color={'#5A5A5A'} />
-                    <Text style={{fontSize:18, paddingHorizontal:10, fontWeight:'600',  color:'#5A5A5A'}}>Check Schedule and Tasks</Text>
+                    <Text style={{fontSize:18, paddingHorizontal:10, fontWeight:'500',  color:'#5A5A5A'}}>Check Schedule and Tasks</Text>
                 </View>
                 </TouchableOpacity>
             </View>
@@ -96,7 +96,7 @@ export default class BottomSheet extends React.Component {
                 <TouchableOpacity>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="create" size={24} color={'#5A5A5A'} />
-                    <Text style={{ fontSize:18, paddingHorizontal:10, fontWeight:'600',  color:'#5A5A5A' }} >Edit Profile</Text>
+                    <Text style={{ fontSize:18, paddingHorizontal:10, fontWeight:'500',  color:'#5A5A5A' }} >Edit Profile</Text>
                 </View>
                 </TouchableOpacity>
             </View>
@@ -105,7 +105,7 @@ export default class BottomSheet extends React.Component {
                 <TouchableOpacity onPress={()=>this.DeleteDoctor()}>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="trash" size={24} color={colors.red} />
-                    <Text style={{color:colors.red, fontSize:18, paddingHorizontal:10, fontWeight:'600', }}>Delete Profile</Text>
+                    <Text style={{color:colors.red, fontSize:18, paddingHorizontal:10, fontWeight:'500', }}>Delete Profile</Text>
                 </View>
                 </TouchableOpacity>
             </View>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         
         alignItems:'center',
         borderRadius:8,
-        backgroundColor:'#127eff',
+        backgroundColor:colors.blue,
         paddingVertical:4,
         paddingHorizontal:8,
         marginRight: 5,

@@ -58,7 +58,7 @@ export default class SurgeonAppointSlide extends React.Component {
         this.setState({pressedSlot : slot, });
     }
     toggleListModal(){
-        this.setState({showListVisible: !this.state.showListVisible})
+        this.props.navigation.navigate("Choose Assistants",{pers: this.props.route.params.pers, slot: this.state.pressedSlot, date: this.state.selectedDate, surgofday: this.state.allSurgOfDate} );
     }
     toggleAddPersonnelModel(){
         this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
@@ -80,7 +80,7 @@ export default class SurgeonAppointSlide extends React.Component {
 
     componentDidMount(){
         
-        var test = this.props.pers.id.toString();
+        var test = this.props.route.params.pers.id.toString();
         firebase = new Fire((error, user)=>{
             if(error){
                 return alert("Uh no, there is something went wrong");
@@ -130,26 +130,21 @@ export default class SurgeonAppointSlide extends React.Component {
           
         return (
             <View style={styles.container}>
-                <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
+                <StatusBar backgroundColor={colors.blue} />   
                 
-                <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                    <ChooseSurgAssist closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} surgofday={this.state.allSurgOfDate} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
-                </Modal>
+               
                 
                 
-                <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
-                        <AntDesign  name="close" size={24} color={colors.black} />
-                </TouchableOpacity>
 
-                <View style={{ backgroundColor:'',  height:260, marginBottom:10, paddingTop:50, flexDirection:'column', alignItems:'center', justifyContent:'center', }}>
+                <View style={{ backgroundColor:'',  height:220, marginBottom:20, paddingTop:30, flexDirection:'column', alignItems:'center', justifyContent:'center', }}>
                     <View>
                         <Image style={{width:130, height:130, borderRadius:25,  }} source={require('../assets/doctor-female.jpg')}  />
                     </View>
-                    <Text style={styles.persName}>{this.props.pers.speciality} </Text>
-                    <Text style={styles.persSpec}>Dr.{this.props.pers.nom}</Text>
+                    <Text style={styles.persName}>Dr. {this.props.route.params.pers.nom} </Text>
+                    <Text style={styles.persSpec}>Chirurgien en {this.props.route.params.pers.speciality}</Text>
                 </View>
-                <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:20 }}>
-                    <View style={{marginHorizontal:20, marginVertical:10}}>
+                <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:10 }}>
+                    <View style={{marginHorizontal:20, marginTop:10, marginBottom:15, }}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
                     </View>
                     <View style={{ }}>
@@ -162,14 +157,24 @@ export default class SurgeonAppointSlide extends React.Component {
                             highlightColor:colors.blue,
                             borderWidth:1,
                             borderHighlightColor:colors.blue,
+                            borderRadius:50, 
+                            
+                            
                         }}
-                        style={{height:80, paddingTop:10, paddingBottom:10 }}
-                        calendarHeaderStyle={{color:'#000'}}
+                        style={{height:95, paddingVertical:0,  }}
+                        innerStyle={{  }}
+                        dayComponentHeight={60}
+                        
+                        dayContainerStyle={{borderRadius:10,  paddingVertical:10  }}
+                        calendarHeaderContainerStyle={{}}
+                        
+                        calendarHeaderStyle={{color:'#000', paddingBottom:20, paddingTop:5, }}
                         calendarColor={'#FFF'}
-                        dateNameStyle={{color:'#000'}}
-                        dateNumberStyle={{color:'#000'}}
-                        highlightDateNameStyle={{color:'#FFF'}}
-                        highlightDateNumberStyle={{color:'#FFF'}}
+                        dateNameStyle={{color:'#000', paddingBottom:10, fontSize:10, fontWeight:'600'}}
+                        dateNumberStyle={{}}
+                        highlightDateNameStyle={{color:'#FFF', paddingBottom:10, fontSize:10 , fontWeight:'600' }}
+                        highlightDateNumberStyle={{color:'#FFF', }}
+                        disabledDateNameStyle={{ paddingBottom:10, fontSize:10}}
                         datesBlacklist={this.datesBlacklistFunc}
                         onDateSelected={async date => this.onDateSelected(date)}
                         iconContainer={{flex:0.1}}
@@ -255,16 +260,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFF',
       },
       persName:{
-            paddingTop: 10,
-            fontSize: 18,
-            fontWeight: '400',
-      },
-      persSpec:{
-        paddingTop: 5,
+        paddingTop: 10,
         fontSize: 18,
-        fontWeight: '400',
-        fontWeight:'500',
-      },
+        fontWeight: '500',
+  },
+  persSpec:{
+    color:colors.gray,
+    paddingTop: 5,
+    fontSize: 18,
+    fontWeight: '300',
+    
+  },
 
 
 })

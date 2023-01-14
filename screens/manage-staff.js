@@ -191,7 +191,7 @@ export default class ManageStaff extends React.Component{
 
                 
             </ScrollView>
-            <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={()=> this.props.navigation.navigate("Ajouter un Personnel")} >
+            <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={()=> this.props.navigation.navigate("Ajouter un Personnel", {name:'haha',})} >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
                                         <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
@@ -236,7 +236,7 @@ const styles =StyleSheet.create({
         justifyContent:'center', 
         width: 60, 
         height : 60, 
-        backgroundColor:'#127eff', 
+        backgroundColor:colors.blue, 
         borderRadius:15,
         shadowOffset: {
             width: 0,

@@ -27,6 +27,7 @@ export default class AssignSlide extends React.Component {
         newTodo:'',
         persLists:[],
         toggleAddTodo: true,
+        dateClicked : false,
     }
 
     constructor(props) {
@@ -49,7 +50,7 @@ export default class AssignSlide extends React.Component {
                     //this.state.filtered = this.state.doctors;
                    // this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
 
-                   var idx = this.props.pers.id;
+                   var idx = this.props.route.params.pers.id;
             var persLists = lists.filter( function(el){ return (el.persID === idx ) });
             this.setState({ persLists: persLists }, () => {
             
@@ -71,7 +72,7 @@ export default class AssignSlide extends React.Component {
 
 
       onDateSelected = date => {
-        
+        this.setState({'dateClicked': true})
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var list = [];
         var list1 ={};
@@ -104,7 +105,7 @@ export default class AssignSlide extends React.Component {
 
     addList = date =>{
         this.setState({persDateList:[]});
-        var id = this.props.pers.id;
+        var id = this.props.route.params.pers.id;
         firebase = new Fire((error, user)=>{
             // if(error){ return alert("Uh no, there is something went wrong"); }
           
@@ -117,7 +118,7 @@ export default class AssignSlide extends React.Component {
         
 
 
-          var idx = this.props.pers.id;
+          var idx = this.props.route.params.pers.id;
           var persLists = lists.filter( function(el){ return (el.persID === idx ) });
           this.setState({ persLists: persLists }, () => {
             });
@@ -139,7 +140,7 @@ export default class AssignSlide extends React.Component {
               });
 
      
-              var idx = this.props.pers.id;
+              var idx = this.props.route.params.pers.id;
               var list = lists.filter( function(el){ return (el.persID === idx && el.date === date ) });
   
               this.setState({ persDateList: list[0] }, () => {
@@ -257,48 +258,57 @@ export default class AssignSlide extends React.Component {
         
        return (
             <View style={styles.container}>
-                <StatusBar barStyle="dark-content" backgroundColor="#fff" />   
+                <StatusBar barStyle="light-content" backgroundColor={colors.blue} />   
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                    <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
+                    <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.route.params.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
-                <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
-                        <AntDesign  name="close" size={24} color={colors.black} />
-                </TouchableOpacity>
 
-                <View style={{ paddingVertical:30, paddingHorizontal:10, backgroundColor:'#FFF', alignItems:'center', height:160,  paddingTop:50, flexDirection:'row',  borderBottomLeftRadius:40, borderBottomRightRadius:40 }}>
-                    <View style={{alignItems:'flex-end', paddingRight:10}} >
+                <View style={{ paddingVertical:30, paddingHorizontal:10, backgroundColor: colors.blue, alignItems:'center', height:130,   flexDirection:'row',  borderBottomLeftRadius:30, borderBottomRightRadius:30 }}>
+                    <View style={{alignItems:'flex-end', paddingLeft:10, paddingRight:20}} >
                         <Image style={{width:80, height:80, borderRadius:25,  }} source={require('../assets/doctor-male.jpg')}  />
                     </View>
                     <View style={{flexDirection:'column'}}>
-                        <Text style={styles.persName}>{this.props.pers.profession} </Text>
-                        <Text style={styles.persSpec}>{this.props.pers.nom}</Text>
+                        <Text style={styles.persName}>{this.props.route.params.pers.nom} </Text>
+                        <Text style={styles.persSpec}>{this.props.route.params.pers.profession}</Text>
                     </View>
                 </View>
                 <View style={{backgroundColor:'#f8f4f4',flex:1,  paddingVertical:20 }}>
                     <View style={{marginHorizontal:20, marginBottom:10}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Calendar</Text>
                     </View>
                     <View style={{ }}>
                     <CalendarStrip
-                        scrollable
+                        scrollable = {true}
+                        scrollerPaging = {true}
                         ref={this.myRef}
                         daySelectionAnimation={{
                             type:'background',
                             highlightColor:colors.blue,
                             borderWidth:1,
                             borderHighlightColor:colors.blue,
+                            borderRadius:50, 
+                            
+                            
                         }}
-                        style={{height:80, paddingTop:10, paddingBottom:10, }}
-                        calendarHeaderStyle={{color:'#000'}}
+                        style={{height:95, paddingVertical:0,  }}
+                        innerStyle={{  }}
+                        dayComponentHeight={60}
+                        
+                        dayContainerStyle={{borderRadius:10,  paddingVertical:10  }}
+                        calendarHeaderContainerStyle={{}}
+                        
+                        calendarHeaderStyle={{color:'#000', paddingBottom:20, paddingTop:5, }}
                         calendarColor={'#FFF'}
-                        dateNameStyle={{color:'#000'}}
-                        dateNumberStyle={{color:'#000'}}
-                        highlightDateNameStyle={{color:'#FFF'}}
-                        highlightDateNumberStyle={{color:'#FFF'}}
+                        dateNameStyle={{color:'#000', paddingBottom:10, fontSize:10, fontWeight:'600'}}
+                        dateNumberStyle={{}}
+                        highlightDateNameStyle={{color:'#FFF', paddingBottom:10, fontSize:10 , fontWeight:'600' }}
+                        highlightDateNumberStyle={{color:'#FFF', }}
+                        disabledDateNameStyle={{ paddingBottom:10, fontSize:10}}
                         datesBlacklist={this.datesBlacklistFunc}
                         onDateSelected={async date => this.onDateSelected(date)}
                         iconContainer={{flex:0.1}}
-                        />
+                        
+                    />
                     </View>
 
 
@@ -325,8 +335,8 @@ export default class AssignSlide extends React.Component {
                 
                
                 <View style={[styles.section, styles.footer] } >
-                        <TextInput  style={[styles.input, { display: this.state.toggleAddTodo ? 'flex':'none' }]} list placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
-                        <TouchableOpacity style={[styles.addTodo, {backgroundColor:colors.blue, display: this.state.toggleAddTodo ? 'flex':'none' }]} onPress={()=>this.addTodo()} >
+                        <TextInput  style={[styles.input, { display: (this.state.toggleAddTodo && this.state.dateClicked) ? 'flex':'none' }]} list placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
+                        <TouchableOpacity style={[styles.addTodo, {backgroundColor:colors.blue, display: (this.state.toggleAddTodo && this.state.dateClicked) ? 'flex':'none' }]} onPress={()=>this.addTodo()} >
                             <AntDesign name="plus" size={16} color={colors.white} />
                         </TouchableOpacity>
                         <Text></Text>
@@ -342,14 +352,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#f8f4f4',
       },
       persName:{
-            
-            fontSize: 18,
-            fontWeight: '400',
-      },
-      persSpec:{
+        paddingTop: 10,
         fontSize: 18,
-        fontWeight:'500',
-      },
+        fontWeight: '500',
+        color: colors.white,
+  },
+  persSpec:{
+    color:colors.lightGray,
+    paddingTop: 5,
+    fontSize: 18,
+    fontWeight: '400',
+    
+  },
       section:{
         paddingTop:16,
         alignSelf: "stretch"
@@ -397,7 +411,7 @@ const styles = StyleSheet.create({
         todo:{
             
             color:colors.black,
-            fontWeight: "500",
+            fontWeight: "400",
             fontSize: 16,
         },
         deleteButton:{

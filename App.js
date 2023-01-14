@@ -12,11 +12,16 @@ import DoctorAppointSlide from './screens/doctor-appoint-slide';
 import AssignTaskScreen from './screens/assignTask-screen';
 import ManageStaff from './screens/manage-staff';
 import SurgeryScreen from './screens/surgery-screen';
+import SurgeonAppointSlide from './screens/surgeon-appoint-slide';
 import AddPersonnelSlide from './screens/addpersonnel-slide';
+import ChooseSurgAssist from './screens/choose-surg-assist';
+import PatientInfoSlide from './screens/patientInfo-slide';
+import AssignSlide from './screens/assign-slide';
 import { createStackNavigator } from '@react-navigation/stack'; //Insert screens into a stack
 import { NavigationContainer } from '@react-navigation/native'; //contains navigator and screen
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Feather from 'react-native-vector-icons/Feather';
+import colors from './Colors';
 
 
 
@@ -32,7 +37,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name = "Welcome"
-        component={MainScreen}
+        component={WelcomeScreen}
         options={{headerShown: false}}
 
          />
@@ -49,7 +54,17 @@ export default function App() {
          <Stack.Screen
          name="Appointment"
          component={AppointmentScreen}
-         options={{headerShown: false}}
+         options={{headerShown: true, 
+          headerShadowVisible: false,
+          headerTintColor:'#FFF',
+         title: 'Doctor Appointment',
+         headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
          />
         <Stack.Screen
          name="Tasks"
@@ -69,24 +84,115 @@ export default function App() {
          <Stack.Screen
          name="Take an Appointment"
          component={DoctorAppointSlide}
-         options={{headerShown: true}}
+         options={{headerShown: true, 
+          headerTintColor:'#FFF',
+         title: 'Surgery Appointment',
+         headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
          />
          <Stack.Screen
          name="Assign Task"
          component={AssignTaskScreen}
-         options={{headerShown: false}}
+         options={{
+          headerShown: true,
+          headerShadowVisible: false,
+          headerTintColor:'#FFF',
+          title: 'Assign Tasks',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
          />
 
          <Stack.Screen
          name="Ajouter un Personnel"
          component={AddPersonnelSlide}
-         options={{headerShown: true}}
+         options={{headerShown: true, }}
          />
          <Stack.Screen
          name="Surgery"
          component={SurgeryScreen}
-         options={{headerShown: true}}
+         options={{
+          headerShown: true,
+          headerTintColor:'#FFF',
+          title: 'Surgery Scheduling',
+          headerShadowVisible: false,
+          headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
          />
+         <Stack.Screen
+         name="SurgeonAppointSlide"
+         component={SurgeonAppointSlide}
+         options={{headerShown: true, 
+          headerTintColor:'#FFF',
+         title: 'Surgery Appointment',
+         headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
+         />
+
+        <Stack.Screen
+         name="Choose Assistants"
+         component={ChooseSurgAssist}
+         options={{headerShown: true, 
+          headerTintColor:'#FFF',
+         title: 'Choose Surgery Assistants',
+         headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
+         />
+
+        <Stack.Screen
+         name="Add Surgery Information"
+         component={PatientInfoSlide}
+         options={{headerShown: true, 
+          headerTintColor:'#FFF',
+         title: 'Add Surgery Information',
+         headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
+         />
+         <Stack.Screen
+         name="Todo List"
+         component={AssignSlide}
+         options={{headerShown: true,
+          headerShadowVisible: false, 
+          headerTintColor:'#FFF',
+         title: 'Todo List',
+         headerTitleAlign: 'center',
+          headerStyle: {
+            elevation: 0,
+            backgroundColor: colors.blue,
+          },
+          headerTitleStyle: { color: 'white', fontSize:18  },
+         }}
+         />
+
       </Stack.Navigator>
     </NavigationContainer>
   

@@ -15,33 +15,34 @@ export default class PatientInfoSlide extends React.Component {
   }
   
   createConsultation = () => {
-    const doctorID = this.props.pers.id ;
-    const date = this.props.date;
-    const slot = this.props.slot;
-    const nurse = this.props.pressedCategory2;
-    const anes = this.props.pressedCategory;
+    const doctorID = this.props.route.params.pers.id ;
+    const date = this.props.route.params.date;
+    const slot = this.props.route.params.slot;
+    const nurse = this.props.route.params.pressedCategory2;
+    const anes = this.props.route.params.pressedCategory;
     const patientID = this.state.inputValue;
     const motif = this.state.inputValue1;
     const age = this.state.inputValue2;
     const details = this.state.inputValue3;
     const consultation = {doctorID, date, slot, patientID, motif, age}; 
     this.addConsultation(consultation); 
-    this.props.closeModal();
     console.log(patientID);
+    this.props.navigation.navigate("Appointment");
     }; 
 
     createSurgery = () => {
-        const doctorID = this.props.pers.id;
-        const date = this.props.date;
-        const slot = this.props.slot;
-        const nurse = this.props.nurse;
-        const anes = this.props.anes;
+        const doctorID = this.props.route.params.pers.id;
+        const date = this.props.route.params.date;
+        const slot = this.props.route.params.slot;
+        const nurse = this.props.route.params.nurse;
+        const anes = this.props.route.params.anes;
         const patientID = this.state.inputValue;
         const motif = this.state.inputValue1;
         const age = this.state.inputValue2;
         const details = this.state.inputValue3;
         const surgery = {doctorID, date, slot, patientID, motif, age, details, nurse, anes}; 
         this.addSurgery(surgery); 
+        this.props.navigation.navigate("Surgery");
         };
 
     addConsultation = consultation =>{
@@ -53,7 +54,6 @@ export default class PatientInfoSlide extends React.Component {
             motif: consultation.motif,
             age: consultation.age,
         });
-        this.props.closePrevModal(); 
     };
 
     addSurgery = surgery =>{
@@ -76,7 +76,7 @@ export default class PatientInfoSlide extends React.Component {
   render(){
       console.log("this is input1:"+this.state.inputValue3+"x");
     var surg = false;  
-    surg = this.props.surg;
+    surg = this.props.route.params.surg;
     return (
       <View style={styles.container}  >
         <View>
@@ -106,7 +106,7 @@ export default class PatientInfoSlide extends React.Component {
                         <TextInput keyboardType='decimal-pad' maxLength={3} onChangeText={text => this.setState({ inputValue2: text })} clearButtonMode='always' style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
                         
                     </View>
-                    <View style={{ display: this.props.surg ? 'flex':'none' , marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
+                    <View style={{ display: this.props.route.params.surg ? 'flex':'none' , marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
                         <View style={{marginVertical:10,  }}>
                             <Text style={{fontWeight:'600', fontSize:20}}>Détails</Text>
                         </View>

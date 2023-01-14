@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button, Image, FlatList, StyleSheet, useWindowDimensions } from 'react-native';
-
+import colors from '../../Colors';
 
 export default WelcomeItem =({ item }) => {
     
@@ -33,12 +33,12 @@ const styles= StyleSheet.create({
         fontWeight:'800',
         fontSize: 28,
         marginBottom: 10,
-        color: '#493d8a',
+        color: colors.middleBlue,
         textAlign: 'center',
     },
     description:{
         fontWeight:'800',
-        color: '#493d8a',
+        color: colors.blue,
         textAlign: 'center',
         paddingHorizontal: 64, 
     },
