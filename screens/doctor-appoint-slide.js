@@ -27,6 +27,7 @@ export default class DoctorAppointSlide extends React.Component {
         SlotsData:[],
         availableSlots:[],
         dateClicked : false,
+        toggleApp: false,
     }
     constructor(props) {
         super(props);
@@ -44,6 +45,7 @@ export default class DoctorAppointSlide extends React.Component {
         console.log("filtredCons:", newCons);
         this.showContent(newCons);
         this.setState({pressedSlot:''});
+        this.toggleApp(date);
         
 
     }   
@@ -72,6 +74,18 @@ export default class DoctorAppointSlide extends React.Component {
     datesBlacklistFunc = date => {
         return date.isoWeekday() === 7; // disable Saturdays
     }
+
+    toggleApp = date=>{
+        if(moment(date).format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')){
+            this.setState({toggleApp: false});
+            console.log("maaaaaaaaa3");
+
+        } else {
+            this.setState({toggleApp: true});
+            console.log("waaaaaaaaa3");
+        }
+    }
+
 
     componentDidMount(){
         
@@ -176,16 +190,16 @@ export default class DoctorAppointSlide extends React.Component {
                         
                     />
                     </View>
-                    <View style={{marginHorizontal:20, marginVertical:20, display: dateClicked ? 'flex' : 'none'}}>
+                    <View style={{   marginHorizontal:20, marginVertical:20, display: dateClicked && this.state.toggleApp ? 'flex' : 'none'}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Available Slots</Text>
                         
                         
                     </View>
-                    <View style={{}}>
-                    <View style={{display: (this.state.availableSlots.length===0 && dateClicked) ? 'flex':'none', alignItems:'center', justifyContent:'center', paddingTop:80 }}>
+                    <View style={{  }}>
+                    <View style={{display: (this.state.availableSlots.length===0 &&  dateClicked) ? 'flex':'none', alignItems:'center', justifyContent:'center', paddingTop:80 }}>
                         <Image source={require("../assets/no-schedule.png")} style={{ height:100, width:100}} />
                     </View>
-                    <View style={{ flexDirection:'column', paddingHorizontal:6}} >
+                    <View style={{ flexDirection:'column', paddingHorizontal:6, display: this.state.toggleApp ? 'flex': 'none'}} >
                         <FlatList 
                             data={this.state.availableSlots}
                             keyExtractor={(item) => item.toString()} 
@@ -205,7 +219,7 @@ export default class DoctorAppointSlide extends React.Component {
 
 
                     </View>
-                    <View style={{flex:1, display: this.state.availableSlots.length === 0 ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:10}}>
+                    <View style={{flex:1, display: (this.state.availableSlots.length === 0 || !this.state.toggleApp ) ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:10}}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
                             <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
                                 <View style={{flexDirection:'row'}}>
@@ -222,6 +236,7 @@ export default class DoctorAppointSlide extends React.Component {
                             </TouchableOpacity>
                         </View>
                     </View>
+                
                 </View>
 
             </View>

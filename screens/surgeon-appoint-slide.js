@@ -29,6 +29,7 @@ export default class SurgeonAppointSlide extends React.Component {
         SlotsData:[],
         availableSlots:[],
         dateClicked : false,
+        toggleApp : true,
     }
     constructor(props) {
         super(props);
@@ -49,9 +50,20 @@ export default class SurgeonAppointSlide extends React.Component {
         this.setState({pressedSlot:''});
         var allSurgOfDate = this.state.surg.filter( function(el) { return el.date === formatedDate } );
         this.setState({allSurgOfDate: allSurgOfDate});
-        
+        this.toggleApp(date);
 
-    }   
+    } 
+    
+    toggleApp = date=>{
+        if(moment(date).format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')){
+            this.setState({toggleApp: false});
+            console.log("maaaaaaaaa3");
+
+        } else {
+            this.setState({toggleApp: true});
+            console.log("waaaaaaaaa3");
+        }
+    }
 
     slotPressed= slot =>{
         
@@ -181,16 +193,17 @@ export default class SurgeonAppointSlide extends React.Component {
                         
                     />
                     </View>
+                    
+                    <View style={{ display:  this.state.toggleApp ? 'flex':'none' }}>
                     <View style={{ display : req ? 'none': 'flex', marginHorizontal:20, marginVertical:10}}>
                         <Text style={{fontWeight:'500', fontSize:18}} >Minor Surgery</Text>
                         
                         
                     </View>
-                    <View style={{}}>
                     <View style={{display: (this.state.availableSlots.length===0 && dateClicked) ? 'flex':'none', alignItems:'center', justifyContent:'center', paddingTop:80 }}>
                         <Image source={require("../assets/no-schedule.png")} style={{ height:100, width:100}} />
                     </View>
-                    <View style={{ flexDirection:'column', paddingHorizontal:6,}} >
+                    <View style={{ flexDirection:'column', paddingHorizontal:6, }} >
                         <FlatList 
                             data={this.state.availableSlots}
                             keyExtractor={(item) => item.toString()} 
@@ -198,7 +211,7 @@ export default class SurgeonAppointSlide extends React.Component {
                             renderItem={({ item })=>{
                             if(item.toString()!=="15:00"){
                                 return( 
-                                    <TouchableOpacity onPress={()=>this.slotPressed(item.toString())}>
+                                    <TouchableOpacity onPress={()=>this.slotPressed(item.toString())} style={{marginLeft: 5}}>
                                         <Slot time={item.toString()} isPressed ={this.state.pressedSlot} />
                                     </TouchableOpacity>
                                     )
@@ -230,7 +243,7 @@ export default class SurgeonAppointSlide extends React.Component {
 
 
                     </View>
-                    <View style={{flex:1,flex:1, display: this.state.availableSlots.length === 0 ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
+                    <View style={{flex:1,flex:1, display: (this.state.availableSlots.length === 0 || !this.state.toggleApp) ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:30}}>
                         <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
                             <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
                                 <View style={{flexDirection:'row'}}>

@@ -92,7 +92,7 @@ export default class AssignSlide extends React.Component {
     }
 
     toggleAdd = date=>{
-        if(date < moment()){
+        if(moment(date).format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')){
             this.setState({toggleAddTodo: false})
         } else {
             this.setState({toggleAddTodo: true})
@@ -100,7 +100,7 @@ export default class AssignSlide extends React.Component {
     }
 
     datesBlacklistFunc = date => {
-        return date.isoWeekday() === 6; // disable Saturdays
+        return date.isoWeekday() === 7; // disable Saturdays
     }
 
     addList = date =>{
