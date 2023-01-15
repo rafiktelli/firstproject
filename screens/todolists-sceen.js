@@ -4,14 +4,12 @@ import colors from "../Colors";
 import {AntDesign} from "@expo/vector-icons";
 import TodoListSummary from '../components/todolist/todoList-summary';
 import AddListSlide from './addList-slide';
-import AddPersonnelSlide from './addpersonnel-slide';
 import Fire from '../Fire';
 
 
 export default class TodoListsScreen extends React.Component{
     state = {
         addTodoVisible: false,
-        addPersonnelVisible: false,
         lists: [],
         personnels: [],
         user: {},
@@ -48,9 +46,7 @@ export default class TodoListsScreen extends React.Component{
         this.setState({addTodoVisible: !this.state.addTodoVisible});
     }
 
-    toggleAddPersonnelModel(){
-        this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
-    }
+   
 
     renderList = list =>{
         return <TodoListSummary list={list} updateList={this.updateList} />;
@@ -93,9 +89,7 @@ export default class TodoListsScreen extends React.Component{
                 <Modal animationType="slide" visible={this.state.addTodoVisible} onRequestClose ={()=>this.toggleAddTodoModal()}>
                     <AddListSlide closeModal={() => this.toggleAddTodoModal()} addList={this.addList} />
                 </Modal>
-                <Modal animationType="slide" visible={this.state.addPersonnelVisible} onRequestClose ={()=>this.toggleAddPersonnelModel()}>
-                    <AddPersonnelSlide closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
-                </Modal>
+                
                 <View>
                     <Text>User:{this.state.user.uid}</Text>
                 </View>

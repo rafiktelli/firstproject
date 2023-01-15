@@ -11,7 +11,8 @@ const MainScreen = ({ navigation }) => {
     
     return (
         <View  style={styles.container}>
-        
+         <StatusBar barStyle="dark-content" backgroundColor={colors.lighterGray} /> 
+            
             <View style={{}}>
                 <Text style={{fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Hello Again</Text>
             </View>
@@ -43,6 +44,7 @@ const MainScreen = ({ navigation }) => {
                         <Text style={{  paddingTop:20, fontSize:20, fontWeight: '600', color: colors.black, }} > Manage Staff </Text>
                     </View>
                 </TouchableOpacity>    
+                
             </View> 
         </View> 
         </View>

@@ -150,11 +150,11 @@ export default class DoctorAppointSlide extends React.Component {
                     </View>
                     
                     <Text style={styles.persName}>Dr. {this.props.route.params.pers.nom}</Text>
-                    <Text style={styles.persSpec}>{this.props.route.params.pers.speciality} </Text>
+                    <Text style={styles.persSpec}>Médecin en {this.props.route.params.pers.speciality} </Text>
                 </View>
                 <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:10 }}>
                     <View style={{marginHorizontal:20, marginTop:10, marginBottom:15, }}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Appointment Calendar</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Calendrier des rendez-vous</Text>
                     </View>
                     <View style={{ }}>
                     <CalendarStrip
@@ -191,7 +191,7 @@ export default class DoctorAppointSlide extends React.Component {
                     />
                     </View>
                     <View style={{   marginHorizontal:20, marginVertical:20, display: dateClicked && this.state.toggleApp ? 'flex' : 'none'}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Available Slots</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Horaires disponibles</Text>
                         
                         
                     </View>

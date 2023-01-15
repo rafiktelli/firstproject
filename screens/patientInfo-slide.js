@@ -83,34 +83,40 @@ export default class PatientInfoSlide extends React.Component {
             
         </View>
         <View >
-                    
-                    <View style={{ marginTop: 20, justifyContent:'center', alignItems:'center', paddingVertical:20, marginTop:70 }}>
-                        <View style={{marginVertical:10,  }}>
-                            <Text style={{fontWeight:'600', fontSize:20}}>Patient Name </Text>
+
+
+
+
+                     <View style={{ marginTop: 20, justifyContent:'center', alignItems:'center', paddingVertical:20, marginTop:70}}>
+                        <View style={{marginVertical:10, flexDirection:'row'  }}>
+                            <Text style={{fontWeight:'600', fontSize:20}}>Motif de </Text>
+                            <Text style={{fontWeight:'600', fontSize:20, display: surg ? 'none':'flex'}}>consultation </Text>
+                            <Text style={{fontWeight:'600', fontSize:20, display: surg ? 'flex':'none'}}>chirurgie </Text>
                         </View>
-                        <TextInput onChangeText={text=>{this.setState({inputValue:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TextInput clearButtonMode='always' onChangeText={text=>{this.setState({inputValue1:text})}} style={styles.input} placeholder="Motif, ex: première consultation *" />
+                        
+                    </View>
+                    <View style={{ marginBottom: 25, justifyContent:'center', alignItems:'center' }}>
+                        <View style={{marginVertical:10,  }}>
+                            <Text style={{fontWeight:'600', fontSize:20}}>Nom du patient </Text>
+                        </View>
+                        <TextInput onChangeText={text=>{this.setState({inputValue:text})}} style={styles.input} placeholder="Nom et prénom du patient *" />
                         
                        
                     </View>
+                   
                     <View style={{ marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
                         <View style={{marginVertical:10,  }}>
-                            <Text style={{fontWeight:'600', fontSize:20}}>Motif</Text>
+                            <Text style={{fontWeight:'600', fontSize:20}}>Age du patient</Text>
                         </View>
-                        <TextInput clearButtonMode='always' onChangeText={text=>{this.setState({inputValue1:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
-                        
-                    </View>
-                    <View style={{ marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
-                        <View style={{marginVertical:10,  }}>
-                            <Text style={{fontWeight:'600', fontSize:20}}>Patient's Age</Text>
-                        </View>
-                        <TextInput keyboardType='decimal-pad' maxLength={3} onChangeText={text => this.setState({ inputValue2: text })} clearButtonMode='always' style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TextInput keyboardType='decimal-pad' maxLength={3} onChangeText={text => this.setState({ inputValue2: text })} clearButtonMode='always' style={styles.input} placeholder="Age *" />
                         
                     </View>
                     <View style={{ display: this.props.route.params.surg ? 'flex':'none' , marginBottom: 25, justifyContent:'center', alignItems:'center'}}>
                         <View style={{marginVertical:10,  }}>
                             <Text style={{fontWeight:'600', fontSize:20}}>Détails</Text>
                         </View>
-                        <TextInput clearButtonMode='always' onChangeText={text=>{this.setState({inputValue3:text})}} style={styles.input} placeholder="Search, e.g: Dr. Jack Sparrow" />
+                        <TextInput clearButtonMode='always' onChangeText={text=>{this.setState({inputValue3:text})}} style={styles.input} placeholder=" Détails sur le patients, la chirurgie  " />
                         
                     </View>
                     <View style={{ alignItems:'center', justifyContent:'center'}}>
@@ -122,7 +128,7 @@ export default class PatientInfoSlide extends React.Component {
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Confirmer</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -135,7 +141,7 @@ export default class PatientInfoSlide extends React.Component {
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Schedule</Text>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Confirmer</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>

@@ -57,7 +57,7 @@ export default function App() {
          options={{headerShown: true, 
           headerShadowVisible: false,
           headerTintColor:'#FFF',
-         title: 'Doctor Appointment',
+         title: 'Consultations',
          headerTitleAlign: 'center',
           headerStyle: {
             elevation: 0,
@@ -72,17 +72,12 @@ export default function App() {
          options={{headerShown: false}}
          />
          <Stack.Screen
-         name="Staff"
-         component={AddPersonnelSlide}
-         options={{headerShown: false}}
-         />
-         <Stack.Screen
          name="Manage Staff"
          component={ManageStaff}
          options={{
           headerShown: true,
           headerTintColor:'#FFF',
-          title: 'Manage Staff',
+          title: 'Gérer le personnel',
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerStyle: {
@@ -97,7 +92,7 @@ export default function App() {
          component={DoctorAppointSlide}
          options={{headerShown: true, 
           headerTintColor:'#FFF',
-         title: 'Surgery Appointment',
+         title: 'Prendre un rendez-vous',
          headerTitleAlign: 'center',
           headerStyle: {
             elevation: 0,
@@ -113,7 +108,7 @@ export default function App() {
           headerShown: true,
           headerShadowVisible: false,
           headerTintColor:'#FFF',
-          title: 'Assign Tasks',
+          title: 'Attribuer des tâches',
           headerTitleAlign: 'center',
           headerStyle: {
             elevation: 0,
@@ -124,7 +119,7 @@ export default function App() {
          />
 
          <Stack.Screen
-         name="Ajouter un Personnel"
+         name="Ajouter Personnel"
          component={AddPersonnelSlide}
          options={{
           headerShown: true,
@@ -133,7 +128,6 @@ export default function App() {
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerStyle: {
-            elevation: 0,
             backgroundColor: colors.blue,
           },
           headerTitleStyle: { color: 'white', fontSize:18  },
@@ -146,7 +140,7 @@ export default function App() {
          options={{
           headerShown: true,
           headerTintColor:'#FFF',
-          title: 'Surgery Scheduling',
+          title: 'Chirurgies',
           headerShadowVisible: false,
           headerTitleAlign: 'center',
           headerStyle: {
@@ -161,7 +155,7 @@ export default function App() {
          component={SurgeonAppointSlide}
          options={{headerShown: true, 
           headerTintColor:'#FFF',
-         title: 'Surgery Appointment',
+         title: 'Planifier une chirurgie',
          headerTitleAlign: 'center',
           headerStyle: {
             elevation: 0,
@@ -176,7 +170,7 @@ export default function App() {
          component={ChooseSurgAssist}
          options={{headerShown: true, 
           headerTintColor:'#FFF',
-         title: 'Choose Surgery Assistants',
+         title: 'Choisir les assistants',
          headerTitleAlign: 'center',
           headerStyle: {
             elevation: 0,
@@ -191,7 +185,7 @@ export default function App() {
          component={PatientInfoSlide}
          options={{headerShown: true, 
           headerTintColor:'#FFF',
-         title: 'Add Surgery Information',
+         title: 'Informations du patient',
          headerTitleAlign: 'center',
           headerStyle: {
             elevation: 0,

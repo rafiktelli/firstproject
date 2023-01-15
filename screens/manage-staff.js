@@ -11,7 +11,6 @@ import DoctorBar from '../components/doctorComponents/doctorBar';
 
 export default class ManageStaff extends React.Component{
     state = {
-        addPersonnelVisible: false,
         personnels: [],
         user: {},
         loading: true,
@@ -65,12 +64,10 @@ export default class ManageStaff extends React.Component{
 
     renderDoctors = pers =>{
         
-        return( <DoctorBar isManage={true} pers={pers} /> );
+        return( <DoctorBar navigation={this.props.navigation} isManage={true} pers={pers} /> );
     }
 
-    toggleAddPersonnelModel(){
-        this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
-    }
+   
 
 
     
@@ -96,9 +93,7 @@ export default class ManageStaff extends React.Component{
             
             
             <StatusBar barStyle="light-content" backgroundColor={colors.blue} /> 
-                <Modal animationType="slide" visible={this.state.addPersonnelVisible} onRequestClose ={()=>this.toggleAddPersonnelModel()}>
-                    <AddPersonnelSlide closeModal={() => this.toggleAddPersonnelModel()} addPersonnel={this.addPersonnel} />
-                </Modal>
+                
 
                 
 
@@ -114,7 +109,7 @@ export default class ManageStaff extends React.Component{
                         <View style={{height:10}}/>
                         <View style={{}}>
                             <TouchableOpacity style={styles.specTitle}  onPress={()=>{return this.setState({medVisible: !this.state.medVisible})}} >
-                                <Text style={styles.text}>Medecins</Text>
+                                <Text style={styles.text}>Médecins</Text>
                                 <View style={{flex:1,  alignItems:'flex-end', paddingRight:40  }}>
                                 <Image style={{height:15, width:15,   }} source={this.state.medVisible ? require('../assets/uparrow.png') : require('../assets/arrowdown.png')} />
                                 </View>
@@ -191,13 +186,14 @@ export default class ManageStaff extends React.Component{
 
                 
             </ScrollView>
-            <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={()=> this.props.navigation.navigate("Ajouter un Personnel", {navigation :this.props.navigation,})} >
+            
+            <TouchableOpacity activeOpacity={1} style={styles.buttonView} onPress={() => this.props.navigation.navigate("Ajouter Personnel")} >
                                 <View style={{flexDirection:'row'}}>
                                     <View >
-                                        <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
+                                        <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:20, marginRight:-30 }} />
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Add Worker</Text>
+                                        <Text style={{color:'#FFF', fontSize:18, fontWeight:'600', paddingLeft:35 }}>Ajouter un personnel</Text>
                                         <Text> {console.log("start")} </Text>
                                         <Text> {console.log("end")} </Text>
                                         

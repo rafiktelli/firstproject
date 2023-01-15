@@ -196,7 +196,7 @@ export default class SurgeonAppointSlide extends React.Component {
                     
                     <View style={{ display:  this.state.toggleApp ? 'flex':'none' }}>
                     <View style={{ display : req ? 'none': 'flex', marginHorizontal:20, marginVertical:10}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Minor Surgery</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Chirurgie Mineure</Text>
                         
                         
                     </View>
@@ -228,7 +228,7 @@ export default class SurgeonAppointSlide extends React.Component {
                                 return( 
                                     
                                     <View style={{}}>
-                                        <Text style={{ marginHorizontal:15, marginVertical:10, fontWeight:'500', fontSize:18}} >Major Surgery</Text>
+                                        <Text style={{ marginHorizontal:15, marginVertical:10, fontWeight:'500', fontSize:18}} >Chirurgie Majeure</Text>
                                     <TouchableOpacity onPress={()=>this.slotPressed(item.toString())}>
                                         <Slot time={item.toString()} isPressed ={this.state.pressedSlot} />
                                     </TouchableOpacity>

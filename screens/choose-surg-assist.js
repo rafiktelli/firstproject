@@ -112,7 +112,7 @@ export default class ChooseSurgAssist extends React.Component {
                     
                     
                     <View style={{marginVertical:10,  }}>
-                        <Text style={{fontWeight:'900', fontSize:20}}>Available Nurses</Text>
+                        <Text style={{fontWeight:'900', fontSize:20}}>Infirmiers Disponibles</Text>
                     </View>
                     <View style={{  }}>
                         <ScrollView keyboardShouldPersistTaps='always' style={{backgroundColor:'#fff'}} 
@@ -137,7 +137,7 @@ export default class ChooseSurgAssist extends React.Component {
                     </View>
                     <View style={{ display: (this.props.route.params.slot ==="15:00") ? 'flex' : 'none' }}>
                         <View style={{marginVertical:10, display: (this.props.route.params.slot ==="15:00") ? 'flex' : 'none' }}>
-                            <Text style={{fontWeight:'900', fontSize:20}}>Available Anesthesiologist</Text>
+                            <Text style={{fontWeight:'900', fontSize:20}}>Anesthésiste disponible</Text>
                         </View>
                         <View style={{  }}>
                             <ScrollView keyboardShouldPersistTaps='always' style={{backgroundColor:'#fff'}} 

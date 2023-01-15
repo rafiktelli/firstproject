@@ -80,8 +80,8 @@ export default class DoctorBar extends React.Component {
                 <SurgeonAppointSlide pers={pers} closeModal={()=>this.toggleListModal(med)} />
             </Modal>
             
-        <RBSheet ref={ref => { this.RBSheet = ref;}} height={300} openDuration={150} customStyles={sheetStyles}>
-            <BottomSheet med={med} pers={pers} />
+        <RBSheet ref={ref => { this.RBSheet = ref;}} height={230} openDuration={150} customStyles={sheetStyles}>
+            <BottomSheet med={med} pers={pers} navigation={this.props.navigation} />
         </RBSheet>
            
 
@@ -94,7 +94,7 @@ export default class DoctorBar extends React.Component {
                         </View>
                         <View  style={{width:220, flexDirection:'column', alignItems:'flex-start', }}>
                             <Text style={{  display: pers.speciality  > "" ? 'flex' : 'none', color: pressed ? '#FFF': colors.gray , fontWeight:'300'  }}>{ pers.speciality}</Text>
-                            <Text style={{ fontSize:16,  color: pressed ? '#FFF':'#000', fontWeight:'600' }}>{(med || surg) ? "Dr. ":""}{pers.nom}</Text>
+                            <Text style={{ fontSize:16,  color: pressed ? '#FFF':'#000', fontWeight:'600' }}>{(med || surg ) ? "Dr. ":""}{pers.nom}</Text>
                         </View>
                         <TouchableOpacity style={{ display: this.props.isManage ? 'flex' : 'none',  flex:1, alignItems: 'flex-end', justifyContent:'center',marginHorizontal:10, marginVertical: 10,width:40,}} onPress={() => this.RBSheet.open()}>
                             <Image source={require('../../assets/verticalDots.png')} style={{ height:30, width:30, }} />

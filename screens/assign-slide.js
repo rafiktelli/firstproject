@@ -178,9 +178,9 @@ export default class AssignSlide extends React.Component {
         return(
             
             <GestureHandlerRootView style={{marginVertical:3,}}>
-            <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)} >
+            <Swipeable  renderRightActions={(_, dragX) => this.rightActions(dragX, index)} >
             <View style={styles.todoContainer}>
-                <TouchableOpacity onPress={()=>this.toggleTodoCompleted(index)}>
+                <TouchableOpacity style={{display: this.props.route.params.view ? 'flex':'none' }} onPress={()=>this.toggleTodoCompleted(index)}>
                     <Ionicons name= {todo.completed? "checkbox-outline":"ios-square-outline"}  size={24} color={todo.completed? colors.gray:colors.gray} style={{width:32}} />
                 </TouchableOpacity>
                 <Text style={[styles.todo, { textDecorationLine: todo.completed? 'line-through': 'none', color: todo.completed ? colors.gray:colors.black} ]}>{todo.title}</Text>
@@ -193,6 +193,9 @@ export default class AssignSlide extends React.Component {
 
 
     rightActions = (dragX, index) => {
+        if (this.props.route.params.view){
+        return <View />;
+        }
         const scale =  dragX.interpolate({
             inputRange:[-100,0],
             outputRange:[1, 0.9],
@@ -203,6 +206,7 @@ export default class AssignSlide extends React.Component {
             outputRange:[1, 0.8,0],
             extrapolate:"clamp"
         });
+    
         return(
 
             <TouchableOpacity onPress={()=>this.deleteTodo(index)}>
@@ -274,7 +278,7 @@ export default class AssignSlide extends React.Component {
                 </View>
                 <View style={{backgroundColor:'#f8f4f4',flex:1,  paddingVertical:20 }}>
                     <View style={{marginHorizontal:20, marginBottom:10}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Calendar</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Calendrier</Text>
                     </View>
                     <View style={{ }}>
                     <CalendarStrip
@@ -314,7 +318,7 @@ export default class AssignSlide extends React.Component {
 
                     <View style={{flex:1, }}>
                     <View style={{marginHorizontal:20, flexDirection:'row' }}>
-                        <Text style={{fontWeight:'500', fontSize:18, paddingVertical:10, }} >Tasks </Text>
+                        <Text style={{fontWeight:'500', fontSize:18, paddingVertical:10, }} >Liste des tâches</Text>
                         <Text style={{ display: taskCount === undefined || taskCount===0  ? 'none':'flex' , fontWeight:'500', fontSize:18, paddingVertical:10, }} >( {completedCount}/{taskCount} ) </Text>
                         
                     </View>
@@ -334,8 +338,8 @@ export default class AssignSlide extends React.Component {
                 </View>
                 
                
-                <View style={[styles.section, styles.footer] } >
-                        <TextInput  style={[styles.input, { display: (this.state.toggleAddTodo && this.state.dateClicked) ? 'flex':'none' }]} list placeholder={'Write a task'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
+                <View style={[styles.section, styles.footer, {display: this.props.route.params.view ? 'none':'flex'}  ]}  >
+                        <TextInput  style={[styles.input, { display: (this.state.toggleAddTodo && this.state.dateClicked) ? 'flex':'none' }]} list placeholder={'Ajouter une tâche'}  onChangeText = {text => this.setState({newTodo : text})} value={this.state.newTodo} />
                         <TouchableOpacity style={[styles.addTodo, {backgroundColor:colors.blue, display: (this.state.toggleAddTodo && this.state.dateClicked) ? 'flex':'none' }]} onPress={()=>this.addTodo()} >
                             <AntDesign name="plus" size={16} color={colors.white} />
                         </TouchableOpacity>
@@ -402,7 +406,7 @@ const styles = StyleSheet.create({
             flexDirection: 'row',
             alignItems: 'center',
             paddingVertical:16,
-            paddingRight:25,
+            paddingRight:40,
             marginLeft:16,
             marginRight:16,
             borderColor:colors.white,

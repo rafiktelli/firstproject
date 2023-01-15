@@ -7,7 +7,7 @@ import {GestureHandlerRootView, Swipeable} from 'react-native-gesture-handler';
 
 export default class TodoList extends Component {
     state ={
-        newTodo:""
+        newTodo:"",
 
     };
 
@@ -164,12 +164,13 @@ const styles = StyleSheet.create({
 
     },
     input:{
-        flex:1,
+        flex: 1, 
         height: 48, 
         borderWidth: StyleSheet.hairlineWidth,
         borderRadius: 6,
         marginRight: 8,
         paddingHorizontal: 18,
+        paddingVertical: 0,
         borderRadius:10, 
         borderWidth: 1,
     },

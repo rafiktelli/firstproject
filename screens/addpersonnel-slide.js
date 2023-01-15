@@ -1,7 +1,7 @@
-import React from "react"; 
+import React, {Component} from "react"; 
 import { View, Text, StyleSheet, StatusBar, KeyboardAvoidingView, Image, TouchableOpacity, TextInput, FlatList, DatePickerIOS } from "react-native"; 
 import { AntDesign } from "@expo/vector-icons"; 
-import colors from "../Colors"; 
+import colors from "../Colors";
 import SelectDropdown from 'react-native-select-dropdown';
 import Dropdown from "../components/todolist/dropDown";
 import Fire from "../Fire";
@@ -9,7 +9,7 @@ import Fire from "../Fire";
 
 
 
-export default class AddPersonnelSlide extends React.Component {
+export default class AddPersonnelSlide extends Component {
 
     state = { 
                 nom: "", 
@@ -44,6 +44,7 @@ export default class AddPersonnelSlide extends React.Component {
                 naissance: personnel.naissance
             });
         };
+        
 
 
         render() {
@@ -52,9 +53,10 @@ export default class AddPersonnelSlide extends React.Component {
 
 
             return (
+
                <KeyboardAvoidingView style={styles.container}> 
-                        <StatusBar barStyle="light-content" backgroundColor={colors.blue} /> 
-                    
+                <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
+                
                     <View style={{ alignSelf: "stretch", marginHorizontal: 32, }}> 
             
                         <TextInput style={styles.input} placeholderTextColor="#C0C0C0"  placeholder="Personnel Name" onChangeText={text => this.setState({ nom: text })}/> 
@@ -70,7 +72,7 @@ export default class AddPersonnelSlide extends React.Component {
                                         <Image  source={require('../assets/add.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Add Worker</Text>
+                                        <Text style={{color:'#FFF', fontSize:22, fontWeight:'600' }}>Ajouter</Text>
                                            
                                     </View>
                                 </View>
@@ -87,6 +89,7 @@ export default class AddPersonnelSlide extends React.Component {
                 
                     
                 </KeyboardAvoidingView>
+                
                 
                 
     ); 

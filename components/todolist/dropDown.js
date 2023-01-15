@@ -8,21 +8,21 @@ import Colors from "../../Colors";
 import Fire from "../../Fire";
 
 export default Dropdown = (props) => {
-  const [countries, setCountries] = useState([]);
-  const [cities, setCities] = useState([]);
+  const [prof, setprof] = useState([]);
+  const [spec, setspec] = useState([]);
   const [medSpec, setMedSpec] = useState([]);
-  const citiesDropdownRef = useRef();
+  const specDropdownRef = useRef();
   var rafik ="";
   var rafika ="";
   var dis = true;
   
   useEffect(() => {
     setTimeout(() => {
-      setCountries([
-        {title: 'Chirurgien', cities: [{title: 'Neurochirurgie'}, {title: 'Ophtalmologie'}, {title: 'Gynécologie'}, {title: 'Infantile'}, {title: 'Maxillo-faciale'}, {title: 'Vasculaire'}]},
-        {title: 'Medecin', cities: [{title: 'Générale'}, {title: 'Cardiologue'}, {title: 'Dermatologie'}, , {title: 'Anesthésie'}, {title: 'Neurologie'}, {title: 'Ophtalmologie'}, {title: 'Gastrologie'}, {title: 'Gynécologie'}, {title: 'Psychiatrie'}, {title: 'ORL'}, {title: 'Pédiatrie'}, {title: 'Urologie'}]},
-        {title: 'Infirmier', cities: [{title: 'Soins infirmiers généralistes'}, {title: 'Infirmier Anesthésiste'}, {title: 'Infirmière de Bloc Opératoire'}, {title: 'Infirmier Puéricultrice'}]},
-        {title: 'Aide-Soignant',cities:[{}]}
+      setprof([
+        {title: 'Chirurgien', spec: [{title: 'Neurochirurgie'}, {title: 'Ophtalmologie'}, {title: 'Gynécologie'}, {title: 'Infantile'}, {title: 'Maxillo-faciale'}, {title: 'Vasculaire'}]},
+        {title: 'Medecin', spec: [{title: 'Générale'}, {title: 'Cardiologue'}, {title: 'Dermatologie'}, , {title: 'Anesthésie'}, {title: 'Neurologie'}, {title: 'Ophtalmologie'}, {title: 'Gastrologie'}, {title: 'Gynécologie'}, {title: 'Psychiatrie'}, {title: 'ORL'}, {title: 'Pédiatrie'}, {title: 'Urologie'}]},
+        {title: 'Infirmier', spec: [{title: 'Soins infirmiers généralistes'}, {title: 'Infirmier Anesthésiste'}, {title: 'Infirmière de Bloc Opératoire'}, {title: 'Infirmier Puéricultrice'}]},
+        {title: 'Aide-Soignant',spec:[{}]}
     ]);
     }, 1000);
   }, []);
@@ -48,25 +48,23 @@ const handleSpeciality =()=> {
   return (
 
     <SafeAreaView>
-      <StatusBar backgroundColor="#FFF" barStyle="dark-content" />
       <View >
         <ScrollView
           showsVerticalScrollIndicator={false}
           alwaysBounceVertical={false}
-          baseColor="#F0F"
           contentContainerStyle={styles.scrollViewContainer}>
           <View style={styles.container}>
             <View style={{marginTop: 4, marginBottom : 4, }} >
             <SelectDropdown
               style={{marginTop: 8, }}
-              data={countries}
+              data={prof}
               onSelect={(selectedItem, index) => {
                 rafik = selectedItem.title;
                 dis = false;
                handleProfession();
-                citiesDropdownRef.current.reset();
-                setCities([]);
-                setCities(selectedItem.cities);
+                specDropdownRef.current.reset();
+                setspec([]);
+                setspec(selectedItem.spec);
               }}
               defaultButtonText={"Select a profession"}
               buttonTextAfterSelection={(selectedItem, index) => {
@@ -88,8 +86,8 @@ const handleSpeciality =()=> {
             </View>
             <View style={{marginTop: 4, marginBottom : 4, }} >
             <SelectDropdown
-              ref={citiesDropdownRef}
-              data={cities}
+              ref={specDropdownRef}
+              data={spec}
               disabled ={!dis}
                  onSelect={(selectedItem, index) => {
                 rafika = selectedItem.title;

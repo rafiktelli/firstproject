@@ -127,10 +127,15 @@ export default class SurgeryScreen extends React.Component {
                 <View style={{ backgroundColor:colors.blue   }}>
                 
                 <View style={{ }}>
-                <View style={{height:75}}>
-                    <Text style={{fontWeight:'500', fontSize:22, color: colors.white, paddingHorizontal: 20, paddingTop:20}}> Specialist Surgeons </Text>
+                <View style={{width:225, height:45}}>
+                 <Text style={{ fontWeight:'200', fontSize:16, color: colors.white, paddingHorizontal: 20, paddingTop:20 }}> Planifier une chirurgie </Text>
+                 
+                 </View>  
+
+                <View style={{height:75, width: 200,}}>
                     
-                    <Text style={{ fontWeight:'200', fontSize:16, color: colors.white, paddingHorizontal: 20, }}> In every domain </Text>
+                    <Text style={{fontWeight:'500', fontSize:24, color: colors.white, paddingHorizontal: 20}}> Chirurgien Spécialiste </Text>
+                    
                 
                 </View>
                     <View style={{ marginLeft:20, flexDirection:'row', marginRight:20, marginTop: 20, marginBottom: 25, justifyContent:'center' }}>
