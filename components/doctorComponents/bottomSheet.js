@@ -8,21 +8,30 @@ import Fire from '../../Fire';
 import DoctorAppointSlide from '../../screens/doctor-appoint-slide';
 import ViewDocTasksScreen from '../../screens/viewDocTasks-screen';
 import AssignSlide from '../../screens/assign-slide';
+import ViewSurgTasksScreen from '../../screens/viewSurgTaks-screen';
 
 export default class BottomSheet extends React.Component {
 
     state={
         showListVisible : false,
         showListVisible1 : false,
+        showListVisible3: false, 
     }
 
     toggleListModal(){
-        if (this.props.pers.profession=="Medecin"){
+        if (this.props.pers.profession==="Medecin" && this.props.pers.speciality !=="Anesthésie" ){
             this.setState({showListVisible: !this.state.showListVisible});
        
         }
         else{
-            this.props.navigation.navigate("Todo List",{pers: this.props.pers, view: true});
+            if(this.props.pers.profession === "Chirurgien" || this.props.pers.profession === "Infirmier" || this.props.pers.speciality === "Anesthésie" ){
+
+                this.setState({showListVisible3: !this.state.showListVisible3});
+                
+
+            } else{
+                this.props.navigation.navigate("Todo List",{pers: this.props.pers, view: true});
+            }
         }
         
     
@@ -49,6 +58,9 @@ export default class BottomSheet extends React.Component {
         </Modal>
         <Modal animationType="slide" visible={this.state.showListVisible1} onRequestClose={()=>this.toggleListModal()}>
             <AssignSlide pers={pers} closeModal={()=>this.toggleListModal()}  />
+        </Modal>
+        <Modal animationType="slide" visible={this.state.showListVisible3} onRequestClose={()=>this.toggleListModal()}>
+            <ViewSurgTasksScreen pers={pers} closeModal={()=>this.toggleListModal()}  />
         </Modal>
       <View style={{ }}>
         <View style={styles.top}>
@@ -85,7 +97,7 @@ export default class BottomSheet extends React.Component {
                 <TouchableOpacity onPress={()=>this.toggleListModal()}>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="checkbox-outline" size={24} color={colors.black} />
-                    <Text style={{fontSize:18, paddingHorizontal:10, fontWeight:'400',  color:colors.black}}>Check Schedule and Tasks</Text>
+                    <Text style={{fontSize:18, paddingHorizontal:10, fontWeight:'400',  color:colors.black}}>Voir les tâches</Text>
                 </View>
                 </TouchableOpacity>
             </View>
@@ -96,7 +108,7 @@ export default class BottomSheet extends React.Component {
                 <TouchableOpacity onPress={()=>this.DeleteDoctor()}>
                 <View style={{flexDirection:'row'}}>
                     <Ionicons name="trash" size={24} color={colors.red} />
-                    <Text style={{color:colors.red, fontSize:18, paddingHorizontal:10, fontWeight:'400', }}>Delete Profile</Text>
+                    <Text style={{color:colors.red, fontSize:18, paddingHorizontal:10, fontWeight:'400', }}>Supprimer Profil</Text>
                 </View>
                 </TouchableOpacity>
             </View>

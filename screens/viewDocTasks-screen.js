@@ -37,13 +37,9 @@ export default class ViewDocTasksScreen extends React.Component {
         this.setState({availableSlots:SlotsData});
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var newCons = this.state.consultations.filter( function(el) { return el.date === formatedDate } );
-        console.log(newCons);
         newCons.sort(this.GetSortOrder("slot"));     
-        console.log(newCons); 
         this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), SlotsData:SlotsData});
-        console.log("khalina ntestiw wach t3tina hadi? " + moment(date).format('DD-MM-YYYY'));
         this.setState({ filteredCons : newCons });
-        console.log("filtredCons:", newCons);
         this.showContent(newCons);
         this.setState({pressedSlot:''});
         
@@ -76,11 +72,6 @@ export default class ViewDocTasksScreen extends React.Component {
         var c = a.filter(n => !b.includes(n));
         this.setState({availableSlots:b});
         this.setState({newCons:newCons});
-
-        
-        console.log(a);
-        console.log(b);
-        console.log(c);
     }
     datesBlacklistFunc = date => {
         return date.isoWeekday() === 7; // disable Saturdays

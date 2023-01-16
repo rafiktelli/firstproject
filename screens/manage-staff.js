@@ -194,9 +194,6 @@ export default class ManageStaff extends React.Component{
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
                                         <Text style={{color:'#FFF', fontSize:18, fontWeight:'600', paddingLeft:35 }}>Ajouter un personnel</Text>
-                                        <Text> {console.log("start")} </Text>
-                                        <Text> {console.log("end")} </Text>
-                                        
                                     </View>
                                 </View>
                             </TouchableOpacity>

@@ -46,9 +46,7 @@ export default class ChooseSurgAssist extends React.Component {
                     this.state.filtered = this.state.nurses;
                     this.state.anes = this.state.personnels.filter( function(el) { return (el.profession === "Medecin" && el.speciality=="Anesthésie"  ) } );
                     this.state.anest = this.state.anes;
-                    console.log("hado Anes");
-                    console.log(this.state.anes);
-                    this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
+                     this.state.spec = Array.from(new Set(this.state.filtered.map(a => a.speciality)));
                     
                 });
             });
@@ -70,12 +68,10 @@ export default class ChooseSurgAssist extends React.Component {
     
 
     catPressed= cat =>{
-        console.log("HOlllaaa");
         this.setState({pressedCategory : cat });
     }
 
     catPressed2= cat =>{
-        console.log("HOlllaaa");
         this.setState({pressedCategory2 : cat });
 
     }
@@ -132,7 +128,6 @@ export default class ChooseSurgAssist extends React.Component {
                                             );
                                     }}
                             />
-                            <Text> {console.log(this.state.pressedCategory)}</Text>
                         </ScrollView>
                     </View>
                     <View style={{ display: (this.props.route.params.slot ==="15:00") ? 'flex' : 'none' }}>
@@ -160,7 +155,6 @@ export default class ChooseSurgAssist extends React.Component {
                                     
                                     
                                 />
-                                <Text> {console.log(this.state.pressedCategory)}</Text>
                             </ScrollView>
                         </View>
                     </View>
@@ -176,9 +170,7 @@ export default class ChooseSurgAssist extends React.Component {
                                         <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
-                                        <Text> {console.log("start")} </Text>
-                                        <Text> {console.log("end")} </Text>
+                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Planifier</Text>
                                         
                                     </View>
                                 </View>

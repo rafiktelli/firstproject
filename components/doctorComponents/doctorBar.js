@@ -57,10 +57,10 @@ export default class DoctorBar extends React.Component {
     const surg = this.props.surg;
     const anes = this.props.anes;
     var pressed = false; 
-    console.log("start is pressed");
+    {/*console.log("start is pressed");
     console.log("pressed item " + this.props.isPressed);
     console.log("bar ID "+ this.props.pers.id);
-    console.log("end is pressed");
+    console.log("end is pressed"); */}
     if(this.props.isPressed === this.props.pers.id){
         pressed = true;
     } else {

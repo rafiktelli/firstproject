@@ -38,13 +38,10 @@ export default class SurgeonAppointSlide extends React.Component {
       } 
       onDateSelected = date => {
         this.setState({dateClicked:true});
-        console.log("shit");
         this.setState({availableSlots:SurgSlotsData});
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var newSurg = this.state.surgeries.filter( function(el) { return el.date === formatedDate } );
         this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), SlotsData:SurgSlotsData});
-        console.log(newSurg);
-        console.log("khalina ntestiw wach t3tina hadi? " + moment(date).format('DD-MM-YYYY'));
         this.setState({ filteredCons : newSurg });
         this.showContent(newSurg);
         this.setState({pressedSlot:''});
@@ -57,11 +54,9 @@ export default class SurgeonAppointSlide extends React.Component {
     toggleApp = date=>{
         if(moment(date).format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')){
             this.setState({toggleApp: false});
-            console.log("maaaaaaaaa3");
 
         } else {
             this.setState({toggleApp: true});
-            console.log("waaaaaaaaa3");
         }
     }
 
@@ -80,11 +75,6 @@ export default class SurgeonAppointSlide extends React.Component {
         var b = newSurg.map( data => data.slot);
         var c = a.filter(n => !b.includes(n));
         this.setState({availableSlots:c});
-
-        
-        console.log(a);
-        console.log(b);
-        console.log(c);
     }
     datesBlacklistFunc = date => {
         return date.isoWeekday() === 7; // disable Saturdays
@@ -252,8 +242,6 @@ export default class SurgeonAppointSlide extends React.Component {
                                     </View>
                                     <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1}}>
                                         <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
-                                        <Text> {console.log("start")} </Text>
-                                        <Text> {console.log("end")} </Text>
                                         
                                     </View>
                                 </View>

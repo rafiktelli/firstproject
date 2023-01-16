@@ -113,7 +113,6 @@ export default class AppointmentScreen extends React.Component {
                 filtered: this.state.doctors,
             });
         }
-        console.log(this.state.inputValue);
     } 
 
     render(){
@@ -185,7 +184,6 @@ export default class AppointmentScreen extends React.Component {
                                 keyExtractor={(item) => item.id.toString()} 
                                 renderItem={ ({item})  => this.renderDoctors(item)}
                             />
-                            <Text> {console.log(this.state.pressedCategory)}</Text>
                         </ScrollView>
                     </View>
 

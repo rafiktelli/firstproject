@@ -161,8 +161,7 @@ export default class AssignTaskScreen extends React.Component {
                                 keyExtractor={(item) => item.id.toString()} 
                                 renderItem={ ({item})  => this.renderDoctors(item)}
                             />
-                            <Text> {console.log(this.state.pressedCategory)}</Text>
-                        </ScrollView>
+                         </ScrollView>
                     </View>
 
                 </View>

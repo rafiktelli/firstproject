@@ -44,8 +44,6 @@ export default class TodoList extends Component {
 
 
     renderTodo = (todo, index) =>{
-        console.log("hollllllllllllllllllllaaaaaaaaaaaaaa");
-        console.log(todo);
         return(
             
             <GestureHandlerRootView>

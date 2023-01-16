@@ -130,7 +130,6 @@ export default class AssignSlide extends React.Component {
                 }       
 
             firebase.getLists(lists=>{
-                console.log("KAMAYA");
                 this.setState({lists, user}, () => {
                     this.setState({loading:false});
                     //this.state.filtered = this.state.doctors;
@@ -257,7 +256,6 @@ export default class AssignSlide extends React.Component {
             var alist = persDateList;
             taskCount = alist.todos.length;
             completedCount = alist.todos.filter(todo => todo.completed).length;
-            console.log("Task Count: "+taskCount + " and "+ completedCount);
         }
         
        return (

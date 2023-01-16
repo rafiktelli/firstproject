@@ -91,7 +91,7 @@ const handleSpeciality =()=> {
               disabled ={!dis}
                  onSelect={(selectedItem, index) => {
                 rafika = selectedItem.title;
-                console.log(selectedItem.title);
+                //console.log(selectedItem.title);
                 handleSpeciality();
                 
               }}

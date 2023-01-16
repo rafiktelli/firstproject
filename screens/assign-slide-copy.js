@@ -96,9 +96,9 @@ export default class AssignSlide extends React.Component {
                     this.setState({loading:false});
                     dok = lists.filter( function(el){ return (el.persID === idx && el.date === date) })[0];
                     this.setState({persDateList:dok});                        
-                    console.log("this is lists");
-                    console.log(lists);
-                    console.log("end is lists");
+                    {/* console.log("this is lists");
+                        console.log(lists);
+                        console.log("end is lists");*/}
                 });
 
                 
@@ -197,8 +197,8 @@ export default class AssignSlide extends React.Component {
 
 
     render(){
-        console.log("these are the lists : ");
-        console.log(this.state.lists); 
+        //console.log("these are the lists : ");
+        //console.log(this.state.lists); 
         const persDateList = this.state.persDateList;
         //console.log(persDateList.todos);
           

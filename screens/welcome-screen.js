@@ -37,7 +37,7 @@ const WelcomeScreen = ({ navigation }) => {
       
       <Paginator data={slides} scrollX={scrollX} />
       <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Login") } >
-       <Text style={styles.buttonText}> Connect </Text>
+       <Text style={styles.buttonText}> Se connecter </Text>
       </TouchableOpacity>
 
 
@@ -61,7 +61,7 @@ const styles = {
   alignItems: 'center',
   position: 'absolute', //Here is the trick
   bottom: 50, //Here is the trick
-  backgroundColor: colors.middleBlue,
+  backgroundColor: colors.newBlue,
   borderRadius: 5,
   paddingVertical: 12, 
   paddingHorizontal: 32,

@@ -112,7 +112,6 @@ export default class SurgeryScreen extends React.Component {
                 filtered: this.state.surgeons,
             });
         }
-        console.log(this.state.inputValue);
     } 
     
 
@@ -185,7 +184,6 @@ export default class SurgeryScreen extends React.Component {
                                 keyExtractor={(item) => item.id.toString()} 
                                 renderItem={ ({item})  => this.renderDoctors(item)}
                             />
-                            <Text> {console.log(this.state.pressedCategory)}</Text>
                         </ScrollView>
                     </View>
                     </View>

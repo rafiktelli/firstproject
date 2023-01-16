@@ -29,11 +29,9 @@ export default class AddPersonnelSlide extends Component {
         this.setState({nom:""});
         }; 
         getProfession = (data) =>{
-            console.log("Coming from Parent", data);
             this.setState({profession: data});
         };
         getSpeciality = (data) =>{
-            console.log("Coming from Parent", data);
             this.setState({speciality: data});
         };
         addPersonnel = personnel =>{
@@ -48,9 +46,6 @@ export default class AddPersonnelSlide extends Component {
 
 
         render() {
-
-            console.log("this is input value:"+ this.state.nom);
-
 
             return (
 

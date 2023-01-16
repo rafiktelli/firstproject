@@ -9,9 +9,10 @@ import Slot from '../components/doctorComponents/slot';
 import PatientInfoSlide from '../screens/patientInfo-slide';
 import colors from '../Colors';
 import Fire from '../Fire';
+import TaskCard from '../components/doctorComponents/taskCard';
 
 
-export default class DoctorAppointSlide extends React.Component {
+export default class ViewSurgTasksScreen extends React.Component {
 
      
 
@@ -26,8 +27,6 @@ export default class DoctorAppointSlide extends React.Component {
         pressedSlots:[],
         SlotsData:[],
         availableSlots:[],
-        dateClicked : false,
-        toggleApp: false,
     }
     constructor(props) {
         super(props);
@@ -35,17 +34,14 @@ export default class DoctorAppointSlide extends React.Component {
         this.setState({availableSlots: SlotsData});
       } 
       onDateSelected = date => {
-        this.setState({dateClicked:true});
         this.setState({availableSlots:SlotsData});
         var formatedDate = moment(date).format('DD-MM-YYYY').toString(); 
         var newCons = this.state.consultations.filter( function(el) { return el.date === formatedDate } );
+        newCons.sort(this.GetSortOrder("slot"));     
         this.setState({selectedDate: moment(date).format('DD-MM-YYYY'), SlotsData:SlotsData});
-        //console.log("khalina ntestiw wach t3tina hadi? " + moment(date).format('DD-MM-YYYY'));
         this.setState({ filteredCons : newCons });
-        //console.log("filtredCons:", newCons);
         this.showContent(newCons);
         this.setState({pressedSlot:''});
-        this.toggleApp(date);
         
 
     }   
@@ -55,44 +51,57 @@ export default class DoctorAppointSlide extends React.Component {
         this.setState({pressedSlot : slot, });
     }
     toggleListModal(){
-        this.props.navigation.navigate("Add Surgery Information",{ pers: this.props.route.params.pers, slot: this.state.pressedSlot, date: this.state.selectedDate} );
+        this.setState({showListVisible: !this.state.showListVisible})
     }
     toggleAddPersonnelModel(){
         this.setState({addPersonnelVisible: !this.state.addPersonnelVisible});
     }
+    GetSortOrder(prop) {    
+        return function(a, b) {  
+            if (a[prop] > b[prop]) {    
+                return 1;    
+            } else if (a[prop] < b[prop]) {    
+                return -1;    
+            }    
+            return 0;    
+        }    
+    } 
     showContent(newCons){
         var a = SlotsData.map(data => data.time);
         var b = newCons.map( data => data.slot);
         var c = a.filter(n => !b.includes(n));
-        this.setState({availableSlots:c});
-
-        
+        this.setState({availableSlots:b});
+        this.setState({newCons:newCons});
     }
     datesBlacklistFunc = date => {
         return date.isoWeekday() === 7; // disable Saturdays
     }
 
-    toggleApp = date=>{
-        if(moment(date).format('DD-MM-YYYY') < moment().format('DD-MM-YYYY')){
-            this.setState({toggleApp: false});
-        } else {
-            this.setState({toggleApp: true});
-        }
-    }
-
-
     componentDidMount(){
         
-        var test = this.props.route.params.pers.id.toString();
+        var test = this.props.pers.id.toString();
         firebase = new Fire((error, user)=>{
             if(error){
                 return alert("Uh no, there is something went wrong");
             }
-            firebase.getConsultations(consultations=>{
+            firebase.getSurgeries(consultations=>{
                             
                 this.setState({consultations, user}, () => {
                     this.setState({loading:false});
-                    var newCons = this.state.consultations.filter( function(el) { return el.doctorID === test } );
+                    if(this.props.pers.profession === "Infirmier"){
+                        var newCons = this.state.consultations.filter( function(el) { return el.nurse === test } );
+                    } else {
+                        if(this.props.pers.profession === "Chirurgien"){
+                            var newCons = this.state.consultations.filter( function(el) { return el.doctorID === test } );
+                        } else {
+                            if (this.props.pers.speciality === "Anesthésie"){
+                                var newCons = this.state.consultations.filter( function(el) { return el.anes === test } );
+                                console.log('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+                            } else {
+                                console.log('kkkkk');
+                            }
+                        }
+                    }
                     this.setState({ consultations : newCons });
                     //this.state.consultations = this.state.personnels.filter( function(el) { return el.profession === "Medecin"; } );
                 });
@@ -110,7 +119,6 @@ export default class DoctorAppointSlide extends React.Component {
 
 
     render(){
-        var dateClicked = this.state.dateClicked;
         var startDate = new Date("2023-01-01");
         var selectedDate = new Date();
         var endDate = new Date("2023-04-02");
@@ -129,26 +137,20 @@ export default class DoctorAppointSlide extends React.Component {
           
           
         return (
-            <View style={styles.container}>
-                <StatusBar barStyle="light-content" backgroundColor={colors.blue} />   
-                
+            <View style={styles.container} >  
+                  
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
-                    <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.route.params.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
+                    <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
                 
-                
+                <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
+                        <AntDesign  name="close" size={24} color={colors.black} />
+                </TouchableOpacity>
 
-                <View style={{ backgroundColor:'',  height:215, marginBottom:20, paddingTop:25, flexDirection:'column', alignItems:'center', justifyContent:'center', }}>
-                    <View>
-                        <Image style={{width:130, height:130, borderRadius:25,  }} source={require('../assets/doctor-female.jpg')}  />
-                    </View>
-                    
-                    <Text style={styles.persName}>Dr. {this.props.route.params.pers.nom}</Text>
-                    <Text style={styles.persSpec}>Médecin en {this.props.route.params.pers.speciality} </Text>
-                </View>
-                <View style={{backgroundColor:'#f8f4f4',flex:1,  borderTopLeftRadius: 40, borderTopRightRadius: 40, paddingVertical:10 }}>
-                    <View style={{marginHorizontal:20, marginTop:10, marginBottom:15, }}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Calendrier des rendez-vous</Text>
+                
+                <View style={{backgroundColor:'#f8f4f4',flex:1, paddingVertical:20 }}>
+                    <View style={{marginHorizontal:20, marginVertical:10, marginTop: 40}}>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Calendar</Text>
                     </View>
                     <View style={{ }}>
                     <CalendarStrip
@@ -184,25 +186,29 @@ export default class DoctorAppointSlide extends React.Component {
                         
                     />
                     </View>
-                    <View style={{   marginHorizontal:20, marginVertical:20, display: dateClicked && this.state.toggleApp ? 'flex' : 'none'}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Horaires disponibles</Text>
+                    <View style={{marginHorizontal:20, marginBottom:10, marginTop:20}}>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Schedule of Dr.{this.props.pers.nom}</Text>
                         
                         
                     </View>
-                    <View style={{  }}>
-                    <View style={{display: (this.state.availableSlots.length===0 &&  dateClicked) ? 'flex':'none', alignItems:'center', justifyContent:'center', paddingTop:80 }}>
-                        <Image source={require("../assets/no-schedule.png")} style={{ height:100, width:100}} />
-                    </View>
-                    <View style={{ flexDirection:'column', paddingHorizontal:6, display: this.state.toggleApp ? 'flex': 'none'}} >
+                    <ScrollView style={{}}>
+                    <View style={{ flexDirection:'column', paddingHorizontal:6}} >
                         <FlatList 
-                            data={this.state.availableSlots}
-                            keyExtractor={(item) => item.toString()} 
-                            numColumns={4}
+                            data={this.state.newCons}
+                            keyExtractor={(item) => item.id} 
                             renderItem={({ item })=>{
+                                var date = item.date;
+                                if(item.age === undefined) {var age =""; } else{
+                                    var age = item.age +" ans";
+                                }
+                                if (item.date === moment().format('DD-MM-YYYY') ){date = "Aujourd'hui"} 
+                                else {if(item.date === moment().add(1, 'day').format('DD-MM-YYYY')){ date = "Demain"}
+                                else{if(item.date  === moment().subtract(1, 'day').format('DD-MM-YYYY')){ date = "Hier"}}}
+                                 
                                 return(
-                                    <TouchableOpacity onPress={()=>this.slotPressed(item.toString())}>
-                                        <Slot time={item.toString()} isPressed ={this.state.pressedSlot} />
-                                    </TouchableOpacity>
+                                    <View>
+                                        <TaskCard containerStyle={{backgroundColor: colors.lightBlue }} surg={true} name={item.motif} date={date} doctor={item.patientID} duration={item.duration} age={age} time={item.slot} />
+                                    </View>
                                     );
                             }}
                         />
@@ -212,23 +218,8 @@ export default class DoctorAppointSlide extends React.Component {
                     </View>
 
 
-                    </View>
-                    <View style={{flex:1, display: (this.state.availableSlots.length === 0 || !this.state.toggleApp ) ? 'none':'flex', alignItems:'center', justifyContent:'flex-end', paddingBottom:10}}>
-                        <View style={{backgroundColor:colors.blue, width:250, height:80, borderRadius:20, justifyContent:'center' }}>
-                            <TouchableOpacity disabled={this.state.pressedSlot == '' } onPress={()=>this.toggleListModal()} >
-                                <View style={{flexDirection:'row'}}>
-                                    <View >
-                                        <Image source={require('../assets/clock.png')} style={{width:30, height:30,marginLeft:30, marginRight:-30 }} />
-                                    </View>
-                                    <View style={{alignItems:'center', justifyContent:'center', flexDirection:'row', flex:1, }}>
-                                        <Text style={{color:'#FFF', fontSize:20, fontWeight:'600' }}>Appointment</Text>
-                                        
-                                    </View>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                
+                    </ScrollView>
+                    
                 </View>
 
             </View>
@@ -244,14 +235,13 @@ const styles = StyleSheet.create({
       persName:{
             paddingTop: 10,
             fontSize: 18,
-            fontWeight: '500',
+            fontWeight: '400',
       },
       persSpec:{
-        color:colors.gray,
         paddingTop: 5,
         fontSize: 18,
         fontWeight: '400',
-        
+        fontWeight:'500',
       },
 
 

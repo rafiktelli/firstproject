@@ -26,7 +26,6 @@ export default class PatientInfoSlide extends React.Component {
     const details = this.state.inputValue3;
     const consultation = {doctorID, date, slot, patientID, motif, age}; 
     this.addConsultation(consultation); 
-    console.log(patientID);
     this.props.navigation.navigate("Appointment");
     }; 
 
@@ -74,11 +73,10 @@ export default class PatientInfoSlide extends React.Component {
 
 
   render(){
-      console.log("this is input1:"+this.state.inputValue3+"x");
     var surg = false;  
     surg = this.props.route.params.surg;
     return (
-      <View style={styles.container}  >
+      <ScrollView style={styles.container}  >
         <View>
             
         </View>
@@ -149,7 +147,7 @@ export default class PatientInfoSlide extends React.Component {
                 </View>
                 </View>
                         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

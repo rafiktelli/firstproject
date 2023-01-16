@@ -2,6 +2,8 @@ import React,{useState} from 'react'
 import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, FlatList} from 'react-native';
 import TaskCard from '../components/doctorComponents/taskCard';
 import taskdata from '../data';
+import { AntDesign, Ionicons } from "@expo/vector-icons"; 
+import colors from '../Colors';
 
 
 
@@ -14,47 +16,50 @@ const Login = ({navigation}) => {
     })
 
     return (
-        <ScrollView style={{flex:1, backgroundColor:'#fff',flexDirection:'column'}}>
+        <View style={{backgroundColor:'#fff', flex:1,flexDirection:'column',alignItems:'center',justifyContent:'center', paddingHorizontal:10 }}>
             <StatusBar barStyle="dark-content" backgroundColor="#fff" />
             {/* login form section */}
+
+           
             
-            <View style={{height:150, alignItems:'center', justifyContent:'center'}}>
-                <Text style={{fontSize:30,color:'#000', fontWeight: 'bold' }} >Login </Text>
+            <View style={{ }}>
+                <Text style={{fontSize:30,color:'#000', fontWeight: 'bold', alignItems:'flex-start', marginBottom:10,   marginLeft:-90 }} > Bienvenue </Text>
+                <Text style={{fontSize:18, fontWeight:'300',color:colors.lightGray,  marginBottom:20,  marginLeft:-90  }} > Connectez-vous à votre compte </Text>
             </View>
 
-            <View style={{flex:1,flexDirection:'column',backgroundColor:'#fff',paddingTop:30, paddingBottom:20, paddingHorizontal:'3%'}} >
+            <View style={{backgroundColor:'#fff'}} >
             
                   
                     <View style={styles.emailInput} >
+                    <Ionicons name="person-outline" size={18} color={"#818181"} />
                         <TextInput 
                          style={styles.input} 
-                         placeholder="Enter Email" 
+                         placeholder="Nom d'utilisateur" 
                          placeholderTextColor="#818181" 
                         />
                     </View>
                     
                     <View style={styles.passwordInput} >
+                    <Ionicons name="lock-closed-outline" size={18} color={"#818181"} />
                         <TextInput 
                         style={styles.input} 
-                        placeholder="Enter Password"  
+                        placeholder="Mot de passe "  
                         placeholderTextColor="#818181" 
                         secureTextEntry={true}
                         />
                     </View>
-                     
-                    
-                    </View>
-                    <View style={{justifyContent:'center', alignItems:'center'}}>
-                        <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Main") } >
-                            <Text style={styles.buttonText}>Login </Text>
+                     <View>
+                    <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Main") } >
+                            <Text style={styles.buttonText}>Se connecter </Text>
                         </TouchableOpacity>
-                    </View>  
+                        </View>
+                    </View>
+                    
                     
            
         
-
             
-        </ScrollView>
+        </View>
     )
 }
 
@@ -62,7 +67,6 @@ export default Login
 
 const styles = StyleSheet.create({
     input:{
-        position:'relative',
         height:'100%',
         width:'90%',
         paddingLeft:20,
@@ -89,10 +93,12 @@ const styles = StyleSheet.create({
         paddingLeft:20,
     },
     buttonView: {
-        width:150,
+        width:'100%',
+        marginTop:20,
+
         justifyContent: 'center',
         alignItems: 'center',
-       backgroundColor: 'navy',
+       backgroundColor: colors.newBlue,
         borderRadius: 5,
         paddingVertical: 12, 
         paddingHorizontal: 32,

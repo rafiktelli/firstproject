@@ -10,18 +10,20 @@ export default class TaskCard extends React.Component {
         var hour = this.props.time.split(":")[0];
         var minute = this.props.time.split(":")[1];
         //console.log(hour + " + " + minute);
-        var date = moment.utc()
-                   .hour(hour)   // numbers from 0 to 23
-                   .minute(minute); // numbers from 0 to 59
+        var date = moment.utc().hour(hour).minute(minute);
+        var date1 = moment.utc().hour(hour).minute(minute);
         var plus30Min = date.add(30, 'm');
-        //var time = "" + plus30Min.getHours() + "" + plus30Min.getMinutes() + "";
-
-
+        var plus60Min = date1.add(60, 'm');
         console.log(plus30Min);
         console.log(this.props.time);
         var x = plus30Min.format("HH:mm");
-        console.log("Moment", x);
-        return x;
+        var y = plus60Min.format("HH:mm");
+        var z = this.props.surg ? y : x;
+        if(this.props.surg && moment.utc().hour(hour).minute(minute).format("HH:mm") === "15:00" )
+        {
+            z = "Ouvert";
+        }
+        return z;
     }
 
   render() {

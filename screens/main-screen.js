@@ -1,5 +1,7 @@
 import React,{useState} from 'react'
 import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions } from 'react-native'
+import { Ionicons, AntDesign } from '@expo/vector-icons';
+import RBSheet from "react-native-raw-bottom-sheet";
 
 
     
@@ -14,7 +16,23 @@ const MainScreen = ({ navigation }) => {
          <StatusBar barStyle="dark-content" backgroundColor={colors.lighterGray} /> 
             
             <View style={{}}>
+
+            </View>
+
+            <RBSheet ref={ref => { this.RBSheet = ref;}} height={100} openDuration={150}>
+                <View style={{flexDirection:'row'}}>
+                    <Ionicons name="log-out-outline" size={24} color={colors.red} />
+                    <Text style={{color:colors.red, fontSize:18, paddingHorizontal:10, fontWeight:'400', }}>Supprimer Profil</Text>
+                </View>
+            </RBSheet>
+
+
+            <TouchableOpacity style={{position:'absolute', top:20, right: 20}} onPress={() => this.RBSheet.open()} >
+            <AntDesign name="user" color={colors.blue} size={26}  />
+            </TouchableOpacity>
+            <View style={{}}>
                 <Text style={{fontWeight:'900', fontSize:30, width:250, marginBottom:10}}>Hello Again</Text>
+                
             </View>
             <View>
             <View style={{flexDirection:'row' ,paddingVertical: 20}}>
