@@ -1,11 +1,12 @@
 import React,{useState} from 'react'
-import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, FlatList} from 'react-native';
+import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, FlatList, Modal} from 'react-native';
 import TaskCard from '../components/doctorComponents/taskCard';
 import taskdata from '../data';
 import { AntDesign, Ionicons } from "@expo/vector-icons"; 
 import colors from '../Colors';
 import Fire from '../Fire';
-
+import ViewDocTasksScreen from './viewDocTasks-screen';
+import ViewSurgTasksScreen from './viewSurgTaks-screen';
 
 
 
@@ -15,6 +16,22 @@ const Login = ({navigation}) => {
     const [password,setPassword] = useState({});
     const [user, setUser] = useState({});
     const [personnels, setPersonnels] = useState([]);
+    const [vis, setVis] = useState(false);
+    const [vis3, setVis3] = useState(false);
+    const [pers, setPers] = useState({});
+
+
+
+    const closeIT = () => {
+        if(vis === true){
+            setVis(false);
+        }
+        else{
+            if(vis3===true){
+                setVis3(false);
+            }
+        }
+    }
 
      const navigateNavigation = () => {
         // Here how you open the bottom sheet right
@@ -36,12 +53,31 @@ const Login = ({navigation}) => {
 
                 console.log(personnels);
                 var newPers = personnels.filter( function(el) { return el.nom === email } );
-                var pers = newPers[0];
+                setPers(newPers[0]);
                 console.log(pers);
+                if(email.toLowerCase() === "admin" && password.toLowerCase() === "admin"){
+                    navigation.navigate("Main");
+                    console.log("hi");
+                } else {
+                
                 if(pers.profession === "Aide-Soignant"){
-                    navigation.navigate("Todo List",{pers: pers, view: true});
+                    navigation.navigate("Todo List",{pers: pers, view: true,});
+                } else {
+
+                    if(pers.profession === "Chirurgien" || pers.profession === "Infirmier" || pers.speciality === "Anesthésie" ){
+                        setVis3(!vis3);
+                    } else{
+                        if (pers.profession==="Medecin" && pers.speciality !=="Anesthésie" ){
+                            setVis(!vis);
+                            console.log(vis);
+                        } else {
+                            
+                        }
+                    
+                    }
+
                 }
-    
+            }
                 
             });
     
@@ -51,19 +87,23 @@ const Login = ({navigation}) => {
 
 
         console.log(email + " | " + password);
-        if(email.toLowerCase() === "admin" && password.toLowerCase() === "admin"){
-            navigation.navigate("Main");
-        } else {
-
-        }
+         
      }
 
     return (
         <View style={{backgroundColor:'#fff', flex:1,flexDirection:'column',alignItems:'center',justifyContent:'center', paddingHorizontal:10 }}>
-            <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+            <StatusBar barStyle="dark-content" backgroundColor="#FFF" />
             {/* login form section */}
 
            
+        <Modal animationType="slide" visible={vis} onRequestClose={()=>this.toggleListModal()}>
+            <ViewDocTasksScreen navigation={navigation} profile={true} pers={pers} closeModal={()=>closeIT()}  />
+        </Modal>
+        <Modal animationType="slide" visible={vis3} onRequestClose={()=>this.toggleListModal()}>
+            <ViewSurgTasksScreen navigation={navigation} profile={true} pers={pers} closeModal={()=>closeIT()}  />
+        </Modal>
+
+
             
             <View style={{ }}>
                 <Text style={{fontSize:30,color:'#000', fontWeight: 'bold', alignItems:'flex-start', marginBottom:10,   marginLeft:-90 }} > Bienvenue </Text>

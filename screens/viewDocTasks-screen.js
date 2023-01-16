@@ -11,6 +11,8 @@ import colors from '../Colors';
 import Fire from '../Fire';
 import TaskCard from '../components/doctorComponents/taskCard';
 
+import RBSheet from "react-native-raw-bottom-sheet";
+
 
 export default class ViewDocTasksScreen extends React.Component {
 
@@ -77,6 +79,11 @@ export default class ViewDocTasksScreen extends React.Component {
         return date.isoWeekday() === 7; // disable Saturdays
     }
 
+    seDeconnecter(){
+        this.props.closeModal();
+        this.props.navigation.navigate("Login"); 
+      }
+
     componentDidMount(){
         
         var test = this.props.pers.id.toString();
@@ -125,19 +132,33 @@ export default class ViewDocTasksScreen extends React.Component {
           
         return (
             <View style={styles.container} >  
+                 <StatusBar barStyle="light-content" backgroundColor={"#f8f4f4"} />   
+             
+             
                   
                 <Modal animationType="slide" visible={this.state.showListVisible} onRequestClose={()=>this.toggleListModal()}>
                     <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
+
+
+                <RBSheet ref={ref => { this.RBSheet = ref;}} height={70} openDuration={150} >
+                <TouchableOpacity style={{flexDirection:'row',  paddingHorizontal:10, paddingVertical:20,}} onPress={()=>this.seDeconnecter() }>
+                    <Ionicons name="log-out-outline" size={24} color={colors.red} />
+                    <Text style={{color:colors.red, fontSize:18, fontWeight:'400', }}>  Se déconnecter</Text>
+                </TouchableOpacity>
+                </RBSheet>
                 
                 <TouchableOpacity style={{position:'absolute', top:32, right:32, zIndex: 10 }} onPress={this.props.closeModal}>
-                        <AntDesign  name="close" size={24} color={colors.black} />
+                        <AntDesign  name="close" size={24} color={colors.black} style={{display: this.props.profile ? 'none' : 'flex'}} />
+                </TouchableOpacity>
+                <TouchableOpacity style={{position:'absolute', top:32, right: 32, zIndex: 10}} onPress={() => this.RBSheet.open()} >
+                    <AntDesign name="user" color={colors.blue} size={26}  />
                 </TouchableOpacity>
 
                 
                 <View style={{backgroundColor:'#f8f4f4',flex:1, paddingVertical:20 }}>
                     <View style={{marginHorizontal:20, marginVertical:10, marginTop: 40}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Calendar</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} >Calendrier</Text>
                     </View>
                     <View style={{ }}>
                     <CalendarStrip
@@ -174,7 +195,7 @@ export default class ViewDocTasksScreen extends React.Component {
                     />
                     </View>
                     <View style={{marginHorizontal:20, marginBottom:10, marginTop:20}}>
-                        <Text style={{fontWeight:'500', fontSize:18}} >Schedule of Dr.{this.props.pers.nom}</Text>
+                        <Text style={{fontWeight:'500', fontSize:18}} > Planning de {this.props.pers.nom}</Text>
                         
                         
                     </View>

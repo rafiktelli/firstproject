@@ -8,6 +8,7 @@ import colors from '../Colors';
 import Fire from '../Fire';
 import PatientInfoSlide from './patientInfo-slide';
 import parseErrorStack from 'react-native/Libraries/Core/Devtools/parseErrorStack';
+import RBSheet from "react-native-raw-bottom-sheet";
 
 
 
@@ -34,6 +35,10 @@ export default class AssignSlide extends React.Component {
         super(props);
         this.myRef = React.createRef();
       } 
+    
+    seDeconnecter(){
+        this.props.navigation.navigate("Login"); 
+    }
 
     componentWillUnmount(){
         firebase.detach();
@@ -265,9 +270,23 @@ export default class AssignSlide extends React.Component {
                     <PatientInfoSlide closePrevModal={()=>this.props.closeModal()} closeModal={() => this.toggleAddPersonnelModel()} pers={this.props.route.params.pers} slot={this.state.pressedSlot} date={this.state.selectedDate}  closeModal={()=>this.toggleListModal()} />
                 </Modal>
 
+
+
+                <RBSheet ref={ref => { this.RBSheet = ref;}} height={70} openDuration={150} >
+                <TouchableOpacity style={{flexDirection:'row',  paddingHorizontal:10, paddingVertical:20,}} onPress={()=>this.seDeconnecter() }>
+                    <Ionicons name="log-out-outline" size={24} color={colors.red} />
+                    <Text style={{color:colors.red, fontSize:18, fontWeight:'400', }}>  Se déconnecter</Text>
+                </TouchableOpacity>
+                </RBSheet>
+
+
+
+
                 <View style={{ paddingVertical:30, paddingHorizontal:10, backgroundColor: colors.blue, alignItems:'center', height:130,   flexDirection:'row',  borderBottomLeftRadius:30, borderBottomRightRadius:30 }}>
                     <View style={{alignItems:'flex-end', paddingLeft:10, paddingRight:20}} >
+                    <TouchableOpacity onPress={() => this.RBSheet.open()}>
                         <Image style={{width:80, height:80, borderRadius:25,  }} source={require('../assets/doctor-male.jpg')}  />
+                        </TouchableOpacity>
                     </View>
                     <View style={{flexDirection:'column'}}>
                         <Text style={styles.persName}>{this.props.route.params.pers.nom} </Text>
