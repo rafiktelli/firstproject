@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState, useRef} from 'react'
 import { StyleSheet, Text, ScrollView,View,StatusBar,Image,TextInput, TouchableOpacity, Dimensions } from 'react-native'
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import RBSheet from "react-native-raw-bottom-sheet";
@@ -9,7 +9,11 @@ import RBSheet from "react-native-raw-bottom-sheet";
 
 
 const MainScreen = ({ navigation }) => {
-    
+    const sheetRef = useRef();
+    const bottomSheet = () => {
+        // Here how you open the bottom sheet right
+        sheetRef.current.open();
+     }
     
     return (
         <View  style={styles.container}>
@@ -19,15 +23,15 @@ const MainScreen = ({ navigation }) => {
 
             </View>
 
-            <RBSheet ref={ref => { this.RBSheet = ref;}} height={100} openDuration={150}>
-                <View style={{flexDirection:'row'}}>
+            <RBSheet ref={sheetRef} height={70} openDuration={150}>
+                <View style={{flexDirection:'row',  paddingHorizontal:10, paddingVertical:20,}}>
                     <Ionicons name="log-out-outline" size={24} color={colors.red} />
-                    <Text style={{color:colors.red, fontSize:18, paddingHorizontal:10, fontWeight:'400', }}>Supprimer Profil</Text>
+                    <Text style={{color:colors.red, fontSize:18, fontWeight:'400', }}>  Se déconnecter</Text>
                 </View>
             </RBSheet>
 
 
-            <TouchableOpacity style={{position:'absolute', top:20, right: 20}} onPress={() => this.RBSheet.open()} >
+            <TouchableOpacity style={{position:'absolute', top:20, right: 20}} onPress={() => bottomSheet()} >
             <AntDesign name="user" color={colors.blue} size={26}  />
             </TouchableOpacity>
             <View style={{}}>
