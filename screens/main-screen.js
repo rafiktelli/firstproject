@@ -24,10 +24,10 @@ const MainScreen = ({ navigation }) => {
             </View>
 
             <RBSheet ref={sheetRef} height={70} openDuration={150}>
-                <View style={{flexDirection:'row',  paddingHorizontal:10, paddingVertical:20,}}>
+                <TouchableOpacity style={{flexDirection:'row',  paddingHorizontal:10, paddingVertical:20,}} onPress={()=>navigation.navigate("Login")}>
                     <Ionicons name="log-out-outline" size={24} color={colors.red} />
                     <Text style={{color:colors.red, fontSize:18, fontWeight:'400', }}>  Se déconnecter</Text>
-                </View>
+                </TouchableOpacity>
             </RBSheet>
 
 

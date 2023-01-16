@@ -4,16 +4,59 @@ import TaskCard from '../components/doctorComponents/taskCard';
 import taskdata from '../data';
 import { AntDesign, Ionicons } from "@expo/vector-icons"; 
 import colors from '../Colors';
+import Fire from '../Fire';
 
 
 
 
 const Login = ({navigation}) => {
 
-    const [formData,setformData] = useState({
-        email:'',
-        password:''
-    })
+    const [email,setEmail] = useState({});
+    const [password,setPassword] = useState({});
+    const [user, setUser] = useState({});
+    const [personnels, setPersonnels] = useState([]);
+
+     const navigateNavigation = () => {
+        // Here how you open the bottom sheet right
+
+
+      
+        firebase = new Fire((error, user)=>{
+                if(error){
+                    return alert("Uh no, there is something went wrong");
+                }
+                firebase.getPersonnels(personnels=>{
+                                
+                        setPersonnels(personnels);
+                         var newPers = personnels;
+                });
+
+                setUser(user);
+                console.log(user.uid);
+
+                console.log(personnels);
+                var newPers = personnels.filter( function(el) { return el.nom === email } );
+                var pers = newPers[0];
+                console.log(pers);
+                if(pers.profession === "Aide-Soignant"){
+                    navigation.navigate("Todo List",{pers: pers, view: true});
+                }
+    
+                
+            });
+    
+    
+                
+        
+
+
+        console.log(email + " | " + password);
+        if(email.toLowerCase() === "admin" && password.toLowerCase() === "admin"){
+            navigation.navigate("Main");
+        } else {
+
+        }
+     }
 
     return (
         <View style={{backgroundColor:'#fff', flex:1,flexDirection:'column',alignItems:'center',justifyContent:'center', paddingHorizontal:10 }}>
@@ -34,6 +77,7 @@ const Login = ({navigation}) => {
                     <Ionicons name="person-outline" size={18} color={"#818181"} />
                         <TextInput 
                          style={styles.input} 
+                         onChangeText = {text => setEmail(text)}
                          placeholder="Nom d'utilisateur" 
                          placeholderTextColor="#818181" 
                         />
@@ -43,13 +87,14 @@ const Login = ({navigation}) => {
                     <Ionicons name="lock-closed-outline" size={18} color={"#818181"} />
                         <TextInput 
                         style={styles.input} 
+                        onChangeText = {text => setPassword(text)}
                         placeholder="Mot de passe "  
                         placeholderTextColor="#818181" 
                         secureTextEntry={true}
                         />
                     </View>
                      <View>
-                    <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigation.navigate("Main") } >
+                    <TouchableOpacity  activeOpacity={0.5} style={styles.buttonView} onPress={() => navigateNavigation() } >
                             <Text style={styles.buttonText}>Se connecter </Text>
                         </TouchableOpacity>
                         </View>
